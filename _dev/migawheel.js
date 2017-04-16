@@ -604,6 +604,14 @@ var migawheel = {
             migawheel.svg.addEventListener('mouseup', migawheel.mouseupHandler);
             migawheel.svg.addEventListener('mousemove', migawheel.mousemoveHandler);
             migawheel.svg.addEventListener('click', migawheel.clickHandler);
+
+            document.addEventListener('beforeunload', function () {
+                migawheel.svg.removeEventListener('mousedown', migawheel.mousedownHandler);
+                migawheel.svg.removeEventListener('mouseup', migawheel.mouseupHandler);
+                migawheel.svg.removeEventListener('mousemove', migawheel.mousemoveHandler);
+                migawheel.svg.removeEventListener('click', migawheel.clickHandler);
+            });
+
             migawheel.handlersBindFlag = true;
         }
     }
