@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MigaWheel</title>
+
+    <style>
+        body {
+            background: url("index_bg.gif") repeat;
+        }
+
+        body > div {
+            position: fixed;
+
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .blur {
+            z-index: 1;
+
+            opacity: 0.3;
+            background-color: #cac5ff;
+        }
+
+        .wrapper {
+            text-align: center;
+        }
+
+        .wrapper > * {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .wrapper:before {
+            content: '';
+            width: 0;
+            height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .zi2 {
+            z-index: 2;
+        }
+
+        .zi3 {
+            z-index: 3;
+        }
+
+        .wrapper > .tao {
+            width: 500px;
+            height: 500px;
+
+            background-color: #ddd;
+
+            border-radius: 50%;
+        }
+
+        .wrapper > .inner {
+            width: 200px;
+            height: 200px;
+
+            background-color: rgba(0,0,0,0);
+        }
+
+        .btn {
+            width: 200px;
+            height: 100px;
+
+            color: blue;
+            font-size: 44px;
+
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            font-size: 36px;
+        }
+
+        .left {
+            fill: #333;
+        }
+
+        .left:hover {
+            fill: #111;
+        }
+
+        .right {
+            fill: #ccc;
+        }
+
+        .right:hover {
+            fill: #aaa;
+        }
+
+        text {
+            user-select: none;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        /*.bgs > path {*/
+            /*!*transition: d 1s;*!*/
+        /*}*/
+
+        .cate > text {
+            fill: white;
+            transform-origin: 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="blur"></div>
+    <div class="wrapper zi2">
+        <div class="tao">
+            <svg id="taiqi" width="500" height="500">
+                <defs>
+                    <radialGradient id="gradient" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="250" spreadMethod="pad">
+                        <stop offset="0%" stop-color="#3366CC"></stop>
+                        <stop offset="30%" stop-color="#3366CC" stop-opacity="1"></stop>
+                        <stop offset="60%" stop-color="black" stop-opacity="1"></stop>
+                    </radialGradient>
+                </defs>
+                <g class="left" transform="translate(250,250)">
+                    <path d="M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z"></path>
+                </g>
+                <g class="right" transform="translate(250,250) rotate(180 0 0)">
+                    <path d="M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z"></path>
+                </g>
+                <g transform="translate(150,150)">
+                    <text transform="translate(50,60)" fill="white">View Github</text>
+                    <text transform="translate(55,160)" fill="black">View Resume</text>
+                </g>
+                <g class="bgs" transform="translate(250,250) rotate(0 0 0)">
+                </g>
+                <g class="texts" transform="translate(250,250) rotate(0 0 0)">
+                </g>
+                <g class="cateBack" transform="translate(250,250) rotate(0 0 0)">
+                    <circle cx="0" cy="0" r="100" fill="url(#gradient)"></circle>
+                    <text x="-32" y="8">我是分类</text>
+                    <!--<text x="-80" y="-5">我是分类</text>-->
+                    <!--<text x="-80" y="21">我是分类</text>-->
+                </g>
+            </svg>
+        </div>
+    </div>
+    <!--<div class="wrapper zi3">-->
+        <!--<div class="inner">-->
+            <!--<div class="wrapper btn">ABC</div>-->
+            <!--<div class="wrapper btn">abc</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <script src="migawheel.js"></script>
+    <script>
+        var categories = ['Angular', '面试经', '博客技术说明博客技术说明博客技术说明技术说明', 'D3', '面试经', '博客技术说明', 'D3', '面试经', '博客技术说明', 'D3', '面试经', '博客技术说明'];
+
+        function articleConfig() {
+            return [migawheelMode.Article, [220, 195, 170, 145, 120], 16, 100, 250];
+        }
+
+        function categoryConfig() {
+            return [migawheelMode.Category, 120, 16, 100, 150, function (str) {
+                return ' ' + str.trim() + ' ';
+            }];
+        }
+
+        migawheel.setCateBackHandler(function () {
+            migawheel.config.apply(migawheel, categoryConfig());
+            migawheel.init(categories);
+        });
+
+        migawheel.setCateClickHandler(function (cateName) {
+            migawheel.config.apply(migawheel, articleConfig());
+            migawheel.init(['我是谁，我是caols。[]2017-01-01||2017-02-02']);
+            migawheel.buildCateBack(cateName);
+        });
+
+        migawheel.setArticleClickHandler(function (articleTitle) {
+            console.log('[' + articleTitle + '] 请求跳转.');
+        });
+
+        migawheel.setTaiqiLeftClickHandler(function () {
+            console.log('left clicked, view github.');
+        });
+
+        migawheel.setTaiqiRightClickHandler(function () {
+            console.log('right clicked, view resume.');
+        });
+
+//        migawheel.config.apply(migawheel, articleConfig());
+//        migawheel.init(['我是谁，我是caols。[]2017-01-01||2017-02-02']);
+        migawheel.config.apply(migawheel, categoryConfig());
+        migawheel.init(categories);
+
+    </script>
+</body>
+</html>

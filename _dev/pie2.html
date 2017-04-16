@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pie2</title>
+
+    <style>
+        svg {
+            width: 100px;
+            height: 100px;
+            transform: rotate(-90deg);
+            background: yellowgreen;
+            border-radius: 50%;
+        }
+
+        circle {
+            fill: yellowgreen;
+            stroke: #655;
+            stroke-width: 32;
+            /*stroke-dasharray: 38 100; !* for 38% *!*/
+        }
+
+        circle.thirdColor {
+            stroke: #aaa;
+        }
+    </style>
+</head>
+<body>
+<div class="pie">20%</div>
+<div class="pie">60%</div>
+<script>
+    var elems = document.getElementsByClassName('pie');
+    console.log(elems);
+
+    for (var i = 0, pie = elems[i]; i < elems.length; i++, pie = elems[i]) {
+        var p = parseFloat(pie.textContent);
+
+        console.log(p);
+
+        var NS = "http://www.w3.org/2000/svg";
+        var svg = document.createElementNS(NS, "svg");
+        var title = document.createElementNS(NS, "title");
+        var circle = document.createElementNS(NS, "circle");
+        circle.setAttribute("r", 16);
+        circle.setAttribute("cx", 16);
+        circle.setAttribute("cy", 16);
+        circle.setAttribute("stroke-dasharray", p + " 100");
+//        var circle2 = document.createElementNS(NS, "circle");
+//        circle2.classList.add('thirdColor');
+//        circle2.setAttribute("r", 16);
+//        circle2.setAttribute("cx", 16);
+//        circle2.setAttribute("cy", 16);
+        circle2.setAttribute("stroke-dasharray", "30 100");
+        svg.setAttribute("viewBox", "0 0 32 32");
+        title.textContent = pie.textContent;
+        pie.textContent = '';
+        svg.appendChild(title);
+        svg.appendChild(circle);
+//        svg.appendChild(circle2);
+        pie.appendChild(svg);
+
+        console.log(circle);
+    }
+</script>
+</body>
+</html>
