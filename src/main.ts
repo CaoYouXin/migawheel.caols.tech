@@ -7,4 +7,8 @@ if (environment.production) {
     enableProdMode();
 }
 
+// if (environment.base !== null) {
+//     document.getElementsByTagName('base').item(0).setAttribute('href', environment.base);
+// }
+
 platformBrowserDynamic().bootstrapModule(AppModule);

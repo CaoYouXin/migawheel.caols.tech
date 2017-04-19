@@ -1,0 +1,69 @@
+.wrapper {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    text-align: center;
+}
+
+.wrapper > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wrapper:before {
+    content: '';
+    width: 0;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.zi2 {
+    z-index: 2;
+}
+
+.wrapper > .tao {
+    width: 500px;
+    height: 500px;
+
+    background-color: #ddd;
+
+    border-radius: 50%;
+}
+
+.left {
+    fill: #333;
+}
+
+.left:hover > path {
+    fill: #111;
+}
+
+.right {
+    fill: #ccc;
+}
+
+.right:hover > path {
+    fill: #eee;
+}
+
+text {
+    user-select: none;
+    cursor: default;
+
+    font-family: Monaco, "Lucida Console", "Comic Sans MS", monospace;
+    font-size: 16px;
+}
+
+.cate > text {
+    fill: white;
+    transform-origin: 0 0 0;
+}
+
+.cateBack:hover > circle {
+    fill: url(#gradient-thin);
+}
