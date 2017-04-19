@@ -1,7 +1,7 @@
 <div class="wrapper zi2">
     <div class="tao">
         <div id="miga-search" [class.focused]="searchFocused">
-            <input type="text" placeholder="搜索分类或者文章"
+            <input type="text" placeholder="搜索分类或者文章" autofocus
                    (keyup)="searchKeyUp($event)" (focus)="searchFocus($event)"
                    (blur)="searchFocused=false;searchHintsShow=false;">
         </div>
