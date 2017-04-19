@@ -2,32 +2,48 @@
  * Created by cls on 2017/3/4.
  */
 import {Component, Input} from "@angular/core";
-import {MigaWheelCore, Elem, Configs} from "./migawheel.core";
+import {MigaWheelCore, Elem, Configs, RenderedText} from "./migawheel.core";
+import {MigaWheelSearch} from "./migawheel.search";
 
 @Component({
     selector: 'migawheel',
     templateUrl: './pc.component.html',
-    styleUrls: ['./pc.component.css']
+    styleUrls: ['./pc.component.css'],
+    providers: [MigaWheelCore, MigaWheelSearch]
 })
 export class MigaWheelPcComponent {
-    private categorySelected: boolean = false;
-    private renderedCategory: RenderedText[] = [];
+    constructor(core: MigaWheelCore, search: MigaWheelSearch) {
+        this.core = core;
+        this.search = search;
+    }
 
-    private transform: string = 'translate(250,250) rotate(0 0 0)';
-    private elems: Elem[] = [];
+    private core: MigaWheelCore;
+    private search: MigaWheelSearch;
 
-    @Input('data')
+    private categorySelected: boolean;
+    private renderedCategory: RenderedText[];
+
+    private transform: string;
+    private elems: Elem[];
+
     private data: string;
     private previousData: string;
 
-    private core: MigaWheelCore = new MigaWheelCore();
+    private searchFocused: boolean;
+    private searchHintsShow: boolean;
+    private hints: string[];
+    private selectedHint: number;
+    private searchErrorMsg: string;
 
     private flag: boolean;
+    private clickFlag: boolean;
     private lastAngle: number;
-    private daCount: number = 0;
+    private daCount: number;
 
-    private originX: number = 250;
-    private originY: number = 250;
+    private originX: number;
+    private originY: number;
+
+    private firstKeyUp: boolean;
 
     private calcAngle(e) {
         let dx = e.offsetX - this.originX;
@@ -57,32 +73,119 @@ export class MigaWheelPcComponent {
         this.elems = this.core.render(parsedData[1].split('[.]'));
     }
 
-    // angular2 event handlers
-    // ngOnInit() {
-    //     console.log(this.data);
-    // }
+    private searchHintsReset(show: boolean) {
+        this.selectedHint = -1;
+        this.hints = [];
+        this.searchErrorMsg = this.search.errorMsg;
+        this.searchHintsShow = show;
+    }
 
-    // render function
-    ngOnChanges() {
-        if (this.previousData === this.data) {
-            console.log('same data, emit');
+    private searchHintsUpdate(searchStr: string) {
+        this.searchHintsReset(true);
+        let analysisResults = this.search.analysis(searchStr);
+
+        if (null === analysisResults) {
+            this.searchErrorMsg = this.search.errorMsg;
             return;
         }
-        this.previousData = this.data;
 
-        this.render(this.data);
+        this.hints = ['你我他', '我是谁', '孙行者', '行者孙', '者行孙'];
     }
+
+    private searchHintsSelect(cmd: string) {
+        let newIndex = this.selectedHint + (cmd === 'ArrowUp' ? -1 : 1);
+
+        if (newIndex > -1 && newIndex < this.hints.length) {
+            this.selectedHint = newIndex;
+        }
+    }
+
+    private searchInputKeyEnterUp(elem: any) {
+        console.log('Search String: [' + elem.value + ']');
+
+        this.searchHintsReset(false);
+        let analysisResults = this.search.analysis(elem.value);
+
+        console.log(analysisResults);
+
+        if (null === analysisResults) {
+            this.searchHintsReset(true);
+            return;
+        }
+
+        this.render(Configs.CategoryMode + '[:]' + ['你我他', '我是谁', '孙行者', '行者孙', '者行孙'].join('[.]'));
+    }
+
+    private searchInputKeyBackspaceUp(elem: any) {
+        if (elem.value === '') {
+            this.firstKeyUp = true;
+            this.searchHintsReset(false);
+        }
+    }
+
+    private searchInputKeyColonUp(elem: any) {
+        console.log('Search String: [' + elem.value + ']');
+
+        let colon = ':', firstTime = true;
+        elem.value = elem.value.split('').reduce(function (p, v) {
+            if (v !== colon || firstTime) {
+                p.push(v);
+                if (v === colon) firstTime = false;
+            }
+            return p;
+        }, []).join('');
+    }
+
+    // angular2 event handlers
+    ngOnInit() {
+        this.categorySelected = false;
+        this.transform = 'translate(250,250) rotate(0 0 0)';
+        this.renderedCategory = [];
+        this.elems = [];
+        this.hints = [];
+        this.selectedHint = -1;
+        this.searchErrorMsg = this.search.errorMsg;
+        this.daCount = 0;
+        this.originX = this.originY = 250;
+        this.firstKeyUp = true;
+
+        this.render(Configs.CategoryMode + '[:]'
+            + ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'].join('[.]'));
+    }
+
+    // ngOnChanges() {
+    //     if (this.previousData === this.data) {
+    //         console.log('same data, emit');
+    //         return;
+    //     }
+    //     this.previousData = this.data;
+    //
+    //     this.render(this.data);
+    // }
 
     // dom event handlers
-    private leftClicked(e) {
+    private leftClicked() {
+        if (!this.clickFlag) {
+            return;
+        }
+
         alert('left clicked.');
+
+        window.open('https://github.com/CaoYouXin', '_blank');
     }
 
-    private rightClicked(e) {
+    private rightClicked() {
+        if (!this.clickFlag) {
+            return;
+        }
+
         alert('right clicked.');
     }
 
     private elemClicked(e) {
+        if (!this.clickFlag) {
+            return;
+        }
 
         let pElem = e.target.parentElement, content = '';
         for (let i = 1, lineNum = 0, previousRadius, array = []; i < pElem.childElementCount; i++) {
@@ -110,6 +213,9 @@ export class MigaWheelPcComponent {
 
         switch (this.core.mode) {
             case Configs.CategoryMode:
+                this.renderedCategory = this.core.renderCategory(content);
+                this.categorySelected = true;
+
                 this.render(Configs.PostMode + '[:]我是谁[]2017-01-01||2017-02-02');
                 break;
             case Configs.PostMode:
@@ -123,6 +229,7 @@ export class MigaWheelPcComponent {
 
     private svgMouseDown(e) {
         this.flag = true;
+        this.clickFlag = true;
         this.lastAngle = this.calcAngle(e);
     }
 
@@ -134,6 +241,7 @@ export class MigaWheelPcComponent {
         if (!this.flag) {
             return;
         }
+        this.clickFlag = false;
 
         let angle = this.calcAngle(e);
         let da = angle - this.lastAngle;
@@ -165,16 +273,48 @@ export class MigaWheelPcComponent {
 
         this.lastAngle = angle;
     }
-}
 
-class RenderedText {
-    x: string;
-    y: string;
-    content: string;
+    private cateBackClicked() {
+        if (!this.clickFlag) {
+            return;
+        }
 
-    constructor(x: number, y: number, content: string) {
-        this.x = '' + x;
-        this.y = '' + y;
-        this.content = content;
+        alert('category back clicked');
+
+        this.categorySelected = false;
+        this.render(Configs.CategoryMode + '[:]' + this.core.previousCategories.join('[.]'));
+    }
+
+    // search extension
+    private searchFocus(e) {
+        this.searchFocused = true;
+        if (e.target.value.length > 0) {
+            this.searchHintsUpdate(e.target.value);
+        }
+    }
+
+    private searchKeyUp(e) {
+        if (this.firstKeyUp) {
+            this.searchHintsReset(true);
+            this.firstKeyUp = false;
+        }
+
+        switch (e.key) {
+            case 'ArrowDown': case 'ArrowUp':
+                this.searchHintsSelect(e.key);
+                break;
+            case 'Enter':
+                this.searchInputKeyEnterUp(e.target);
+                break;
+            case 'Backspace':
+                this.searchInputKeyBackspaceUp(e.target);
+                break;
+            case ':':
+                this.searchInputKeyColonUp(e.target);
+                break;
+            default:
+                this.searchHintsUpdate(e.target.value);
+                return;
+        }
     }
 }

@@ -1,5 +1,5 @@
 
-import {max} from "rxjs/operator/max";
+import {Injectable} from "@angular/core";
 export class Configs {
     static PostMode: string = 'POST.Mode';
     static CategoryMode: string = 'CATEGORY.Mode';
@@ -13,6 +13,7 @@ export class Configs {
     }
 }
 
+@Injectable()
 export class MigaWheelCore {
 
     mode: string;
@@ -33,7 +34,7 @@ export class MigaWheelCore {
     private tailElemIndex: number;
     private ellipsisElem: Elem;
 
-    private previousCategories: string[];
+    previousCategories: string[];
 
     hasEllipsis(): boolean {
         let dIndex = this.tailElemIndex - this.headElemIndex;
@@ -136,7 +137,37 @@ export class MigaWheelCore {
         this.largeRadius = largeR;
     }
 
+    renderCategory(category: string): RenderedText[] {
+        let ret: RenderedText[] = [];
+
+        let width = this.countWidth(category), text;
+        if (width > 160) {
+            category = category.substr(0, ~~(320 / width * category.length));
+            let line1 = category.substr(0, category.length / 2);
+            ret.push(new RenderedText(0 - this.countWidth(line1) / 2, 0 - this.fontSize * 0.3, line1));
+
+            let line2 = category.substr(category.length / 2);
+            ret.push(new RenderedText(0 - this.countWidth(line2) / 2, this.fontSize * 1.5, line2));
+        } else {
+            ret.push(new RenderedText(0 - width / 2, this.fontSize / 2, category));
+        }
+
+        return ret;
+    }
+
+    private countWidth(str): number {
+        let count = 0;
+        for (let i = 0; i < str.length; i++) {
+            count += str.charCodeAt(i) < 128 ? this.fontSize / 2 : this.fontSize;
+        }
+        return count;
+    }
+
     render(data: string[]): Elem[] {
+
+        if (this.mode === Configs.CategoryMode) {
+            this.previousCategories = data;
+        }
 
         let self = this, rad = 0, completed = false;
 
@@ -173,7 +204,7 @@ export class MigaWheelCore {
     private buildShowElems(): Elem[] {
         let ret: Elem[] = [];
 
-        console.log(this.headElemIndex, this.tailElemIndex);
+        // console.log(this.headElemIndex, this.tailElemIndex);
 
         for (let i = this.headElemIndex; true; i++, i %= this.renderedElems.length) {
             ret.push(this.renderedElems[i]);
@@ -185,9 +216,9 @@ export class MigaWheelCore {
 
         if (this.hasEllipsis()) ret.push(this.ellipsisElem);
 
-        ret.forEach((r) => {
-            console.log(r.rad, r.lenRad);
-        });
+        // ret.forEach((r) => {
+        //     console.log(r.rad, r.lenRad);
+        // });
 
         return ret;
     }
@@ -363,5 +394,17 @@ export class Content {
         this.transform = 'rotate(' + (rad / Math.PI * 180) + ' 0 0)';
         this.content = content;
         this.y = '-' + radius;
+    }
+}
+
+export class RenderedText {
+    x: string;
+    y: string;
+    content: string;
+
+    constructor(x: number, y: number, content: string) {
+        this.x = '' + x;
+        this.y = '' + y;
+        this.content = content;
     }
 }
