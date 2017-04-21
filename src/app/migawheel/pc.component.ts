@@ -70,6 +70,7 @@ export class MigaWheelPcComponent {
                 Configs.postConfig() :
                 Configs.categoryConfig());
 
+        this.transform = 'translate(250,250) rotate(0 0 0)';
         this.elems = this.core.render(parsedData[1].split('[.]'));
     }
 
@@ -219,7 +220,8 @@ export class MigaWheelPcComponent {
                 this.render(Configs.PostMode + '[:]我是谁[]2017-01-01||2017-02-02');
                 break;
             case Configs.PostMode:
-
+                window.localStorage.setItem('article', content);
+                window.location.href = 'article';
                 break;
             default:
                 break;

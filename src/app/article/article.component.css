@@ -1,0 +1,327 @@
+/* banner */
+.banner, .left-banner, .menu {
+    position: fixed;
+
+    background-color: rgba(249, 249, 249, 0.2);
+
+    transition: background-color, 1s ease-in-out .7s;
+}
+
+.banner {
+    z-index: 10001;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100px;
+}
+
+.left-banner {
+    z-index: 10000;
+
+    top: 100px;
+    left: 0;
+
+    width: 100px;
+    height: calc(100% - 100px);
+}
+
+.banner.untransparent, .left-banner.untransparent {
+    background-color: rgb(249, 249, 249);
+}
+
+.menu {
+    z-index: 10000;
+
+    top: 100px;
+    left: 100px;
+
+    width: calc(100% - 100px);
+    height: calc(100% - 100px);
+
+    transform-origin: 0 0 0;
+    transition: transform 1s ease-in-out .2s,
+    background-color, 1s ease-in-out .7s;
+
+    background-color: rgb(249, 249, 249);
+}
+
+.menu.left {
+    background-color: transparent;
+
+    transform: rotateZ(0.25turn);
+}
+
+.menu.right {
+    background-color: transparent;
+
+    transform: rotateZ(-0.25turn);
+}
+
+.banner > .menu-btn {
+    display: block;
+
+    width: 114px;
+    height: 114px;
+
+    border-radius: 50%;
+
+    background-image: radial-gradient(100px at 50% 50%, #3366CC 0%, #3366CC 30%, black 70%);
+
+    line-height: 114px;
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: color 1s ease-in-out;
+}
+
+.banner > .menu-btn:hover {
+    color: white;
+
+    background-image: radial-gradient(80px at 50% 50%, #3366CC 0%, #3366CC 30%, black 70%);
+}
+
+/* content */
+*, *:before, *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.body-wrapper {
+    position: absolute;
+
+    top: 100px;
+    left: 100px;
+
+    width: calc(100% - 100px);
+}
+
+.body {
+    display: block;
+
+    width: 800px;
+
+    margin: 0 auto;
+    padding: 20px;
+
+    background-color: rgb(249, 249, 249);
+}
+
+.footer {
+    display: block;
+
+    width: 100%;
+    height: 50px;
+
+    background-color: rgba(249, 249, 249, 0.2);
+
+    line-height: 50px;
+    text-align: center;
+
+    color: goldenrod;
+}
+
+.footer.fixed {
+    position: fixed;
+
+    bottom: 0;
+    left: 100px;
+
+    width: calc(100% - 100px);
+}
+
+hr {
+    width: 100%;
+    border-bottom: solid 1px #DDDDDD;
+}
+
+p[data-rel] {
+    text-indent: 0;
+}
+
+p[data-rel]:before {
+    content: attr(data-rel);
+}
+
+p {
+    text-indent: 2em;
+    color: #111111;
+}
+
+ol {
+    list-style-position: inside;
+}
+
+/* box */
+.box {
+    display: inline-block;
+
+    height: 36px;
+
+    margin-top: 10px;
+
+    border-radius: 3px;
+}
+
+.box:before {
+    content: '';
+    display: inline-block;
+
+    width: 0;
+    height: 100%;
+
+    vertical-align: middle;
+}
+
+.box > * {
+    display: inline-block;
+
+    vertical-align: middle;
+}
+
+.box > i {
+    width: 25px;
+    height: 25px;
+}
+
+.box > span {
+    line-height: 30px;
+
+    margin-left: 5px;
+    padding: 0 10px;
+}
+
+.category.box {
+    border: solid 1px cornflowerblue;
+    box-shadow: 0 0 5px cornflowerblue;
+}
+
+.like.box {
+    border: solid 1px indianred;
+    box-shadow: 0 0 5px indianred;
+}
+
+.category.box > i {
+    background: url("../../assets/c.png") no-repeat;
+    background-size: 100%;
+}
+
+.like.box > i {
+    background: url("../../assets/like.png") no-repeat;
+    background-size: 100%;
+}
+
+.category.box > span {
+    color: cornflowerblue;
+    border-left: solid 1px cornflowerblue;
+}
+
+.like.box > span {
+    color: indianred;
+    border-left: solid 1px indianred;
+}
+
+/* reply */
+.reply {
+    width: 740px;
+    height: 75px;
+
+    margin-top: 10px;
+    margin-left: 10px;
+
+    border-radius: 5px;
+    box-shadow: 0 0 10px cyan;
+
+    overflow: hidden;
+
+    transition: height 1s ease-in-out;
+
+    font-size: 0;
+}
+
+.reply > * {
+    font-family: Monaco, "Lucida Console", monospace;
+    font-size: 20px;
+
+    width: 730px;
+    height: 30px;
+
+    margin-top: 5px;
+    margin-left: 5px;
+
+    line-height: 30px;
+}
+
+.reply > .title {
+    text-align: center;
+
+    color: white;
+    background-color: cyan;
+}
+
+.reply > .title > span:before {
+    content: '『';
+}
+
+.reply > .title > span:after {
+    content: '』';
+}
+
+.reply > textarea {
+    outline: none;
+    resize: none;
+
+    line-height: 28px;
+
+    border: dashed 1px cyan;
+
+    background-color: transparent;
+
+    transition: height 1s ease-in-out;
+}
+
+.reply > .publish-btn {
+    text-align: center;
+
+    cursor: pointer;
+
+    color: white;
+    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);
+}
+
+.reply > .publish-btn:hover {
+    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);
+}
+
+.reply.focused {
+    height: 230px;
+}
+
+.reply > textarea.focused {
+    height: 150px;
+}
+
+.comments > li {
+    border: dashed 1px cyan;
+    background-image: radial-gradient(800px at 0 0, white 0%, transparent 100%);
+}
+
+.comments > li + li {
+    border-top: none;
+}
+
+.comments .comments-of-comment {
+    list-style: none;
+
+    margin: 10px;
+
+    background-color: rgb(248, 248, 248);
+}
+
+.comments .comments-of-comment > li + li {
+    border-top: dashed 1px cyan;
+}

@@ -32,7 +32,8 @@
                 <text x="-45" y="60" transform="rotate(180 0 0)" fill="black">View Resume</text>
             </g>
             <g class="elems" [attr.transform]="transform">
-                <g *ngFor="let elem of elems" class="cate" [attr.transform]="elem.transform" (click)="elemClicked($event)">
+                <g *ngFor="let elem of elems" class="cate" [attr.transform]="elem.transform"
+                    (click)="elemClicked($event)">
                     <path [attr.fill]="elem.bgFill" [attr.d]="elem.bgD"></path>
                     <text *ngFor="let text of elem.content" x="0" [attr.y]="text.y" [attr.transform]="text.transform">{{text.content}}</text>
                 </g>
