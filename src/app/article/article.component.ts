@@ -23,7 +23,8 @@ export class ArticleComponent {
     ngOnInit() {
         this.replaceMenu(true);
 
-        this.articleContent.nativeElement.innerHTML = '<style>#test.hidden{display:none;}</style>' +
+        // this.articleContent.nativeElement.innerHTML = '<style>#test.hidden{display:none;}.article-content p{color: #00fafa;}</style>' +
+        this.articleContent.nativeElement.innerHTML = '<link rel="stylesheet" href="http://caols.tech/a.css">' +
             '<p id="test">Show Or Not</p><button id="testBtn">Do Cmd</button>' +
             '<button onclick="alert(\'hello world\')">hello world</button>';
 
@@ -40,5 +41,9 @@ export class ArticleComponent {
     menuClicked() {
         this.bannerTransparent = !this.bannerTransparent;
         this.replaceMenu(!this.bannerTransparent);
+    }
+
+    categoryClicked() {
+
     }
 }

@@ -147,12 +147,7 @@ p[data-rel]:before {
     content: attr(data-rel);
 }
 
-p {
-    text-indent: 2em;
-    color: #111111;
-}
-
-ol {
+.top5 + ol, .comments {
     list-style-position: inside;
 }
 
@@ -165,6 +160,8 @@ ol {
     margin-top: 10px;
 
     border-radius: 3px;
+
+    cursor: pointer;
 }
 
 .box:before {
