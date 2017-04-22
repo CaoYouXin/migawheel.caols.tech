@@ -1,17 +1,20 @@
 import {Component} from "@angular/core";
 import {MigaWheelCore, Elem, Configs, RenderedText} from "./migawheel.core";
 import {MigaWheelSearch} from "./migawheel.search";
+import {MigaWheelDao} from "./migawheel.dao";
+import {DaoUtil} from "../dao/dao.util";
 import {Router} from "@angular/router";
 
 @Component({
     selector: 'migawheel',
     templateUrl: './pc.component.html',
     styleUrls: ['./pc.component.css'],
-    providers: [MigaWheelCore, MigaWheelSearch]
+    providers: [MigaWheelCore, MigaWheelSearch, MigaWheelDao, DaoUtil]
 })
 export class MigaWheelPcComponent {
     constructor(private core: MigaWheelCore,
                 private search: MigaWheelSearch,
+                private dao: MigaWheelDao,
                 private router: Router) {
     }
 
@@ -148,8 +151,9 @@ export class MigaWheelPcComponent {
         this.originX = this.originY = 250;
         this.firstKeyUp = true;
 
-        this.render(Configs.CategoryMode + '[:]'
-            + ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'].join('[.]'));
+        this.dao.categories().subscribe(categories => {
+            this.render(Configs.CategoryMode + '[:]' + categories.join('[.]'));
+        });
     }
 
     // dom event handlers

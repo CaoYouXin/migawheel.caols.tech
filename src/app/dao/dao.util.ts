@@ -1,4 +1,4 @@
-import {Http, Response, Headers} from "@angular/http";
+import {Http, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs/Rx"
 import {Injectable} from "@angular/core";
 
@@ -7,11 +7,11 @@ export class DaoUtil {
 
     constructor(private http: Http) {}
 
-    get(url: string): Observable<any> {
+    get(url: string): Observable<Response> {
         return this.http.get(url, {headers: this.getHeader()});
     }
 
-    post(url: string, data: Object): Observable<any> {
+    post(url: string, data: Object): Observable<Response> {
         return this.http.post(url, data, {headers: this.getHeader()});
     }
 

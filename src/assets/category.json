@@ -1,0 +1,25 @@
+{
+  "categories": {
+    "Test": {
+      "url": "http://caols.tech/a.html",
+      "script": "http://caols.tech/a.js",
+      "posts": [
+        "文章标题"
+      ]
+    },
+    "Demo": {
+      "url": "http://caols.tech/a.html",
+      "script": "http://caols.tech/a.js",
+      "posts": [
+        "Demo标题"
+      ]
+    },
+    "App": {
+      "url": "http://caols.tech/a.html",
+      "script": "http://caols.tech/a.js",
+      "posts": [
+        "App标题"
+      ]
+    }
+  }
+}

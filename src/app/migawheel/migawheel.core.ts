@@ -1,5 +1,5 @@
-
 import {Injectable} from "@angular/core";
+
 export class Configs {
     static PostMode: string = 'POST.Mode';
     static CategoryMode: string = 'CATEGORY.Mode';
