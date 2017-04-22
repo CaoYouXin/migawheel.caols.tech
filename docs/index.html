@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>人在劳作</title>
+
+    <script>
+
+        window.top.parseHref = window.top.parseHref || function () {
+            var domain = 'migawheel.caols.tech';
+            var isProductEnv = domain === document.domain;
+            var regExp = new RegExp('^http.*?\/(?:\/.*?)?(\/.*?' + domain + '\/)(.*)$');
+            var matched = window.location.href.toString().match(regExp);
+            var rootHref = isProductEnv ? '/' : matched[1];
+
+            return {
+                hrefParseInfo: matched,
+                rootHref: rootHref
+            };
+        };
+
+        var hrefConf = {rootHref: '/'};
+        try {
+            hrefConf = window.top.parseHref();
+        } catch (e) {
+        } finally {
+            document.write('<base href="' + hrefConf.rootHref + '">');
+        }
+
+    </script>
+
+    <style>
+        body {
+            background: url("./assets/index_bg.gif") repeat;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+<app-root>Loading...</app-root>
+<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
+</html>
