@@ -181,8 +181,8 @@ p[data-rel]:before {
 
 .category-list1 > ul > li > p {
     padding: 10px;
-
-    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .category-list2 > ul > li {

@@ -50,7 +50,11 @@
 
             <div class="category-list1">
                 <ul>
-                    <li *ngFor="let imageListItem of imageList" [style.background-image]="imageListItem.imageSrc"><p>{{imageListItem.title}}</p></li>
+                    <li *ngFor="let imageListItem of imageList"
+                        [style.background-size]="imageListItemBackgroundSize"
+                        [style.background-image]="imageListItem.imageSrc">
+                        <p>{{imageListItem.title}}</p>
+                    </li>
                 </ul>
             </div>
 
