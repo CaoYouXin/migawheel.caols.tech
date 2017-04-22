@@ -1,0 +1,9 @@
+<section class="menu-bar">
+    <div class="banner" [class.untransparent]="!bannerTransparent">
+        <div class="menu-btn" (click)="menuClicked()">MENU</div>
+    </div>
+    <div class="left-banner" [class.untransparent]="!bannerTransparent"></div>
+    <div class="menu" [class.left]="menuTransform === 'left'" [class.right]="menuTransform === 'right'">
+
+    </div>
+</section>

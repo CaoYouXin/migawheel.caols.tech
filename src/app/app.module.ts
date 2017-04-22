@@ -7,6 +7,9 @@ import {AppComponent} from "./app.component";
 import {IndexComponent} from "./index/index.component";
 import {MigaWheelPcComponent} from "./migawheel/pc.component";
 import {ArticleComponent} from "./article/article.component";
+import {CategoryComponent} from "./category/category.component";
+import {MenuComponent} from "./menu/menu.component";
+import {ContentComponent} from "./content/content.component";
 
 @NgModule({
     imports: [
@@ -19,7 +22,10 @@ import {ArticleComponent} from "./article/article.component";
         AppComponent,
         IndexComponent,
         MigaWheelPcComponent,
-        ArticleComponent
+        ArticleComponent,
+        CategoryComponent,
+        MenuComponent,
+        ContentComponent
     ],
     bootstrap: [AppComponent]
 })

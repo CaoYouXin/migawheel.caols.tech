@@ -1,9 +1,7 @@
-/**
- * Created by cls on 2017/3/4.
- */
-import {Component, Input} from "@angular/core";
+import {Component} from "@angular/core";
 import {MigaWheelCore, Elem, Configs, RenderedText} from "./migawheel.core";
 import {MigaWheelSearch} from "./migawheel.search";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'migawheel',
@@ -12,13 +10,13 @@ import {MigaWheelSearch} from "./migawheel.search";
     providers: [MigaWheelCore, MigaWheelSearch]
 })
 export class MigaWheelPcComponent {
-    constructor(core: MigaWheelCore, search: MigaWheelSearch) {
-        this.core = core;
-        this.search = search;
+    constructor(private core: MigaWheelCore,
+                private search: MigaWheelSearch,
+                private router: Router) {
     }
 
-    private core: MigaWheelCore;
-    private search: MigaWheelSearch;
+    // private core: MigaWheelCore;
+    // private search: MigaWheelSearch;
 
     private categorySelected: boolean;
     private renderedCategory: RenderedText[];
@@ -154,16 +152,6 @@ export class MigaWheelPcComponent {
             + ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'].join('[.]'));
     }
 
-    // ngOnChanges() {
-    //     if (this.previousData === this.data) {
-    //         console.log('same data, emit');
-    //         return;
-    //     }
-    //     this.previousData = this.data;
-    //
-    //     this.render(this.data);
-    // }
-
     // dom event handlers
     private leftClicked() {
         if (!this.clickFlag) {
@@ -221,7 +209,7 @@ export class MigaWheelPcComponent {
                 break;
             case Configs.PostMode:
                 window.localStorage.setItem('article', content);
-                window.location.href = 'article';
+                this.router.navigate(['/article']);
                 break;
             default:
                 break;

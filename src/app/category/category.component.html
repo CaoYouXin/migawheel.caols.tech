@@ -1,0 +1,110 @@
+<menu [show]="showMenu"></menu>
+
+<section class="body-sec">
+    <div class="body-wrapper">
+        <div class="body">
+            <div class="category-header">
+                <h1>{{categoryTitle}}</h1>
+                <hr>
+                <div class="like box">
+                    <i></i>
+                    <span>90</span>
+                </div>
+                <br>
+                <br>
+                <p class="create-time" data-rel="创建时间: ">2017-01-01</p>
+                <p class="update-time" data-rel="最后更新时间: ">2017-02-02</p>
+                <br>
+                <hr>
+            </div>
+            <br>
+            <br>
+
+            <div class="category-content">
+                <content [innerHTML]="articleContent" [scriptSrc]="articleScriptSrc" (onload)="articleOnload()"></content>
+            </div>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+            <div class="category-pager">
+                <div class="category-pager-controls">
+                    <div class="page-pre">上一页</div>
+                    <div class="page-post">下一页</div>
+                </div>
+                <p>第 <span>1</span> 页; 共 <span>3</span> 页</p>
+                <div class="category-pager-select">
+                    <input type="text" pattern="\d+|无限" value="5" min="1">
+                    <span>▽</span>
+                    <ul>
+                        <li>5</li>
+                        <li>10</li>
+                        <li>30</li>
+                        <li>50</li>
+                        <li>无限</li>
+                        <li>关闭</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="category-list1">
+                <ul>
+                    <li *ngFor="let imageListItem of imageList" [style.background-image]="imageListItem.imageSrc"><p>{{imageListItem.title}}</p></li>
+                </ul>
+            </div>
+
+            <div class="category-list2">
+                <ul>
+                    <li *ngFor="let noneImageListItem of noneImageList" (click)="noneImageListItemClicked($event)">
+                        <h1>{{noneImageListItem.title}}</h1>
+                        <p>{{noneImageListItem.brief}}</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="category-pager">
+                <div class="category-pager-controls">
+                    <div class="page-pre">上一页</div>
+                    <div class="page-post">下一页</div>
+                </div>
+                <p>第 <span>1</span> 页; 共 <span>3</span> 页</p>
+                <div class="category-pager-select">
+                    <input type="text" pattern="\d+|无限" value="5" min="1">
+                    <span>▽</span>
+                    <ul>
+                        <li>5</li>
+                        <li>10</li>
+                        <li>30</li>
+                        <li>50</li>
+                        <li>无限</li>
+                        <li>关闭</li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+
+            <div class="category-footer">
+                <hr>
+                <div class="like box">
+                    <i></i>
+                    <span>90</span>
+                </div>
+                <br>
+                <br>
+                <p class="top5" data-rel="TOP 5:"></p>
+                <ol>
+                    <li><a href="#">深入理解计算机网络1</a></li>
+                    <li><a href="#">深入理解计算机网络3</a></li>
+                    <li><a href="#">深入理解计算机网络5</a></li>
+                    <li><a href="#">深入理解计算机网络6</a></li>
+                    <li><a href="#">深入理解计算机网络7</a></li>
+                </ol>
+                <br>
+            </div>
+        </div>
+        <div class="footer">
+            人在劳作，天在看！@2017
+        </div>
+    </div>
+</section>

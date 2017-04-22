@@ -1,22 +1,14 @@
-<section class="menu-bar">
-    <div class="banner" [class.untransparent]="!bannerTransparent">
-        <div class="menu-btn" (click)="menuClicked()">MENU</div>
-    </div>
-    <div class="left-banner" [class.untransparent]="!bannerTransparent"></div>
-    <div class="menu" [class.left]="menuTransform === 'left'" [class.right]="menuTransform === 'right'">
-
-    </div>
-</section>
+<menu [show]="showMenu"></menu>
 
 <section class="body-sec">
     <div class="body-wrapper">
         <div class="body">
             <div class="article-header">
-                <h1>“HTTP请求头部包括一系列的“请求头”和它们所对应的值，指出允许客户端向服务器传递请求的附加信息以及客户端自身的信息</h1>
+                <h1>{{articleTitle}}</h1>
                 <hr>
                 <div class="category box" (click)="categoryClicked()">
                     <i></i>
-                    <span>“请求头”</span>
+                    <span>{{categoryName}}</span>
                 </div>
                 <div class="like box">
                     <i></i>
@@ -32,7 +24,8 @@
                 <br>
             </div>
 
-            <div class="article-content" #articleContent>
+            <div class="article-content">
+                <content [innerHTML]="articleContent" [scriptSrc]="articleScriptSrc" (onload)="articleOnload()"></content>
             </div>
 
             <div class="article-footer">
@@ -41,7 +34,7 @@
                 <hr>
                 <div class="category box" (click)="categoryClicked()">
                     <i></i>
-                    <span>“请求头”</span>
+                    <span>{{categoryName}}</span>
                 </div>
                 <div class="like box">
                     <i></i>

@@ -1,4 +1,5 @@
 import {Component, ViewChild, ElementRef} from "@angular/core";
+import {Router} from "@angular/router"
 
 @Component({
     selector: 'article',
@@ -6,44 +7,38 @@ import {Component, ViewChild, ElementRef} from "@angular/core";
     styleUrls: ['article.component.css']
 })
 export class ArticleComponent {
-    private menuTransform: string;
-    private bannerTransparent: boolean;
+    private showMenu: boolean;
 
-    @ViewChild('articleContent')
-    private articleContent: ElementRef;
+    private articleContent: string;
+    private articleScriptSrc: string;
 
+    private articleTitle: string;
+    private categoryName: string;
     private replyFocused: boolean;
 
-    replaceMenu(showMenu: boolean) {
-        this.bannerTransparent = !showMenu;
-        this.menuTransform = showMenu ? null : (window.innerWidth > window.innerHeight ? 'left' : 'right');
-    }
+    constructor(private router: Router) {}
 
     // ng handlers
     ngOnInit() {
-        this.replaceMenu(true);
+        this.articleTitle = window.localStorage.getItem('article');
 
-        // this.articleContent.nativeElement.innerHTML = '<style>#test.hidden{display:none;}.article-content p{color: #00fafa;}</style>' +
-        this.articleContent.nativeElement.innerHTML = '<link rel="stylesheet" href="http://caols.tech/a.css">' +
+        this.showMenu = true;
+        this.categoryName = 'Demo';
+
+        this.articleContent = '<link rel="stylesheet" href="http://caols.tech/a.css">' +
             '<p id="test">Show Or Not</p><button id="testBtn">Do Cmd</button>' +
             '<button onclick="alert(\'hello world\')">hello world</button>';
-
-        let self = this;
-        let scriptElem = document.createElement('script');
-        scriptElem.src = 'http://caols.tech/a.js';
-        scriptElem.onload = function() {
-            self.replaceMenu(false);
-        };
-        this.articleContent.nativeElement.appendChild(scriptElem);
+        this.articleScriptSrc = 'http://caols.tech/a.js';
     }
 
     // dom handlers
-    menuClicked() {
-        this.bannerTransparent = !this.bannerTransparent;
-        this.replaceMenu(!this.bannerTransparent);
+    categoryClicked() {
+        window.localStorage.setItem('category', this.categoryName);
+
+        this.router.navigate(['/category']);
     }
 
-    categoryClicked() {
-
+    articleOnload() {
+        this.showMenu = false;
     }
 }
