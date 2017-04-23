@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, Output, EventEmitter, Input} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@angular/core";
 
 @Component({
     selector: 'content',
@@ -18,16 +18,20 @@ export class ContentComponent {
     private onload: EventEmitter<any> = new EventEmitter();
 
     // ng event handler
-    ngOnChanges() {
-        this.contentContainer.nativeElement.innerHTML = this.innerHTML;
+    ngOnChanges(changeRecords) {
+        if (changeRecords.innerHTML) {
+            this.contentContainer.nativeElement.innerHTML = this.innerHTML;
+        }
 
-        let self = this;
-        let scriptElem = document.createElement('script');
-        scriptElem.src = this.scriptSrc;
-        scriptElem.onload = function() {
-            self.onload.emit();
-        };
-        this.contentContainer.nativeElement.appendChild(scriptElem);
+        if (changeRecords.scriptSrc && this.scriptSrc) {
+            let self = this;
+            let scriptElem = document.createElement('script');
+            scriptElem.src = this.scriptSrc;
+            scriptElem.onload = function () {
+                self.onload.emit();
+            };
+            this.contentContainer.nativeElement.appendChild(scriptElem);
+        }
     }
 
 }

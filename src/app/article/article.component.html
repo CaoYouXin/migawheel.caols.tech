@@ -12,12 +12,12 @@
                 </div>
                 <div class="like box">
                     <i></i>
-                    <span>90</span>
+                    <span>{{articleLikeCount}}</span>
                 </div>
                 <br>
                 <br>
-                <p class="create-time" data-rel="创建时间: ">2017-01-01</p>
-                <p class="update-time" data-rel="最后更新时间: ">2017-02-02</p>
+                <p class="create-time" data-rel="创建时间: ">{{articleCreateTime}}</p>
+                <p class="update-time" data-rel="最后更新时间: ">{{articleUpdateTime}}</p>
                 <br>
                 <hr>
                 <br>
@@ -38,22 +38,20 @@
                 </div>
                 <div class="like box">
                     <i></i>
-                    <span>90</span>
+                    <span>{{articleLikeCount}}</span>
                 </div>
                 <br>
                 <br>
-                <p class="former-article" data-rel="上一篇: "><a href="#">深入理解计算机网络2</a></p>
-                <p class="latter-article" data-rel="下一篇: "><a href="#">深入理解计算机网络4</a></p>
+                <p class="former-article" data-rel="上一篇: "
+                    (click)="articleLoad(previousArticle)">{{previousArticle}}</p>
+                <p class="latter-article" data-rel="下一篇: "
+                    (click)="articleLoad(nextArticle)">{{nextArticle}}</p>
                 <br>
                 <hr>
                 <br>
                 <p class="top5" data-rel="TOP 5:"></p>
                 <ol>
-                    <li><a href="#">深入理解计算机网络1</a></li>
-                    <li><a href="#">深入理解计算机网络3</a></li>
-                    <li><a href="#">深入理解计算机网络5</a></li>
-                    <li><a href="#">深入理解计算机网络6</a></li>
-                    <li><a href="#">深入理解计算机网络7</a></li>
+                    <li *ngFor="let top of top5" (click)="articleLoad(top)">{{top}}</li>
                 </ol>
                 <br>
                 <hr>
@@ -61,7 +59,7 @@
                 <div id="reply" class="reply" [class.focused]="replyFocused">
                     <div class="title"><span>awesome</span>发布评论...</div>
                     <textarea placeholder="输入评论..." [class.focused]="replyFocused"
-                              (focus)="replyFocused = true" (blur)="replyFocused = false;"></textarea>
+                              (focus)="replyFocused=true" (blur)="replyFocused=false"></textarea>
                     <div class="publish-btn">发布</div>
                 </div>
                 <br>
