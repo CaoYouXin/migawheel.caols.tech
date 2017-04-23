@@ -7,6 +7,11 @@ import {Router} from "@angular/router"
     styleUrls: ['article.component.css']
 })
 export class ArticleComponent {
+
+    @ViewChild('body')
+    private bodyContainer: ElementRef;
+
+    private footerFixed: boolean;
     private showMenu: boolean;
 
     private articleContent: string;
@@ -40,5 +45,6 @@ export class ArticleComponent {
 
     articleOnload() {
         this.showMenu = false;
+        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
     }
 }

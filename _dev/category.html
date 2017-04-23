@@ -285,14 +285,14 @@
     </style>
 
     <style>
-        .category-pager {
+        .pager {
             overflow: hidden;
             margin: 5px 0;
 
             /*box-shadow: 0 0 5px #caffc5;*/
         }
 
-        .category-pager-controls, .category-pager-controls + p,
+        .pager-controls, .pager-controls + p,
         .page-pre, .page-post {
             display: block;
             float: left;
@@ -309,7 +309,7 @@
             cursor: pointer;
         }
 
-        .category-pager-controls + p {
+        .pager-controls + p {
             line-height: 30px;
 
             margin-left: 3em;
@@ -341,7 +341,7 @@
             box-shadow: 0 0 3px #b7b2eb;
         }
 
-        .category-pager-select {
+        .pager-select {
             display: block;
             float: right;
 
@@ -355,11 +355,11 @@
             font-size: 0;
         }
 
-        .category-pager-select.focused {
+        .pager-select.focused {
             box-shadow: 0 0 3px salmon;
         }
 
-        .category-pager-select > input {
+        .pager-select > input {
             outline: none;
 
             width: 100px;
@@ -371,7 +371,7 @@
             font-size: 18px;
         }
 
-        .category-pager-select > span {
+        .pager-select > span {
             display: inline-block;
 
             width: 30px;
@@ -383,7 +383,7 @@
             cursor: pointer;
         }
 
-        .category-pager-select > ul {
+        .pager-select > ul {
             display: none;
             list-style: none;
 
@@ -397,11 +397,11 @@
             background-color: rgba(24, 24, 240, 0.6);
         }
 
-        .category-pager-select > ul.show {
+        .pager-select > ul.show {
             display: block;
         }
 
-        .category-pager-select > ul:before {
+        .pager-select > ul:before {
             content: '';
 
             display: block;
@@ -417,7 +417,7 @@
             border-top: none;
         }
 
-        .category-pager-select > ul > li {
+        .pager-select > ul > li {
             width: 100px;
 
             color: white;
@@ -425,7 +425,7 @@
             cursor: default;
         }
 
-        .category-pager-select > ul > li:hover {
+        .pager-select > ul > li:hover {
             background-color: rgba(24, 24, 240, 0.9);
         }
     </style>
@@ -469,13 +469,13 @@
             <br>
             <hr>
             <br>
-            <div class="category-pager">
+            <div class="pager">
                 <div class="category-pager-controls">
                     <div class="page-pre">上一页</div>
                     <div class="page-post">下一页</div>
                 </div>
                 <p>第 <span>1</span> 页; 共 <span>3</span> 页</p>
-                <div class="category-pager-select">
+                <div class="pager-select">
                     <input type="text" pattern="\d+|无限" value="5" min="1">
                     <span>▽</span>
                     <ul>
@@ -509,13 +509,13 @@
                 </ul>
             </div>
 
-            <div class="category-pager">
+            <div class="pager">
                 <div class="category-pager-controls">
                     <div class="page-pre">上一页</div>
                     <div class="page-post">下一页</div>
                 </div>
                 <p>第 <span>1</span> 页; 共 <span>3</span> 页</p>
-                <div class="category-pager-select">
+                <div class="pager-select">
                     <input type="text" pattern="\d+|无限" value="5" min="1">
                     <span>▽</span>
                     <ul>

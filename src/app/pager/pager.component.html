@@ -1,0 +1,20 @@
+<div class="pager">
+    <div class="pager-controls">
+        <div class="page-pre" (click)="currentPageAdd(-1)">上一页</div>
+        <div class="page-post" (click)="currentPageAdd(1)">下一页</div>
+    </div>
+    <p>第 <span>{{currentPage}}</span> 页; 共 <span>{{totalPage}}</span> 页</p>
+    <div class="pager-select">
+        <input [(ngModel)]="pageSize" type="text" pattern="\d+|无限"
+               (ngModelChange)="pageSizeChange($event)" min="1">
+        <span (click)="showSelector=true;">▽</span>
+        <ul [class.show]="showSelector" (click)="selectorClicked($event)">
+            <li>5</li>
+            <li>10</li>
+            <li>30</li>
+            <li>50</li>
+            <li>无限</li>
+            <li>关闭</li>
+        </ul>
+    </div>
+</div>

@@ -2,7 +2,7 @@
 
 <section class="body-sec">
     <div class="body-wrapper">
-        <div class="body">
+        <div class="body" #body>
             <div class="article-header">
                 <h1>{{articleTitle}}</h1>
                 <hr>
@@ -80,7 +80,7 @@
                 <br>
             </div>
         </div>
-        <div class="footer">
+        <div class="footer" [class.fixed]="footerFixed">
             人在劳作，天在看！@2017
         </div>
     </div>
