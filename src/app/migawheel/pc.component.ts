@@ -4,6 +4,7 @@ import {MigaWheelSearch} from "./migawheel.search";
 import {MigaWheelDao} from "./migawheel.dao";
 import {DaoUtil} from "../dao/dao.util";
 import {Router} from "@angular/router";
+import {PostType} from "../const/post.type.const";
 
 @Component({
     selector: 'migawheel',
@@ -164,9 +165,9 @@ export class MigaWheelPcComponent {
     }
 
     private processClick(content: string) {
+        let self = this;
         switch (this.core.mode) {
             case Configs.CategoryMode:
-                let self = this;
                 this.renderedCategory = this.core.renderCategory(content);
                 this.categorySelected = true;
                 this.dao.posts(content)
@@ -174,8 +175,19 @@ export class MigaWheelPcComponent {
                         error => DaoUtil.logError(error));
                 break;
             case Configs.PostMode:
-                window.localStorage.setItem('article', content);
-                this.router.navigate(['/article']);
+                this.dao.post(content)
+                    .subscribe(post => {
+                        switch (post.type) {
+                            case PostType.APP:
+                                window.open(post.url, '_blank');
+                                break;
+                            case PostType.ARTICLE:
+                                window.localStorage.setItem('article', content);
+                                self.router.navigate(['/article']);
+                                break;
+                            default:break;
+                        }
+                    });
                 break;
             default:
                 break;

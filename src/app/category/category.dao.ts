@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {DaoUtil} from "../dao/dao.util";
 import "rxjs/add/operator/map";
 import {SafeStyle} from "@angular/platform-browser";
+import {PostType} from "../const/post.type.const";
 
 @Injectable()
 export class CategoryDao {
@@ -21,10 +22,10 @@ export class CategoryDao {
                     let imageList = [], noneImageList = [];
                     cate.posts.forEach(pt => {
                         switch (ret[pt].type) {
-                            case 'App':
+                            case PostType.APP:
                                 imageList.push(new ListItem(pt, null, ret[pt].imageSrc));
                                 break;
-                            case 'Article':
+                            case PostType.ARTICLE:
                                 noneImageList.push(new ListItem(pt, ret[pt].brief, null));
                                 break;
                             default:break;
