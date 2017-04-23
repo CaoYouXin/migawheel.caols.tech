@@ -92,9 +92,9 @@ export class MigaWheelPcComponent {
             .subscribe(ret => this.hints = ret.slice(0, 5).map(hint => {
                 let indexOf = hint.indexOf('[]');
                 if (-1 === indexOf) {
-                    return hint + '[category]';
+                    return '[分类]' + hint;
                 } else {
-                    return hint.substr(0, indexOf) + '[article]';
+                    return '[发布]' + hint.substr(0, indexOf);
                 }
             }));
     }
@@ -108,30 +108,27 @@ export class MigaWheelPcComponent {
     }
 
     private searchHintClicked(hint: string) {
-        let indexOf = hint.indexOf('[article]');
+        let indexOf = hint.indexOf('[发布]');
         if (-1 === indexOf) {
             this.core.mode = Configs.CategoryMode;
-            this.processClick(hint.substr(0, hint.indexOf('[')));
+            this.processClick(hint.substr('[分类]'.length));
         } else {
             this.core.mode = Configs.PostMode;
-            this.processClick(hint.substr(0, indexOf))
+            this.processClick(hint.substr('[发布]'.length))
         }
         this.searchHintsReset(false);
     }
 
     private searchInputKeyEnterUp(elem: any) {
+
         if (-1 !== this.selectedHint) {
             let hint = this.hints[this.selectedHint];
             this.searchHintClicked(hint);
             return;
         }
 
-        console.log('Search String: [' + elem.value + ']');
-
         this.searchHintsReset(false);
         let analysisResults = this.search.analysis(elem.value);
-
-        console.log(analysisResults);
 
         if (null === analysisResults) {
             this.searchHintsReset(true);
@@ -156,8 +153,6 @@ export class MigaWheelPcComponent {
     }
 
     private searchInputKeyColonUp(elem: any) {
-        console.log('Search String: [' + elem.value + ']');
-
         let colon = ':', firstTime = true;
         elem.value = elem.value.split('').reduce(function (p, v) {
             if (v !== colon || firstTime) {
@@ -212,8 +207,6 @@ export class MigaWheelPcComponent {
             return;
         }
 
-        alert('left clicked.');
-
         window.open('https://github.com/CaoYouXin', '_blank');
     }
 
@@ -222,7 +215,7 @@ export class MigaWheelPcComponent {
             return;
         }
 
-        alert('right clicked.');
+        alert('to show resume...');
     }
 
     private elemClicked(e) {
@@ -251,8 +244,6 @@ export class MigaWheelPcComponent {
                 content += array.join('').trim();
             }
         }
-
-        // alert('elem [' + content + '] clicked');
 
         this.processClick(content);
 
@@ -289,8 +280,6 @@ export class MigaWheelPcComponent {
         this.daCount -= da;
         if (Math.abs(this.daCount) / Math.PI >= .25 && this.core.hasEllipsis()) {
 
-            console.log((this.daCount < 0 ? 'left' : 'right') + ' shift');
-
             if (this.daCount < 0) {
 
                 this.elems = this.core.shiftLeft();
@@ -309,8 +298,6 @@ export class MigaWheelPcComponent {
         if (!this.clickFlag) {
             return;
         }
-
-        // alert('category back clicked');
 
         this.categorySelected = false;
         this.render(Configs.CategoryMode + '[:]' + this.core.previousCategories.join('[.]'));
@@ -351,7 +338,6 @@ export class MigaWheelPcComponent {
     }
 
     private searchClicked(e) {
-        console.log(e);
         this.searchHintClicked(e.target.innerHTML);
     }
 }
