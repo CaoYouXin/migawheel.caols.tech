@@ -3,10 +3,12 @@
         <div id="miga-search" [class.focused]="searchFocused">
             <input type="text" placeholder="搜索分类或者文章" autofocus
                    (keyup)="searchKeyUp($event)" (focus)="searchFocus($event)"
-                   (blur)="searchFocused=false;searchHintsShow=false;">
+                   (blur)="searchFocused=false;">
         </div>
         <div id="miga-search-hints" [class.show]="searchHintsShow" data-rel="-1">
-            <p *ngFor="let hint of hints; let i=index" [class.selected]="i === selectedHint">{{hint}}</p>
+            <p *ngFor="let hint of hints; let i=index"
+                [class.selected]="i === selectedHint"
+                (click)="searchClicked($event)">{{hint}}</p>
             <span *ngIf="hints.length === 0">{{searchErrorMsg}}</span>
         </div>
 

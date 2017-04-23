@@ -21,4 +21,7 @@ export class DaoUtil {
         return headers;
     }
 
+    static logError(err) {
+        console.log('sth wrong when fetching data. ' + err);
+    }
 }

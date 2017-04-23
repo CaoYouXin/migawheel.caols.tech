@@ -10,6 +10,7 @@ import {ArticleComponent} from "./article/article.component";
 import {CategoryComponent} from "./category/category.component";
 import {MenuComponent} from "./menu/menu.component";
 import {ContentComponent} from "./content/content.component";
+import {PagerComponent} from "./pager/pager.component";
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import {ContentComponent} from "./content/content.component";
         ArticleComponent,
         CategoryComponent,
         MenuComponent,
-        ContentComponent
+        ContentComponent,
+        PagerComponent
     ],
     bootstrap: [AppComponent]
 })

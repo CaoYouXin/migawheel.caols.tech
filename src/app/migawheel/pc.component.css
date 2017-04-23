@@ -155,6 +155,12 @@ text {
 
     margin: 0;
     padding: 0 10px;
+
+    cursor: default;
+}
+
+#miga-search-hints > p:hover {
+    background: blanchedalmond;
 }
 
 #miga-search-hints > p.selected {

@@ -18,9 +18,6 @@ export class MigaWheelPcComponent {
                 private router: Router) {
     }
 
-    // private core: MigaWheelCore;
-    // private search: MigaWheelSearch;
-
     private categorySelected: boolean;
     private renderedCategory: RenderedText[];
 
@@ -91,7 +88,15 @@ export class MigaWheelPcComponent {
             return;
         }
 
-        this.hints = ['你我他', '我是谁', '孙行者', '行者孙', '者行孙'];
+        this.dao.search(analysisResults)
+            .subscribe(ret => this.hints = ret.slice(0, 5).map(hint => {
+                let indexOf = hint.indexOf('[]');
+                if (-1 === indexOf) {
+                    return hint + '[category]';
+                } else {
+                    return hint.substr(0, indexOf) + '[article]';
+                }
+            }));
     }
 
     private searchHintsSelect(cmd: string) {
@@ -102,7 +107,25 @@ export class MigaWheelPcComponent {
         }
     }
 
+    private searchHintClicked(hint: string) {
+        let indexOf = hint.indexOf('[article]');
+        if (-1 === indexOf) {
+            this.core.mode = Configs.CategoryMode;
+            this.processClick(hint.substr(0, hint.indexOf('[')));
+        } else {
+            this.core.mode = Configs.PostMode;
+            this.processClick(hint.substr(0, indexOf))
+        }
+        this.searchHintsReset(false);
+    }
+
     private searchInputKeyEnterUp(elem: any) {
+        if (-1 !== this.selectedHint) {
+            let hint = this.hints[this.selectedHint];
+            this.searchHintClicked(hint);
+            return;
+        }
+
         console.log('Search String: [' + elem.value + ']');
 
         this.searchHintsReset(false);
@@ -115,7 +138,14 @@ export class MigaWheelPcComponent {
             return;
         }
 
-        this.render(Configs.CategoryMode + '[:]' + ['你我他', '我是谁', '孙行者', '行者孙', '者行孙'].join('[.]'));
+        let mode: string = Configs.CategoryMode;
+        for (let i = 0; i < analysisResults.length; i++) {
+            if (analysisResults[i].mode === Configs.PostMode) {
+                mode = Configs.PostMode;
+            }
+        }
+        this.dao.search(analysisResults)
+            .subscribe(ret => this.render(mode + '[:]' + ret.join('[.]')));
     }
 
     private searchInputKeyBackspaceUp(elem: any) {
@@ -138,6 +168,25 @@ export class MigaWheelPcComponent {
         }, []).join('');
     }
 
+    private processClick(content: string) {
+        switch (this.core.mode) {
+            case Configs.CategoryMode:
+                let self = this;
+                this.renderedCategory = this.core.renderCategory(content);
+                this.categorySelected = true;
+                this.dao.posts(content)
+                    .subscribe(ret => self.render(Configs.PostMode + '[:]' + ret.join('[.]')),
+                        error => DaoUtil.logError(error));
+                break;
+            case Configs.PostMode:
+                window.localStorage.setItem('article', content);
+                this.router.navigate(['/article']);
+                break;
+            default:
+                break;
+        }
+    }
+
     // angular2 event handlers
     ngOnInit() {
         this.categorySelected = false;
@@ -152,8 +201,9 @@ export class MigaWheelPcComponent {
         this.firstKeyUp = true;
 
         this.dao.categories().subscribe(categories => {
-            this.render(Configs.CategoryMode + '[:]' + categories.join('[.]'));
-        });
+                this.render(Configs.CategoryMode + '[:]' + categories.join('[.]'));
+            },
+            error => DaoUtil.logError(error));
     }
 
     // dom event handlers
@@ -202,22 +252,9 @@ export class MigaWheelPcComponent {
             }
         }
 
-        alert('elem [' + content + '] clicked');
+        // alert('elem [' + content + '] clicked');
 
-        switch (this.core.mode) {
-            case Configs.CategoryMode:
-                this.renderedCategory = this.core.renderCategory(content);
-                this.categorySelected = true;
-
-                this.render(Configs.PostMode + '[:]我是谁[]2017-01-01||2017-02-02');
-                break;
-            case Configs.PostMode:
-                window.localStorage.setItem('article', content);
-                this.router.navigate(['/article']);
-                break;
-            default:
-                break;
-        }
+        this.processClick(content);
 
     }
 
@@ -273,7 +310,7 @@ export class MigaWheelPcComponent {
             return;
         }
 
-        alert('category back clicked');
+        // alert('category back clicked');
 
         this.categorySelected = false;
         this.render(Configs.CategoryMode + '[:]' + this.core.previousCategories.join('[.]'));
@@ -294,7 +331,8 @@ export class MigaWheelPcComponent {
         }
 
         switch (e.key) {
-            case 'ArrowDown': case 'ArrowUp':
+            case 'ArrowDown':
+            case 'ArrowUp':
                 this.searchHintsSelect(e.key);
                 break;
             case 'Enter':
@@ -310,5 +348,10 @@ export class MigaWheelPcComponent {
                 this.searchHintsUpdate(e.target.value);
                 return;
         }
+    }
+
+    private searchClicked(e) {
+        console.log(e);
+        this.searchHintClicked(e.target.innerHTML);
     }
 }
