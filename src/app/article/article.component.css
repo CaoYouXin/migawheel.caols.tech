@@ -56,10 +56,15 @@ hr {
 
 p[data-rel] {
     text-indent: 0;
+    cursor: pointer;
 }
 
 p[data-rel]:before {
     content: attr(data-rel);
+}
+
+.top5 + ol > li {
+    cursor: pointer;
 }
 
 .top5 + ol, .comments {

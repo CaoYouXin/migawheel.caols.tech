@@ -31,12 +31,6 @@ export class PagerComponent {
     }
 
     // ng handlers
-    ngOnInit() {
-        this.pageSize = '5';
-        this.currentPage = 1;
-        this.reCalc();
-    }
-
     ngOnChanges(changeRecord) {
         if (changeRecord.totalCount || changeRecord.pageSize) {
             this.reCalc();

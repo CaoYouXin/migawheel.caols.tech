@@ -4,16 +4,16 @@
     <div class="body-wrapper">
         <div class="body" #body>
             <div class="category-header">
-                <h1>{{categoryTitle}}</h1>
+                <h1>{{categoryName}}</h1>
                 <hr>
                 <div class="like box">
                     <i></i>
-                    <span>90</span>
+                    <span>{{categoryLikeCount}}</span>
                 </div>
                 <br>
                 <br>
-                <p class="create-time" data-rel="创建时间: ">2017-01-01</p>
-                <p class="update-time" data-rel="最后更新时间: ">2017-02-02</p>
+                <p class="create-time" data-rel="创建时间: ">{{categoryCreateTime}}</p>
+                <p class="update-time" data-rel="最后更新时间: ">{{categoryUpdateTime}}</p>
                 <br>
                 <hr>
             </div>
@@ -21,17 +21,18 @@
             <br>
 
             <div class="category-content">
-                <content [innerHTML]="articleContent" [scriptSrc]="articleScriptSrc" (onload)="articleOnload()"></content>
+                <content [innerHTML]="categoryContent" [scriptSrc]="categoryScriptSrc" (onload)="categoryOnload()"></content>
             </div>
 
             <br>
             <br>
-            <hr>
-            <br>
-            <pager [totalCount]="pagerTotalCount"
-                   [pageSize]="pagerPageSize"
-                   [currentPage]="pagerCurrentPage"
-                   (change)="pagerInfoChange($event)"></pager>
+            <hr *ngIf="imageList.length + noneImageList.length > 0">
+            <br *ngIf="imageList.length > 0">
+            <pager *ngIf="imageList.length > 0"
+                   [totalCount]="list1PagerTotalCount"
+                   [pageSize]="list1PagerPageSize"
+                   [currentPage]="list1PagerCurrentPage"
+                   (change)="list1PagerInfoChange($event)"></pager>
 
             <div class="category-list1">
                 <ul>
@@ -43,6 +44,20 @@
                 </ul>
             </div>
 
+            <pager *ngIf="imageList.length > 0"
+                   [totalCount]="list1PagerTotalCount"
+                   [pageSize]="list1PagerPageSize"
+                   [currentPage]="list1PagerCurrentPage"
+                   (change)="list1PagerInfoChange($event)"></pager>
+            <br *ngIf="imageList.length > 0">
+            <hr *ngIf="imageList.length + noneImageList.length > 1">
+            <br *ngIf="noneImageList.length > 0">
+            <pager *ngIf="noneImageList.length > 0"
+                   [totalCount]="list2PagerTotalCount"
+                   [pageSize]="list2PagerPageSize"
+                   [currentPage]="list2PagerCurrentPage"
+                   (change)="list2PagerInfoChange($event)"></pager>
+
             <div class="category-list2">
                 <ul>
                     <li *ngFor="let noneImageListItem of noneImageList" (click)="noneImageListItemClicked($event)">
@@ -52,17 +67,18 @@
                 </ul>
             </div>
 
-            <pager [totalCount]="pagerTotalCount"
-                   [pageSize]="pagerPageSize"
-                   [currentPage]="pagerCurrentPage"
-                   (change)="pagerInfoChange($event)"></pager>
-            <br>
+            <pager *ngIf="noneImageList.length > 0"
+                   [totalCount]="list2PagerTotalCount"
+                   [pageSize]="list2PagerPageSize"
+                   [currentPage]="list2PagerCurrentPage"
+                   (change)="list2PagerInfoChange($event)"></pager>
+            <br *ngIf="noneImageList.length > 0">
 
             <div class="category-footer">
                 <hr>
                 <div class="like box">
                     <i></i>
-                    <span>90</span>
+                    <span>{{categoryLikeCount}}</span>
                 </div>
                 <br>
                 <br>

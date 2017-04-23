@@ -1,5 +1,7 @@
 {
   "文章标题": {
+    "type": "Article",
+    "brief": "这是一篇文章",
     "url": "http://caols.tech/a.html",
     "script": "http://caols.tech/a.js",
     "create": "2017-01-01",
@@ -7,6 +9,8 @@
     "category": "Test"
   },
   "Demo标题": {
+    "type": "App",
+    "imageSrc": "http://caols.tech/demos/1492848706508.png",
     "url": "http://forum.demo.caols.tech/",
     "script": "http://caols.tech/a.js",
     "create": "2017-01-01",
@@ -14,6 +18,8 @@
     "category": "Demo"
   },
   "App标题": {
+    "type": "App",
+    "imageSrc": "http://caols.tech/demos/1492848706508.png",
     "url": "http://caols.tech/a.html",
     "script": "http://caols.tech/a.js",
     "create": "2017-01-01",

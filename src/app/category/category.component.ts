@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef} from "@angular/core"
 import {Router} from "@angular/router";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
-import {CategoryDao} from "./category.dao";
+import {CategoryDao, ListItem} from "./category.dao";
 import {DaoUtil} from "../dao/dao.util";
 
 @Component({
@@ -22,43 +22,87 @@ export class CategoryComponent {
     private footerFixed: boolean;
     private showMenu: boolean;
 
-    private categoryTitle: string;
+    private categoryName: string;
+    private categoryLikeCount: number;
+    private categoryCreateTime: string;
+    private categoryUpdateTime: string;
 
-    private articleContent: string;
-    private articleScriptSrc: string;
+    private categoryContent: string;
+    private categoryScriptSrc: string;
 
     private imageListItemBackgroundSize: string;
+    private _imageList: ListItem[];
     private imageList: ListItem[];
+    private _noneImageList: ListItem[];
     private noneImageList: ListItem[];
 
-    private pagerTotalCount: number;
-    private pagerPageSize: string;
-    private pagerCurrentPage: number;
+    private list1PagerTotalCount: number;
+    private list1PagerPageSize: string;
+    private list1PagerCurrentPage: number;
+
+    private list2PagerTotalCount: number;
+    private list2PagerPageSize: string;
+    private list2PagerCurrentPage: number;
+
+    private list1Render() {
+        let pageSize = parseInt(this.list1PagerPageSize);
+        this.imageList = this._imageList.slice(
+            (this.list1PagerCurrentPage - 1) * pageSize,
+            this.list1PagerCurrentPage * pageSize
+        );
+    }
+
+    private list2Render() {
+        let pageSize = parseInt(this.list2PagerPageSize);
+        this.noneImageList = this._noneImageList.slice(
+            (this.list2PagerCurrentPage - 1) * pageSize,
+            this.list2PagerCurrentPage * pageSize
+        );
+    }
 
     // ng handlers
     ngOnInit() {
-        this.pagerTotalCount = 10;
+        this.list1PagerCurrentPage = 1;
+        this.list2PagerCurrentPage = 1;
+        this.list1PagerPageSize = '5';
+        this.list2PagerPageSize = '5';
+        this.list1PagerTotalCount = 0;
+        this.list2PagerTotalCount = 0;
 
         this.showMenu = true;
-        this.categoryTitle = window.localStorage.getItem('category');
+        this.categoryName = window.localStorage.getItem('category');
+        this.categoryLikeCount = 99;
+        this.imageList = [];
+        this.noneImageList = [];
 
-        this.dao.html('http://caols.tech/a.html')
-            .subscribe(html => {
-                this.articleContent = html;
-                this.articleScriptSrc = 'http://caols.tech/a.js';
+        let self = this;
+        this.dao.category(this.categoryName)
+            .subscribe(category => {
+                self.categoryCreateTime = category.create;
+                self.categoryUpdateTime = category.update;
+                self.categoryContent = category.content;
+                self.categoryScriptSrc = category.script;
+
+                self._imageList = category.imageList.map(ilItem => {
+                    ilItem.imageSrc = self.sanitizer.bypassSecurityTrustStyle('url("' + ilItem._imageSrc + '")');
+                    return ilItem;
+                });
+                self._noneImageList = category.noneImageList;
+
+                self.list1PagerCurrentPage = 1;
+                self.list2PagerCurrentPage = 1;
+                self.list1PagerTotalCount = category.imageList.length;
+                self.list2PagerTotalCount = category.noneImageList.length;
+
+                self.list1Render();
+                self.list2Render();
             });
 
         this.imageListItemBackgroundSize = 'contain';
-        let item = new ListItem();
-        item.imageSrc = this.sanitizer.bypassSecurityTrustStyle('url("http://caols.tech/demos/1492848706508.png")');
-        item.title = '标题';
-        item.brief = '一个人的情绪受环境的影响，这是很正常的，但你苦着脸，一副苦大仇深的样子，对处境并不会有任何的改变，相反，如果微笑着去生活，那会增加亲和力，别人更乐于跟你交往，得到的机会也会更多。';
-        // this.imageList = [item, JSON.parse(JSON.stringify(item)), JSON.parse(JSON.stringify(item)), JSON.parse(JSON.stringify(item)), JSON.parse(JSON.stringify(item))];
-        // this.noneImageList = [item, JSON.parse(JSON.stringify(item)), JSON.parse(JSON.stringify(item)), JSON.parse(JSON.stringify(item)), JSON.parse(JSON.stringify(item))];
     }
 
     // dom handlers
-    articleOnload() {
+    categoryOnload() {
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
     }
@@ -68,15 +112,17 @@ export class CategoryComponent {
         this.router.navigate(['/article']);
     }
 
-    pagerInfoChange(e) {
+    list1PagerInfoChange(e) {
         let split = e.split('@');
-        this.pagerCurrentPage = parseInt(split[0]);
-        this.pagerPageSize = split[1];
+        this.list1PagerCurrentPage = parseInt(split[0]);
+        this.list1PagerPageSize = split[1];
+        this.list1Render();
     }
-}
 
-export class ListItem {
-    title: string;
-    brief: string;
-    imageSrc: SafeStyle;
+    list2PagerInfoChange(e) {
+        let split = e.split('@');
+        this.list2PagerCurrentPage = parseInt(split[0]);
+        this.list2PagerPageSize = split[1];
+        this.list2Render();
+    }
 }
