@@ -5,7 +5,8 @@
         "posts": [
           "文章标题",
           "Demo标题",
-          "App标题"
+          "App标题",
+          "Demo文章标题"
         ],
         "categories": [
           "Test",

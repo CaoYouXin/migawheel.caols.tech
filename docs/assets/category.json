@@ -10,7 +10,8 @@
     "url": "http://caols.tech/a.html",
     "script": "http://caols.tech/a.js",
     "posts": [
-      "Demo标题"
+      "Demo标题",
+      "Demo文章标题"
     ]
   },
   "App": {
