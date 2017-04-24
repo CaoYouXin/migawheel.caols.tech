@@ -9,9 +9,9 @@
     "category": "Test"
   },
   "Demo标题": {
-    "type": "App",
+    "type": "Article",
     "imageSrc": "http://caols.tech/demos/1492848706508.png",
-    "url": "http://forum.demo.caols.tech/",
+    "url": "http://caols.tech/a.html",
     "script": "http://caols.tech/a.js",
     "create": "2017-01-01",
     "update": "2017-01-02",
@@ -20,7 +20,7 @@
   "App标题": {
     "type": "App",
     "imageSrc": "http://caols.tech/demos/1492848706508.png",
-    "url": "http://caols.tech/a.html",
+    "url": "http://order.demo.caols.tech/",
     "script": "http://caols.tech/a.js",
     "create": "2017-01-01",
     "update": "2017-01-02",
