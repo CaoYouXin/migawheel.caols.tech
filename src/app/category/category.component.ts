@@ -3,16 +3,19 @@ import {Router} from "@angular/router";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {CategoryDao, ListItem} from "./category.dao";
 import {DaoUtil} from "../dao/dao.util";
+import {PostOpener} from "../common/post.opener";
+import {PostOpenerDao} from "../common/post.opener.dao";
 
 @Component({
     selector: 'category',
     templateUrl: 'category.component.html',
     styleUrls: ['category.component.css'],
-    providers: [CategoryDao, DaoUtil]
+    providers: [CategoryDao, DaoUtil, PostOpener, PostOpenerDao]
 })
 export class CategoryComponent {
 
     constructor(private dao: CategoryDao,
+                private postOpener: PostOpener,
                 private router: Router,
                 private sanitizer: DomSanitizer) {}
 
@@ -107,9 +110,13 @@ export class CategoryComponent {
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
     }
 
-    noneImageListItemClicked(e) {
-        window.localStorage.setItem('article', e.target.parentElement.firstElementChild.innerHTML);
-        this.router.navigate(['/article']);
+    listItemClicked(e) {
+        let liElem = e.target;
+        while (liElem.tagName !== 'LI') {
+            liElem = liElem.parentElement;
+        }
+
+        this.postOpener.postOpen(liElem.firstElementChild.innerHTML);
     }
 
     list1PagerInfoChange(e) {

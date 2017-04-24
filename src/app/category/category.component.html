@@ -38,7 +38,8 @@
                 <ul>
                     <li *ngFor="let imageListItem of imageList"
                         [style.background-size]="imageListItemBackgroundSize"
-                        [style.background-image]="imageListItem.imageSrc">
+                        [style.background-image]="imageListItem.imageSrc"
+                        (click)="listItemClicked($event)">
                         <p>{{imageListItem.title}}</p>
                     </li>
                 </ul>
@@ -60,7 +61,7 @@
 
             <div class="category-list2">
                 <ul>
-                    <li *ngFor="let noneImageListItem of noneImageList" (click)="noneImageListItemClicked($event)">
+                    <li *ngFor="let noneImageListItem of noneImageList" (click)="listItemClicked($event)">
                         <h1>{{noneImageListItem.title}}</h1>
                         <p>{{noneImageListItem.brief}}</p>
                     </li>

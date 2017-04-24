@@ -5,18 +5,21 @@ import {MigaWheelDao} from "./migawheel.dao";
 import {DaoUtil} from "../dao/dao.util";
 import {Router} from "@angular/router";
 import {PostType} from "../const/post.type.const";
+import {PostOpener} from "../common/post.opener";
+import {PostOpenerDao} from "../common/post.opener.dao";
 
 @Component({
     selector: 'migawheel',
     templateUrl: './pc.component.html',
     styleUrls: ['./pc.component.css'],
-    providers: [MigaWheelCore, MigaWheelSearch, MigaWheelDao, DaoUtil]
+    providers: [MigaWheelCore, MigaWheelSearch, MigaWheelDao, DaoUtil, PostOpener, PostOpenerDao]
 })
 export class MigaWheelPcComponent {
     constructor(private core: MigaWheelCore,
                 private search: MigaWheelSearch,
                 private dao: MigaWheelDao,
-                private router: Router) {
+                private router: Router,
+                private postOpener: PostOpener) {
     }
 
     private categorySelected: boolean;
@@ -175,19 +178,7 @@ export class MigaWheelPcComponent {
                         error => DaoUtil.logError(error));
                 break;
             case Configs.PostMode:
-                this.dao.post(content)
-                    .subscribe(post => {
-                        switch (post.type) {
-                            case PostType.APP:
-                                window.open(post.url, '_blank');
-                                break;
-                            case PostType.ARTICLE:
-                                window.localStorage.setItem('article', content);
-                                self.router.navigate(['/article']);
-                                break;
-                            default:break;
-                        }
-                    });
+                this.postOpener.postOpen(content);
                 break;
             default:
                 break;

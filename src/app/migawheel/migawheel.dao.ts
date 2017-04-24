@@ -232,15 +232,4 @@ export class MigaWheelDao {
         return new Observable<string[]>(observer => observer.complete());
     }
 
-    post(title: string): Observable<any> {
-        return new Observable<any>(observer => {
-            this.dao.get('/assets/post.json')
-                .map(res => res.json())
-                .subscribe(ret => {
-                    observer.next(ret[title]);
-                    observer.complete();
-                });
-        });
-    }
-
 }
