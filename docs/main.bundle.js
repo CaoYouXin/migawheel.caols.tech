@@ -1,6 +1,6 @@
 webpackJsonp([1,4],{
 
-/***/ 192:
+/***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,6 +8,7 @@ webpackJsonp([1,4],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_api_const__ = __webpack_require__(98);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostOpenerDao; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -21,6 +22,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PostOpenerDao = (function () {
     function PostOpenerDao(dao) {
         this.dao = dao;
@@ -28,7 +30,7 @@ var PostOpenerDao = (function () {
     PostOpenerDao.prototype.post = function (title) {
         var _this = this;
         return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
-            _this.dao.get('/assets/post.json')
+            _this.dao.get(__WEBPACK_IMPORTED_MODULE_3__const_api_const__["a" /* API */].PostJson)
                 .map(function (res) { return res.json(); })
                 .subscribe(function (ret) {
                 observer.next(ret[title]);
@@ -47,7 +49,7 @@ var PostOpenerDao = (function () {
 
 /***/ }),
 
-/***/ 193:
+/***/ 194:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -381,13 +383,13 @@ var RenderedText = (function () {
 
 /***/ }),
 
-/***/ 278:
+/***/ 279:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_dao__ = __webpack_require__(461);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_dao__ = __webpack_require__(462);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__ = __webpack_require__(70);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -451,6 +453,9 @@ var ArticleComponent = (function () {
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
     };
+    ArticleComponent.prototype.replyPublishBtnClicked = function () {
+        console.log('评论: ' + this.replyContent);
+    };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["g" /* ViewChild */])('body'), 
         __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */]) === 'function' && _a) || Object)
@@ -458,8 +463,8 @@ var ArticleComponent = (function () {
     ArticleComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'article',
-            template: __webpack_require__(451),
-            styles: [__webpack_require__(444)],
+            template: __webpack_require__(452),
+            styles: [__webpack_require__(445)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */], __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _c) || Object])
@@ -471,17 +476,17 @@ var ArticleComponent = (function () {
 
 /***/ }),
 
-/***/ 279:
+/***/ 280:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__category_dao__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__category_dao__ = __webpack_require__(463);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dao_dao_util__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_post_opener__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_post_opener_dao__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_post_opener__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_post_opener_dao__ = __webpack_require__(193);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CategoryComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -579,8 +584,8 @@ var CategoryComponent = (function () {
     CategoryComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'category',
-            template: __webpack_require__(452),
-            styles: [__webpack_require__(445)],
+            template: __webpack_require__(453),
+            styles: [__webpack_require__(446)],
             providers: [__WEBPACK_IMPORTED_MODULE_3__category_dao__["a" /* CategoryDao */], __WEBPACK_IMPORTED_MODULE_4__dao_dao_util__["a" /* DaoUtil */], __WEBPACK_IMPORTED_MODULE_5__common_post_opener__["a" /* PostOpener */], __WEBPACK_IMPORTED_MODULE_6__common_post_opener_dao__["a" /* PostOpenerDao */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__category_dao__["a" /* CategoryDao */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__category_dao__["a" /* CategoryDao */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__common_post_opener__["a" /* PostOpener */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__common_post_opener__["a" /* PostOpener */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["b" /* DomSanitizer */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["b" /* DomSanitizer */]) === 'function' && _e) || Object])
@@ -592,14 +597,14 @@ var CategoryComponent = (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__post_opener_dao__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_post_type_const__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__post_opener_dao__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_post_type_const__ = __webpack_require__(282);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostOpener; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -646,7 +651,7 @@ var PostOpener = (function () {
 
 /***/ }),
 
-/***/ 281:
+/***/ 282:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -662,7 +667,7 @@ var PostType = (function () {
 
 /***/ }),
 
-/***/ 282:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -684,8 +689,8 @@ var IndexComponent = (function () {
     IndexComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'index',
-            template: __webpack_require__(454),
-            styles: [__webpack_require__(446)]
+            template: __webpack_require__(455),
+            styles: [__webpack_require__(447)]
         }), 
         __metadata('design:paramtypes', [])
     ], IndexComponent);
@@ -695,7 +700,7 @@ var IndexComponent = (function () {
 
 /***/ }),
 
-/***/ 435:
+/***/ 436:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -704,20 +709,20 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 435;
+webpackEmptyContext.id = 436;
 
 
 /***/ }),
 
-/***/ 436:
+/***/ 437:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(705);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(706);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__(470);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_module__ = __webpack_require__(460);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__(471);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_module__ = __webpack_require__(461);
 
 
 
@@ -733,116 +738,117 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 443:
+/***/ 444:
 /***/ (function(module, exports) {
 
 module.exports = ""
 
 /***/ }),
 
-/***/ 444:
+/***/ 445:
 /***/ (function(module, exports) {
 
 module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n    cursor: pointer;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol > li {\n    cursor: pointer;\n}\n\n.top5 + ol, .comments {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: pointer;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/c.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* reply */\n.reply {\n    width: 740px;\n    height: 75px;\n\n    margin-top: 10px;\n    margin-left: 10px;\n\n    border-radius: 5px;\n    box-shadow: 0 0 10px cyan;\n\n    overflow: hidden;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n\n    font-size: 0;\n}\n\n.reply > * {\n    font-family: Monaco, \"Lucida Console\", monospace;\n    font-size: 20px;\n\n    width: 730px;\n    height: 30px;\n\n    margin-top: 5px;\n    margin-left: 5px;\n\n    line-height: 30px;\n}\n\n.reply > .title {\n    text-align: center;\n\n    color: white;\n    background-color: cyan;\n}\n\n.reply > .title > span:before {\n    content: '『';\n}\n\n.reply > .title > span:after {\n    content: '』';\n}\n\n.reply > textarea {\n    outline: none;\n    resize: none;\n\n    line-height: 28px;\n\n    border: dashed 1px cyan;\n\n    background-color: transparent;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n}\n\n.reply > .publish-btn {\n    text-align: center;\n\n    cursor: pointer;\n\n    color: white;\n    background-image: -webkit-linear-gradient(bottom, #07fff2 0%, #43fdff 50%, cyan 100%);\n    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);\n}\n\n.reply > .publish-btn:hover {\n    background-image: -webkit-linear-gradient(bottom, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n}\n\n.reply.focused {\n    height: 230px;\n}\n\n.reply > textarea.focused {\n    height: 150px;\n}\n\n.comments > li {\n    border: dashed 1px cyan;\n    background-image: -webkit-radial-gradient(0 0 800px, white 0%, transparent 100%);\n    background-image: radial-gradient(800px at 0 0, white 0%, transparent 100%);\n}\n\n.comments > li + li {\n    border-top: none;\n}\n\n.comments .comments-of-comment {\n    list-style: none;\n\n    margin: 10px;\n\n    background-color: rgb(248, 248, 248);\n}\n\n.comments .comments-of-comment > li + li {\n    border-top: dashed 1px cyan;\n}\n"
 
 /***/ }),
 
-/***/ 445:
+/***/ 446:
 /***/ (function(module, exports) {
 
 module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n.category-header > h1:first-child:before {\n    content: '分类: ';\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: default;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/c.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* list */\n.category-list1, .category-list2 {\n    overflow: hidden;\n}\n\n.category-list1 > ul, .category-list2 > ul {\n    list-style: none;\n}\n\n.category-list1 > ul > li {\n    display: block;\n    float: left;\n\n    background-color: #eeebbc;\n\n    width: 370px;\n    height: 210px;\n\n    margin-top: 30px;\n    margin-left: 10px;\n    margin-right: 10px;\n}\n\n.category-list1 > ul > li:nth-child(1),\n.category-list1 > ul > li:nth-child(2) {\n     margin-top: 0;\n }\n\n.category-list1 > ul > li:nth-child(2n + 1) {\n    margin-left: 0;\n}\n\n.category-list1 > ul > li:nth-child(2n) {\n    margin-right: 0;\n}\n\n.category-list1 > ul > li > p {\n    padding: 10px;\n    color: white;\n    background-color: rgba(0, 0, 0, 0.6);\n}\n\n.category-list2 > ul > li {\n    cursor: default;\n}\n\n.category-list2 > ul > li + li {\n    margin-top: 20px;\n}\n\n.category-list2 > ul > li:hover {\n    background-color: rgb(240, 240, 240);\n}\n"
 
 /***/ }),
 
-/***/ 446:
+/***/ 447:
 /***/ (function(module, exports) {
 
 module.exports = ".blur {\n    position: fixed;\n\n    left: 0;\n    right: 0;\n    top: 0;\n    bottom: 0;\n\n    z-index: 1;\n\n    opacity: 0.2;\n    background-color: blanchedalmond;\n}\n"
 
 /***/ }),
 
-/***/ 447:
+/***/ 448:
 /***/ (function(module, exports) {
 
 module.exports = ".banner, .left-banner, .menu {\n    position: fixed;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    -webkit-transition: background-color, 1s ease-in-out .7s;\n\n    transition: background-color, 1s ease-in-out .7s;\n}\n\n.banner {\n    z-index: 10001;\n\n    top: 0;\n    left: 0;\n\n    width: 100%;\n    height: 100px;\n}\n\n.left-banner {\n    z-index: 10000;\n\n    top: 100px;\n    left: 0;\n\n    width: 100px;\n    height: calc(100% - 100px);\n}\n\n.banner.untransparent, .left-banner.untransparent {\n    background-color: rgb(249, 249, 249);\n}\n\n.menu {\n    z-index: 10000;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n    height: calc(100% - 100px);\n\n    -webkit-transform-origin: 0 0 0;\n\n            transform-origin: 0 0 0;\n    -webkit-transition: background-color, 1s ease-in-out .7s,\n    -webkit-transform 1s ease-in-out .2s;\n    transition: background-color, 1s ease-in-out .7s,\n    -webkit-transform 1s ease-in-out .2s;\n    transition: transform 1s ease-in-out .2s,\n    background-color, 1s ease-in-out .7s;\n    transition: transform 1s ease-in-out .2s,\n    background-color, 1s ease-in-out .7s,\n    -webkit-transform 1s ease-in-out .2s;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.menu.left {\n    background-color: transparent;\n\n    -webkit-transform: rotateZ(0.25turn);\n\n            transform: rotateZ(0.25turn);\n}\n\n.menu.right {\n    background-color: transparent;\n\n    -webkit-transform: rotateZ(-0.25turn);\n\n            transform: rotateZ(-0.25turn);\n}\n\n.banner > .menu-btn {\n    display: block;\n\n    width: 114px;\n    height: 114px;\n\n    border-radius: 50%;\n\n    background-image: -webkit-radial-gradient(50% 50% 100px, #3366CC 0%, #3366CC 30%, black 70%);\n\n    background-image: radial-gradient(100px at 50% 50%, #3366CC 0%, #3366CC 30%, black 70%);\n\n    line-height: 114px;\n    text-align: center;\n\n    cursor: pointer;\n\n    -webkit-transition: color 1s ease-in-out;\n\n    transition: color 1s ease-in-out;\n}\n\n.banner > .menu-btn:hover {\n    color: white;\n\n    background-image: -webkit-radial-gradient(50% 50% 80px, #3366CC 0%, #3366CC 30%, black 70%);\n\n    background-image: radial-gradient(80px at 50% 50%, #3366CC 0%, #3366CC 30%, black 70%);\n}\n"
 
 /***/ }),
 
-/***/ 448:
+/***/ 449:
 /***/ (function(module, exports) {
 
 module.exports = "*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.wrapper {\n    position: fixed;\n\n    left: 0;\n    right: 0;\n    top: 0;\n    bottom: 0;\n\n    text-align: center;\n}\n\n.wrapper > * {\n    display: inline-block;\n    vertical-align: middle;\n}\n\n.wrapper:before {\n    content: '';\n    width: 0;\n    height: 100%;\n    display: inline-block;\n    vertical-align: middle;\n}\n\n.zi2 {\n    z-index: 2;\n}\n\n.wrapper > .tao {\n    width: 500px;\n    height: 560px;\n}\n\n#taiqi {\n    margin-top: 10px;\n\n    background-color: #ddd;\n\n    border-radius: 50%;\n}\n\n.left {\n    fill: #333;\n}\n\n.left:hover > path {\n    fill: #111;\n}\n\n.right {\n    fill: #ccc;\n}\n\n.right:hover > path {\n    fill: #eee;\n}\n\ntext {\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    cursor: default;\n\n    font-family: Monaco, \"Lucida Console\", \"Comic Sans MS\", monospace;\n    font-size: 16px;\n}\n\n.cate > text {\n    fill: white;\n    -webkit-transform-origin: 0 0 0;\n            transform-origin: 0 0 0;\n}\n\n.cateBack {\n    cursor: default;\n}\n\n.cateBack:hover > circle {\n    fill: url(#gradient-thin);\n}\n\n#miga-search {\n    width: 500px;\n    height: 50px;\n\n    display: block;\n\n    font-family: Monaco, monospace;\n    font-size: 18px;\n\n    border: solid 1px #dddddd;\n    border-radius: 5px;\n}\n\n#miga-search > input {\n    outline: none;\n    border: none;\n\n    width: 490px;\n    height: 40px;\n\n    margin-top: 4px;\n\n    font-size: 28px;\n}\n\n#miga-search.focused {\n    box-shadow: inset 0 0 10px blanchedalmond;\n}\n\n#miga-search-hints {\n    width: 500px;\n    height: 250px;\n\n    display: none;\n\n    background: rgba(202, 255, 197, 0.6);\n\n    position: absolute;\n    z-index: 5;\n\n    color: white;\n    text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;\n    box-shadow: 0 2px 3px #DDDDDD;\n\n    line-height: 250px;\n    text-align: center;\n}\n\n#miga-search-hints.show {\n    display: block;\n}\n\n#miga-search-hints > p {\n    box-sizing: border-box;\n\n    display: block;\n\n    font-family: Monaco, monospace;\n    font-size: 18px;\n\n    width: 500px;\n    height: 50px;\n\n    line-height: 50px;\n\n    overflow: hidden;\n    text-wrap: none;\n    text-overflow: ellipsis;\n\n    margin: 0;\n    padding: 0 10px;\n\n    cursor: default;\n}\n\n#miga-search-hints > p:hover {\n    background: blanchedalmond;\n}\n\n#miga-search-hints > p.selected {\n    background: blanchedalmond;\n}\n\n#miga-search-hints > p + p {\n    border-top: solid 1px blanchedalmond;\n}\n"
 
 /***/ }),
 
-/***/ 449:
+/***/ 450:
 /***/ (function(module, exports) {
 
 module.exports = "*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.pager {\n    overflow: hidden;\n    margin: 5px 0;\n}\n\n.pager-controls, .pager-controls + p,\n.page-pre, .page-post {\n    display: block;\n    float: left;\n}\n\n.pager-controls + p {\n    line-height: 30px;\n    margin: 0 0 0 3em;\n}\n\n/* controls */\n\n.page-pre, .page-post {\n    padding: 0 10px;\n\n    color: #111111;\n\n    line-height: 30px;\n    border-radius: 15px;\n\n    cursor: pointer;\n}\n\n.page-pre {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n\n    background-color: #cac5ff;\n}\n\n.page-pre:hover {\n    background-color: #b7b2eb;\n\n    box-shadow: inset 0 0 3px #caffc5;\n}\n\n.page-post {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n\n    background-color: #caffc5;\n}\n\n.page-post:hover {\n    background-color: #b6ebb1;\n\n    box-shadow: 0 0 3px #b7b2eb;\n}\n\n/* select */\n\n.pager-select {\n    display: block;\n    float: right;\n\n    width: 136px;\n    height: 30px;\n\n    border-radius: 2px;\n\n    border: solid 1px #fab4a8;\n\n    font-size: 0;\n}\n\n.pager-select.focused {\n    box-shadow: 0 0 3px salmon;\n}\n\n.pager-select > input {\n    outline: none;\n\n    width: 100px;\n    height: 24px;\n    line-height: 24px;\n\n    margin-top: 1px;\n    margin-left: 2px;\n\n    font-size: 18px;\n}\n\n.pager-select > span {\n    display: inline-block;\n\n    width: 30px;\n    text-align: center;\n    line-height: 28px;\n\n    font-size: 18px;\n\n    cursor: pointer;\n}\n\n.pager-select > ul {\n    display: none;\n    list-style: none;\n\n    margin-top: 20px;\n\n    position: absolute;\n    z-index: 1;\n\n    font-size: 16px;\n\n    background-color: rgba(24, 24, 240, 0.6);\n}\n\n.pager-select > ul.show {\n    display: block;\n}\n\n.pager-select > ul:before {\n    content: '';\n\n    display: block;\n    width: 0;\n    height: 0;\n\n    position: absolute;\n    bottom: 100%;\n    left: calc(50% - 10px);\n\n    border: solid 10px transparent;\n    border-bottom-color: rgba(24, 24, 240, 0.6);\n    border-top: none;\n}\n\n.pager-select > ul > li {\n    width: 136px;\n\n    color: white;\n    text-align: center;\n\n    cursor: default;\n}\n\n.pager-select > ul > li:hover {\n    background-color: rgba(24, 24, 240, 0.9);\n}\n"
 
 /***/ }),
 
-/***/ 450:
+/***/ 451:
 /***/ (function(module, exports) {
 
 module.exports = "<router-outlet></router-outlet>\n"
 
 /***/ }),
 
-/***/ 451:
-/***/ (function(module, exports) {
-
-module.exports = "<menu [show]=\"showMenu\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"article-header\">\n                <h1>{{articleTitle}}</h1>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{articleCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{articleUpdateTime}}</p>\n                <br>\n                <hr>\n                <br>\n                <br>\n            </div>\n\n            <div class=\"article-content\">\n                <content [innerHTML]=\"articleContent\" [scriptSrc]=\"articleScriptSrc\" (onload)=\"articleOnload()\"></content>\n            </div>\n\n            <div class=\"article-footer\">\n                <br>\n                <br>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"former-article\" data-rel=\"上一篇: \"\n                    (click)=\"articleLoad(previousArticle)\">{{previousArticle}}</p>\n                <p class=\"latter-article\" data-rel=\"下一篇: \"\n                    (click)=\"articleLoad(nextArticle)\">{{nextArticle}}</p>\n                <br>\n                <hr>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li *ngFor=\"let top of top5\" (click)=\"articleLoad(top)\">{{top}}</li>\n                </ol>\n                <br>\n                <hr>\n                <br>\n                <div id=\"reply\" class=\"reply\" [class.focused]=\"replyFocused\">\n                    <div class=\"title\"><span>awesome</span>发布评论...</div>\n                    <textarea placeholder=\"输入评论...\" [class.focused]=\"replyFocused\"\n                              (focus)=\"replyFocused=true\" (blur)=\"replyFocused=false\"></textarea>\n                    <div class=\"publish-btn\">发布</div>\n                </div>\n                <br>\n                <ol class=\"comments\" reversed>\n                    <li>\n                        <span>Coffee</span>\n                        <ul class=\"comments-of-comment\">\n                            <li>Sugar</li>\n                            <li>Spoon</li>\n                            <li>Cup</li>\n                        </ul>\n                    </li>\n                    <li><span>Tea</span></li>\n                    <li><span>Milk</span></li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
-
-/***/ }),
-
 /***/ 452:
 /***/ (function(module, exports) {
 
-module.exports = "<menu [show]=\"showMenu\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"category-header\">\n                <h1>{{categoryName}}</h1>\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{categoryCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{categoryUpdateTime}}</p>\n                <br>\n                <hr>\n            </div>\n            <br>\n            <br>\n\n            <div class=\"category-content\">\n                <content [innerHTML]=\"categoryContent\" [scriptSrc]=\"categoryScriptSrc\" (onload)=\"categoryOnload()\"></content>\n            </div>\n\n            <br>\n            <br>\n            <hr *ngIf=\"imageList.length + noneImageList.length > 0\">\n            <br *ngIf=\"imageList.length > 0\">\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list1\">\n                <ul>\n                    <li *ngFor=\"let imageListItem of imageList\"\n                        [style.background-size]=\"imageListItemBackgroundSize\"\n                        [style.background-image]=\"imageListItem.imageSrc\"\n                        (click)=\"listItemClicked($event)\">\n                        <p>{{imageListItem.title}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"imageList.length > 0\">\n            <hr *ngIf=\"imageList.length + noneImageList.length > 1\">\n            <br *ngIf=\"noneImageList.length > 0\">\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list2\">\n                <ul>\n                    <li *ngFor=\"let noneImageListItem of noneImageList\" (click)=\"listItemClicked($event)\">\n                        <h1>{{noneImageListItem.title}}</h1>\n                        <p>{{noneImageListItem.brief}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"noneImageList.length > 0\">\n\n            <div class=\"category-footer\">\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li><a href=\"#\">深入理解计算机网络1</a></li>\n                    <li><a href=\"#\">深入理解计算机网络3</a></li>\n                    <li><a href=\"#\">深入理解计算机网络5</a></li>\n                    <li><a href=\"#\">深入理解计算机网络6</a></li>\n                    <li><a href=\"#\">深入理解计算机网络7</a></li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
+module.exports = "<menu [show]=\"showMenu\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"article-header\">\n                <h1>{{articleTitle}}</h1>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{articleCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{articleUpdateTime}}</p>\n                <br>\n                <hr>\n                <br>\n                <br>\n            </div>\n\n            <div class=\"article-content\">\n                <content [innerHTML]=\"articleContent\" [scriptSrc]=\"articleScriptSrc\" (onload)=\"articleOnload()\"></content>\n            </div>\n\n            <div class=\"article-footer\">\n                <br>\n                <br>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"former-article\" data-rel=\"上一篇: \"\n                    (click)=\"articleLoad(previousArticle)\">{{previousArticle}}</p>\n                <p class=\"latter-article\" data-rel=\"下一篇: \"\n                    (click)=\"articleLoad(nextArticle)\">{{nextArticle}}</p>\n                <br>\n                <hr>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li *ngFor=\"let top of top5\" (click)=\"articleLoad(top)\">{{top}}</li>\n                </ol>\n                <br>\n                <hr>\n                <br>\n                <div id=\"reply\" class=\"reply\" [class.focused]=\"replyFocused\">\n                    <div class=\"title\"><span>awesome</span>发布评论...</div>\n                    <textarea placeholder=\"输入评论...\"\n                              [(ngModel)]=\"replyContent\"\n                              [class.focused]=\"replyFocused\"\n                              (focus)=\"replyFocused=true\" (blur)=\"replyFocused=false\"></textarea>\n                    <div class=\"publish-btn\" (click)=\"replyPublishBtnClicked()\">发布</div>\n                </div>\n                <br>\n                <ol class=\"comments\" reversed>\n                    <li>\n                        <span>Coffee</span>\n                        <ul class=\"comments-of-comment\">\n                            <li>Sugar</li>\n                            <li>Spoon</li>\n                            <li>Cup</li>\n                        </ul>\n                    </li>\n                    <li><span>Tea</span></li>\n                    <li><span>Milk</span></li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
 
 /***/ }),
 
 /***/ 453:
 /***/ (function(module, exports) {
 
-module.exports = "<div #contentContainer></div>"
+module.exports = "<menu [show]=\"showMenu\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"category-header\">\n                <h1>{{categoryName}}</h1>\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{categoryCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{categoryUpdateTime}}</p>\n                <br>\n                <hr>\n            </div>\n            <br>\n            <br>\n\n            <div class=\"category-content\">\n                <content [innerHTML]=\"categoryContent\" [scriptSrc]=\"categoryScriptSrc\" (onload)=\"categoryOnload()\"></content>\n            </div>\n\n            <br>\n            <br>\n            <hr *ngIf=\"imageList.length + noneImageList.length > 0\">\n            <br *ngIf=\"imageList.length > 0\">\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list1\">\n                <ul>\n                    <li *ngFor=\"let imageListItem of imageList\"\n                        [style.background-size]=\"imageListItemBackgroundSize\"\n                        [style.background-image]=\"imageListItem.imageSrc\"\n                        (click)=\"listItemClicked($event)\">\n                        <p>{{imageListItem.title}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"imageList.length > 0\">\n            <hr *ngIf=\"imageList.length + noneImageList.length > 1\">\n            <br *ngIf=\"noneImageList.length > 0\">\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list2\">\n                <ul>\n                    <li *ngFor=\"let noneImageListItem of noneImageList\" (click)=\"listItemClicked($event)\">\n                        <h1>{{noneImageListItem.title}}</h1>\n                        <p>{{noneImageListItem.brief}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"noneImageList.length > 0\">\n\n            <div class=\"category-footer\">\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li><a href=\"#\">深入理解计算机网络1</a></li>\n                    <li><a href=\"#\">深入理解计算机网络3</a></li>\n                    <li><a href=\"#\">深入理解计算机网络5</a></li>\n                    <li><a href=\"#\">深入理解计算机网络6</a></li>\n                    <li><a href=\"#\">深入理解计算机网络7</a></li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
 
 /***/ }),
 
 /***/ 454:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"blur\"></div>\n\n<migawheel></migawheel>\n"
+module.exports = "<div #contentContainer></div>"
 
 /***/ }),
 
 /***/ 455:
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"menu-bar\">\n    <div class=\"banner\" [class.untransparent]=\"!bannerTransparent\">\n        <div class=\"menu-btn\" (click)=\"menuClicked()\">MENU</div>\n    </div>\n    <div class=\"left-banner\" [class.untransparent]=\"!bannerTransparent\"></div>\n    <div class=\"menu\" [class.left]=\"menuTransform === 'left'\" [class.right]=\"menuTransform === 'right'\">\n\n    </div>\n</section>\n"
+module.exports = "<div class=\"blur\"></div>\n\n<migawheel></migawheel>\n"
 
 /***/ }),
 
 /***/ 456:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper zi2\">\n    <div class=\"tao\">\n        <div id=\"miga-search\" [class.focused]=\"searchFocused\">\n            <input type=\"text\" placeholder=\"搜索分类或者文章\" autofocus\n                   (keyup)=\"searchKeyUp($event)\" (focus)=\"searchFocus($event)\"\n                   (blur)=\"searchFocused=false;\">\n        </div>\n        <div id=\"miga-search-hints\" [class.show]=\"searchHintsShow\" data-rel=\"-1\">\n            <p *ngFor=\"let hint of hints; let i=index\"\n                [class.selected]=\"i === selectedHint\"\n                (click)=\"searchClicked($event)\">{{hint}}</p>\n            <span *ngIf=\"hints.length === 0\">{{searchErrorMsg}}</span>\n        </div>\n\n        <svg id=\"taiqi\" width=\"500\" height=\"500\" (mousedown)=\"svgMouseDown($event)\" (mouseup)=\"svgMouseUp($event)\" (mousemove)=\"svgMouseMove($event)\">\n            <defs>\n                <radialGradient id=\"gradient\" gradientUnits=\"userSpaceOnUse\" cx=\"0\" cy=\"0\" r=\"250\" spreadMethod=\"pad\">\n                    <stop offset=\"0%\" stop-color=\"#3366CC\"></stop>\n                    <stop offset=\"30%\" stop-color=\"#3366CC\" stop-opacity=\"1\"></stop>\n                    <stop offset=\"60%\" stop-color=\"black\" stop-opacity=\"1\"></stop>\n                </radialGradient>\n                <radialGradient id=\"gradient-thin\" gradientUnits=\"userSpaceOnUse\" cx=\"0\" cy=\"0\" r=\"250\" spreadMethod=\"pad\">\n                    <stop offset=\"0%\" stop-color=\"#3366CC\"></stop>\n                    <stop offset=\"25%\" stop-color=\"#3366CC\" stop-opacity=\"1\"></stop>\n                    <stop offset=\"50%\" stop-color=\"black\" stop-opacity=\"1\"></stop>\n                </radialGradient>\n            </defs>\n            <g class=\"left\" transform=\"translate(250,250)\" (click)=\"leftClicked($event)\">\n                <path d=\"M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z\"></path>\n                <text x=\"-60\" y=\"-40\" fill=\"white\">View Github</text>\n            </g>\n            <g class=\"right\" transform=\"translate(250,250) rotate(180 0 0)\" (click)=\"rightClicked($event)\">\n                <path d=\"M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z\"></path>\n                <text x=\"-45\" y=\"60\" transform=\"rotate(180 0 0)\" fill=\"black\">View Resume</text>\n            </g>\n            <g class=\"elems\" [attr.transform]=\"transform\">\n                <g *ngFor=\"let elem of elems\" class=\"cate\" [attr.transform]=\"elem.transform\"\n                    (click)=\"elemClicked($event)\">\n                    <path [attr.fill]=\"elem.bgFill\" [attr.d]=\"elem.bgD\"></path>\n                    <text *ngFor=\"let text of elem.content\" x=\"0\" [attr.y]=\"text.y\" [attr.transform]=\"text.transform\">{{text.content}}</text>\n                </g>\n            </g>\n            <g class=\"cateBack\" transform=\"translate(250,250) rotate(0 0 0)\" *ngIf=\"categorySelected\" (click)=\"cateBackClicked($event)\">\n                <circle cx=\"0\" cy=\"0\" r=\"100\" fill=\"url(#gradient)\"></circle>\n                <text *ngFor=\"let r of renderedCategory\" [attr.x]=\"r.x\" [attr.y]=\"r.y\">{{r.content}}</text>\n            </g>\n        </svg>\n    </div>\n</div>\n"
+module.exports = "<section class=\"menu-bar\">\n    <div class=\"banner\" [class.untransparent]=\"!bannerTransparent\">\n        <div class=\"menu-btn\" (click)=\"menuClicked()\">MENU</div>\n    </div>\n    <div class=\"left-banner\" [class.untransparent]=\"!bannerTransparent\"></div>\n    <div class=\"menu\" [class.left]=\"menuTransform === 'left'\" [class.right]=\"menuTransform === 'right'\">\n\n    </div>\n</section>\n"
 
 /***/ }),
 
 /***/ 457:
 /***/ (function(module, exports) {
 
+module.exports = "<div class=\"wrapper zi2\">\n    <div class=\"tao\">\n        <div id=\"miga-search\" [class.focused]=\"searchFocused\">\n            <input type=\"text\" placeholder=\"搜索分类或者文章\" autofocus\n                   (keyup)=\"searchKeyUp($event)\" (focus)=\"searchFocus($event)\"\n                   (blur)=\"searchFocused=false;\">\n        </div>\n        <div id=\"miga-search-hints\" [class.show]=\"searchHintsShow\" data-rel=\"-1\">\n            <p *ngFor=\"let hint of hints; let i=index\"\n                [class.selected]=\"i === selectedHint\"\n                (click)=\"searchClicked($event)\">{{hint}}</p>\n            <span *ngIf=\"hints.length === 0\">{{searchErrorMsg}}</span>\n        </div>\n\n        <svg id=\"taiqi\" width=\"500\" height=\"500\" (mousedown)=\"svgMouseDown($event)\" (mouseup)=\"svgMouseUp($event)\" (mousemove)=\"svgMouseMove($event)\">\n            <defs>\n                <radialGradient id=\"gradient\" gradientUnits=\"userSpaceOnUse\" cx=\"0\" cy=\"0\" r=\"250\" spreadMethod=\"pad\">\n                    <stop offset=\"0%\" stop-color=\"#3366CC\"></stop>\n                    <stop offset=\"30%\" stop-color=\"#3366CC\" stop-opacity=\"1\"></stop>\n                    <stop offset=\"60%\" stop-color=\"black\" stop-opacity=\"1\"></stop>\n                </radialGradient>\n                <radialGradient id=\"gradient-thin\" gradientUnits=\"userSpaceOnUse\" cx=\"0\" cy=\"0\" r=\"250\" spreadMethod=\"pad\">\n                    <stop offset=\"0%\" stop-color=\"#3366CC\"></stop>\n                    <stop offset=\"25%\" stop-color=\"#3366CC\" stop-opacity=\"1\"></stop>\n                    <stop offset=\"50%\" stop-color=\"black\" stop-opacity=\"1\"></stop>\n                </radialGradient>\n            </defs>\n            <g class=\"left\" transform=\"translate(250,250)\" (click)=\"leftClicked($event)\">\n                <path d=\"M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z\"></path>\n                <text x=\"-60\" y=\"-40\" fill=\"white\">View Github</text>\n            </g>\n            <g class=\"right\" transform=\"translate(250,250) rotate(180 0 0)\" (click)=\"rightClicked($event)\">\n                <path d=\"M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z\"></path>\n                <text x=\"-45\" y=\"60\" transform=\"rotate(180 0 0)\" fill=\"black\">View Resume</text>\n            </g>\n            <g class=\"elems\" [attr.transform]=\"transform\">\n                <g *ngFor=\"let elem of elems\" class=\"cate\" [attr.transform]=\"elem.transform\"\n                    (click)=\"elemClicked($event)\">\n                    <path [attr.fill]=\"elem.bgFill\" [attr.d]=\"elem.bgD\"></path>\n                    <text *ngFor=\"let text of elem.content\" x=\"0\" [attr.y]=\"text.y\" [attr.transform]=\"text.transform\">{{text.content}}</text>\n                </g>\n            </g>\n            <g class=\"cateBack\" transform=\"translate(250,250) rotate(0 0 0)\" *ngIf=\"categorySelected\" (click)=\"cateBackClicked($event)\">\n                <circle cx=\"0\" cy=\"0\" r=\"100\" fill=\"url(#gradient)\"></circle>\n                <text *ngFor=\"let r of renderedCategory\" [attr.x]=\"r.x\" [attr.y]=\"r.y\">{{r.content}}</text>\n            </g>\n        </svg>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 458:
+/***/ (function(module, exports) {
+
 module.exports = "<div class=\"pager\">\n    <div class=\"pager-controls\">\n        <div class=\"page-pre\" (click)=\"currentPageAdd(-1)\">上一页</div>\n        <div class=\"page-post\" (click)=\"currentPageAdd(1)\">下一页</div>\n    </div>\n    <p>第 <span>{{currentPage}}</span> 页; 共 <span>{{totalPage}}</span> 页</p>\n    <div class=\"pager-select\">\n        <input [(ngModel)]=\"pageSize\" type=\"text\" pattern=\"\\d+|无限\"\n               (ngModelChange)=\"pageSizeChange($event)\" min=\"1\">\n        <span (click)=\"showSelector=true;\">▽</span>\n        <ul [class.show]=\"showSelector\" (click)=\"selectorClicked($event)\">\n            <li>5</li>\n            <li>10</li>\n            <li>30</li>\n            <li>50</li>\n            <li>无限</li>\n            <li>关闭</li>\n        </ul>\n    </div>\n</div>\n"
 
 /***/ }),
 
-/***/ 459:
+/***/ 460:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__const_api_const__ = __webpack_require__(98);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -854,14 +860,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var AppComponent = (function () {
     function AppComponent() {
     }
+    AppComponent.prototype.ngOnInit = function () {
+        __WEBPACK_IMPORTED_MODULE_1__const_api_const__["a" /* API */].setDevMode(true);
+    };
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'app-root',
-            template: __webpack_require__(450),
-            styles: [__webpack_require__(443)]
+            template: __webpack_require__(451),
+            styles: [__webpack_require__(444)]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
@@ -871,23 +881,23 @@ var AppComponent = (function () {
 
 /***/ }),
 
-/***/ 460:
+/***/ 461:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(696);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(383);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__route_app_routing_module__ = __webpack_require__(469);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(459);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__index_index_component__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__migawheel_pc_component__ = __webpack_require__(467);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__article_article_component__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__category_category_component__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__menu_menu_component__ = __webpack_require__(464);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__content_content_component__ = __webpack_require__(463);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pager_pager_component__ = __webpack_require__(468);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(697);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(384);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__route_app_routing_module__ = __webpack_require__(470);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(460);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__index_index_component__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__migawheel_pc_component__ = __webpack_require__(468);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__article_article_component__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__category_category_component__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__menu_menu_component__ = __webpack_require__(465);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__content_content_component__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pager_pager_component__ = __webpack_require__(469);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -942,7 +952,7 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 461:
+/***/ 462:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -950,8 +960,9 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_api_const__ = __webpack_require__(98);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleDao; });
 /* unused harmony export Post */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -967,13 +978,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ArticleDao = (function () {
     function ArticleDao(dao) {
         this.dao = dao;
     }
     ArticleDao.prototype.post = function (title) {
         var _this = this;
-        var post = this.dao.get('/assets/post.json')
+        var post = this.dao.get(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].PostJson)
             .map(function (res) { return res.json(); })
             .map(function (ret) { return ret[Object.keys(ret).filter(function (k) { return k === title; })[0]]; });
         return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
@@ -1008,17 +1020,18 @@ var Post = (function () {
 
 /***/ }),
 
-/***/ 462:
+/***/ 463:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(407);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(408);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_post_type_const__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_post_type_const__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(98);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CategoryDao; });
 /* unused harmony export Category */
 /* unused harmony export ListItem */
@@ -1036,13 +1049,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var CategoryDao = (function () {
     function CategoryDao(dao) {
         this.dao = dao;
     }
     CategoryDao.prototype.category = function (categoryName) {
         var _this = this;
-        var category = this.dao.get('/assets/category.json')
+        var category = this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].CategoryJson)
             .map(function (res) { return res.json(); })
             .map(function (ret) { return ret[Object.keys(ret).filter(function (k) { return k === categoryName; })[0]]; });
         var self = this;
@@ -1072,7 +1086,7 @@ var CategoryDao = (function () {
         });
     };
     CategoryDao.prototype.posts = function () {
-        return this.dao.get('/assets/post.json')
+        return this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].PostJson)
             .map(function (res) { return res.json(); });
     };
     CategoryDao = __decorate([
@@ -1105,7 +1119,7 @@ var ListItem = (function () {
 
 /***/ }),
 
-/***/ 463:
+/***/ 464:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1159,7 +1173,7 @@ var ContentComponent = (function () {
     ContentComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'content',
-            template: __webpack_require__(453)
+            template: __webpack_require__(454)
         }), 
         __metadata('design:paramtypes', [])
     ], ContentComponent);
@@ -1170,7 +1184,7 @@ var ContentComponent = (function () {
 
 /***/ }),
 
-/***/ 464:
+/***/ 465:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1209,8 +1223,8 @@ var MenuComponent = (function () {
     MenuComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'menu',
-            template: __webpack_require__(455),
-            styles: [__webpack_require__(447)]
+            template: __webpack_require__(456),
+            styles: [__webpack_require__(448)]
         }), 
         __metadata('design:paramtypes', [])
     ], MenuComponent);
@@ -1220,17 +1234,18 @@ var MenuComponent = (function () {
 
 /***/ }),
 
-/***/ 465:
+/***/ 466:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__migawheel_core__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__migawheel_core__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(407);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(408);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(98);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MigaWheelDao; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1246,17 +1261,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var MigaWheelDao = (function () {
     function MigaWheelDao(dao) {
         this.dao = dao;
     }
     MigaWheelDao.prototype.categories = function () {
         // return ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'];
-        return this.dao.get('/assets/category.json')
+        return this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].CategoryJson)
             .map(function (res) { return Object.keys(res.json()); });
     };
     MigaWheelDao.prototype.posts = function (category) {
-        return this.dao.get('/assets/post.json')
+        return this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].PostJson)
             .map(function (res) {
             var o = res.json();
             return Object.keys(o).filter(function (k) { return o[k].category === category; })
@@ -1319,15 +1335,15 @@ var MigaWheelDao = (function () {
         var _this = this;
         var dateIndex, categories, posts, isUseIndex = this.isUseDateIndex(analysis), categoryAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].CategoryMode, analysis), postAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].PostMode, analysis), categoryNames = [], postTitles = [];
         if (isUseIndex) {
-            dateIndex = this.dao.get('/assets/date_index.json')
+            dateIndex = this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].DateIndexJson)
                 .map(function (res) { return res.json(); });
         }
         if (categoryAnalysis) {
-            categories = this.dao.get('/assets/category.json')
+            categories = this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].CategoryJson)
                 .map(function (res) { return res.json(); });
         }
         if (postAnalysis) {
-            posts = this.dao.get('/assets/post.json')
+            posts = this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].PostJson)
                 .map(function (res) { return res.json(); });
             if (isUseIndex) {
                 if (categoryAnalysis) {
@@ -1469,12 +1485,12 @@ var MigaWheelDao = (function () {
 
 /***/ }),
 
-/***/ 466:
+/***/ 467:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__migawheel_core__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__migawheel_core__ = __webpack_require__(194);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MigaWheelSearch; });
 /* unused harmony export AnalysisResult */
 /* unused harmony export Period */
@@ -1603,18 +1619,18 @@ var Period = (function () {
 
 /***/ }),
 
-/***/ 467:
+/***/ 468:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__migawheel_core__ = __webpack_require__(193);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__migawheel_search__ = __webpack_require__(466);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__migawheel_dao__ = __webpack_require__(465);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__migawheel_core__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__migawheel_search__ = __webpack_require__(467);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__migawheel_dao__ = __webpack_require__(466);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dao_dao_util__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_post_opener__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_post_opener_dao__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_post_opener__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_post_opener_dao__ = __webpack_require__(193);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MigaWheelPcComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1893,8 +1909,8 @@ var MigaWheelPcComponent = (function () {
     MigaWheelPcComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'migawheel',
-            template: __webpack_require__(456),
-            styles: [__webpack_require__(448)],
+            template: __webpack_require__(457),
+            styles: [__webpack_require__(449)],
             providers: [__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["b" /* MigaWheelCore */], __WEBPACK_IMPORTED_MODULE_2__migawheel_search__["a" /* MigaWheelSearch */], __WEBPACK_IMPORTED_MODULE_3__migawheel_dao__["a" /* MigaWheelDao */], __WEBPACK_IMPORTED_MODULE_4__dao_dao_util__["a" /* DaoUtil */], __WEBPACK_IMPORTED_MODULE_6__common_post_opener__["a" /* PostOpener */], __WEBPACK_IMPORTED_MODULE_7__common_post_opener_dao__["a" /* PostOpenerDao */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__migawheel_core__["b" /* MigaWheelCore */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__migawheel_core__["b" /* MigaWheelCore */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__migawheel_search__["a" /* MigaWheelSearch */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__migawheel_search__["a" /* MigaWheelSearch */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__migawheel_dao__["a" /* MigaWheelDao */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__migawheel_dao__["a" /* MigaWheelDao */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__angular_router__["a" /* Router */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__common_post_opener__["a" /* PostOpener */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__common_post_opener__["a" /* PostOpener */]) === 'function' && _e) || Object])
@@ -1906,7 +1922,7 @@ var MigaWheelPcComponent = (function () {
 
 /***/ }),
 
-/***/ 468:
+/***/ 469:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1981,8 +1997,8 @@ var PagerComponent = (function () {
     PagerComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'pager',
-            template: __webpack_require__(457),
-            styles: [__webpack_require__(449)]
+            template: __webpack_require__(458),
+            styles: [__webpack_require__(450)]
         }), 
         __metadata('design:paramtypes', [])
     ], PagerComponent);
@@ -1993,15 +2009,15 @@ var PagerComponent = (function () {
 
 /***/ }),
 
-/***/ 469:
+/***/ 470:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_index_component__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__article_article_component__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__category_category_component__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_index_component__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__article_article_component__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__category_category_component__ = __webpack_require__(280);
 /* unused harmony export routes */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2040,7 +2056,7 @@ var AppRoutingModule = (function () {
 
 /***/ }),
 
-/***/ 470:
+/***/ 471:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2060,7 +2076,7 @@ var environment = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(383);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(384);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DaoUtil; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2103,13 +2119,49 @@ var DaoUtil = (function () {
 
 /***/ }),
 
-/***/ 998:
+/***/ 98:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return API; });
+var API = (function () {
+    function API() {
+    }
+    API.setDevMode = function (devMode) {
+        API.DevMode = devMode;
+        if (devMode) {
+            API.CategoryJson = API.CategoryJsonDevMode;
+            API.PostJson = API.PostJsonDevMode;
+            API.DateIndexJson = API.DateIndexJsonDevMode;
+        }
+        else {
+            API.CategoryJson = API.CategoryJsonProductMode;
+            API.PostJson = API.PostJsonProductMode;
+            API.DateIndexJson = API.DateIndexJsonProductMode;
+        }
+    };
+    API.CategoryJson = API.CategoryJsonProductMode;
+    API.PostJson = API.PostJsonProductMode;
+    API.DateIndexJson = API.DateIndexJsonProductMode;
+    API.CategoryJsonProductMode = 'http://caols.tech/api/category.json';
+    API.PostJsonProductMode = 'http://caols.tech/api/post.json';
+    API.DateIndexJsonProductMode = 'http://caols.tech/api/date_index.json';
+    API.CategoryJsonDevMode = '/assets/category.json';
+    API.PostJsonDevMode = '/assets/post.json';
+    API.DateIndexJsonDevMode = '/assets/date_index.json';
+    return API;
+}());
+//# sourceMappingURL=/Users/cls/Dev/Git/personal/migawheel.caols.tech/src/api.const.js.map
+
+/***/ }),
+
+/***/ 999:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(436);
+module.exports = __webpack_require__(437);
 
 
 /***/ })
 
-},[998]);
+},[999]);
 //# sourceMappingURL=main.bundle.map

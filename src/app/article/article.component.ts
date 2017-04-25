@@ -33,7 +33,9 @@ export class ArticleComponent {
     private previousArticle: string;
     private nextArticle: string;
     private top5: string[];
+
     private replyFocused: boolean;
+    private replyContent: string;
 
     constructor(private dao: ArticleDao, private router: Router) {}
 
@@ -80,4 +82,9 @@ export class ArticleComponent {
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
     }
+
+    replyPublishBtnClicked() {
+        console.log('评论: ' + this.replyContent);
+    }
+
 }

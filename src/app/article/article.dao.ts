@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {DaoUtil} from "../dao/dao.util";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
+import {API} from "../const/api.const";
 
 @Injectable()
 export class ArticleDao {
@@ -9,7 +10,7 @@ export class ArticleDao {
     constructor(private dao: DaoUtil) {}
 
     post(title: string): Observable<Post> {
-        let post = this.dao.get('/assets/post.json')
+        let post = this.dao.get(API.PostJson)
             .map(res => res.json())
             .map(ret => ret[Object.keys(ret).filter(k => k === title)[0]]);
 

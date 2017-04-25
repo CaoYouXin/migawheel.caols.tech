@@ -4,6 +4,7 @@ import {DaoUtil} from "../dao/dao.util";
 import "rxjs/add/operator/map";
 import {SafeStyle} from "@angular/platform-browser";
 import {PostType} from "../const/post.type.const";
+import {API} from "../const/api.const";
 
 @Injectable()
 export class CategoryDao {
@@ -11,7 +12,7 @@ export class CategoryDao {
     constructor(private dao: DaoUtil) {}
 
     category(categoryName: string): Observable<Category> {
-        let category = this.dao.get('/assets/category.json')
+        let category = this.dao.get(API.CategoryJson)
             .map(res => res.json())
             .map(ret => ret[Object.keys(ret).filter(k => k === categoryName)[0]]);
 
@@ -46,7 +47,7 @@ export class CategoryDao {
     }
 
     posts(): Observable<any> {
-        return this.dao.get('/assets/post.json')
+        return this.dao.get(API.PostJson)
             .map(res => res.json());
     }
 

@@ -58,9 +58,11 @@
                 <br>
                 <div id="reply" class="reply" [class.focused]="replyFocused">
                     <div class="title"><span>awesome</span>发布评论...</div>
-                    <textarea placeholder="输入评论..." [class.focused]="replyFocused"
+                    <textarea placeholder="输入评论..."
+                              [(ngModel)]="replyContent"
+                              [class.focused]="replyFocused"
                               (focus)="replyFocused=true" (blur)="replyFocused=false"></textarea>
-                    <div class="publish-btn">发布</div>
+                    <div class="publish-btn" (click)="replyPublishBtnClicked()">发布</div>
                 </div>
                 <br>
                 <ol class="comments" reversed>

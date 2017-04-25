@@ -4,6 +4,7 @@ import {Configs} from "./migawheel.core";
 import {DaoUtil} from "../dao/dao.util";
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
+import {API} from "../const/api.const";
 
 @Injectable()
 export class MigaWheelDao {
@@ -13,12 +14,12 @@ export class MigaWheelDao {
 
     categories(): Observable<string[]> {
         // return ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'];
-        return this.dao.get('/assets/category.json')
+        return this.dao.get(API.CategoryJson)
             .map(res => Object.keys(res.json()));
     }
 
     posts(category: string): Observable<string[]> {
-        return this.dao.get('/assets/post.json')
+        return this.dao.get(API.PostJson)
             .map(res => {
                 let o = res.json();
                 return Object.keys(o).filter(k => o[k].category === category)
@@ -97,17 +98,17 @@ export class MigaWheelDao {
             postTitles: string[] = [];
 
         if (isUseIndex) {
-            dateIndex = this.dao.get('/assets/date_index.json')
+            dateIndex = this.dao.get(API.DateIndexJson)
                 .map(res => res.json());
         }
 
         if (categoryAnalysis) {
-            categories = this.dao.get('/assets/category.json')
+            categories = this.dao.get(API.CategoryJson)
                 .map(res => res.json());
         }
 
         if (postAnalysis) {
-            posts = this.dao.get('/assets/post.json')
+            posts = this.dao.get(API.PostJson)
                 .map(res => res.json());
 
             if (isUseIndex) {
