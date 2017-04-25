@@ -447,7 +447,7 @@ var ArticleComponent = (function () {
     // dom handlers
     ArticleComponent.prototype.categoryClicked = function () {
         window.localStorage.setItem('category', this.categoryName);
-        this.router.navigate(['/category']);
+        var navigate = this.router.navigate(['/category']);
     };
     ArticleComponent.prototype.articleOnload = function () {
         this.showMenu = false;
@@ -1326,12 +1326,15 @@ var MigaWheelDao = (function () {
         var _this = this;
         Object.keys(obj).forEach(function (key) {
             var examFn = _this.generateExamFn(examSeed);
-            if (examFn(key)) {
+            var examRet = examFn(parseInt(key));
+            // console.log(key, obj[key], examRet);
+            if (examRet) {
                 cb(obj[key]);
             }
         });
     };
     MigaWheelDao.prototype.search = function (analysis) {
+        // console.log(analysis);
         var _this = this;
         var dateIndex, categories, posts, isUseIndex = this.isUseDateIndex(analysis), categoryAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].CategoryMode, analysis), postAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].PostMode, analysis), categoryNames = [], postTitles = [];
         if (isUseIndex) {

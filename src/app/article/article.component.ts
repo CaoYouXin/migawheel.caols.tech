@@ -75,7 +75,7 @@ export class ArticleComponent {
     categoryClicked() {
         window.localStorage.setItem('category', this.categoryName);
 
-        this.router.navigate(['/category']);
+        let navigate = this.router.navigate(['/category']);
     }
 
     articleOnload() {

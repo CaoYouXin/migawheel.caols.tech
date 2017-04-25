@@ -81,13 +81,19 @@ export class MigaWheelDao {
     private exam(obj: any, examSeed: any, cb: Function) {
         Object.keys(obj).forEach(key => {
             let examFn = this.generateExamFn(examSeed);
-            if (examFn(key)) {
+            let examRet = examFn(parseInt(key));
+
+            // console.log(key, obj[key], examRet);
+
+            if (examRet) {
                 cb(obj[key]);
             }
         });
     }
 
     search(analysis: AnalysisResult[]): Observable<string[]> {
+        // console.log(analysis);
+
         let dateIndex: Observable<any>,
             categories: Observable<any>,
             posts: Observable<any>,
