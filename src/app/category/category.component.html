@@ -39,7 +39,7 @@
                     <li *ngFor="let imageListItem of imageList"
                         [style.background-size]="imageListItemBackgroundSize"
                         [style.background-image]="imageListItem.imageSrc"
-                        (click)="listItemClicked($event)">
+                        (click)="postOpener.postOpen(imageListItem.title)">
                         <p>{{imageListItem.title}}</p>
                     </li>
                 </ul>
@@ -61,7 +61,7 @@
 
             <div class="category-list2">
                 <ul>
-                    <li *ngFor="let noneImageListItem of noneImageList" (click)="listItemClicked($event)">
+                    <li *ngFor="let noneImageListItem of noneImageList" (click)="postOpener.postOpen(noneImageListItem.title)">
                         <h1>{{noneImageListItem.title}}</h1>
                         <p>{{noneImageListItem.brief}}</p>
                     </li>
@@ -85,11 +85,7 @@
                 <br>
                 <p class="top5" data-rel="TOP 5:"></p>
                 <ol>
-                    <li><a href="#">深入理解计算机网络1</a></li>
-                    <li><a href="#">深入理解计算机网络3</a></li>
-                    <li><a href="#">深入理解计算机网络5</a></li>
-                    <li><a href="#">深入理解计算机网络6</a></li>
-                    <li><a href="#">深入理解计算机网络7</a></li>
+                    <li *ngFor="let top of top5" (click)="postOpener.postOpen(top)">{{top}}</li>
                 </ol>
                 <br>
             </div>

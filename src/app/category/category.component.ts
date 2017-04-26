@@ -47,6 +47,8 @@ export class CategoryComponent {
     private list2PagerPageSize: string;
     private list2PagerCurrentPage: number;
 
+    private top5: string[];
+
     private list1Render() {
         let pageSize = parseInt(this.list1PagerPageSize);
         this.imageList = this._imageList.slice(
@@ -78,6 +80,8 @@ export class CategoryComponent {
         this.imageList = [];
         this.noneImageList = [];
 
+        this.top5 = [];
+
         let self = this;
         this.dao.category(this.categoryName)
             .subscribe(category => {
@@ -108,15 +112,6 @@ export class CategoryComponent {
     categoryOnload() {
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
-    }
-
-    listItemClicked(e) {
-        let liElem = e.target;
-        while (liElem.tagName !== 'LI') {
-            liElem = liElem.parentElement;
-        }
-
-        this.postOpener.postOpen(liElem.firstElementChild.innerHTML);
     }
 
     list1PagerInfoChange(e) {

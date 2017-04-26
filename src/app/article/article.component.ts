@@ -66,7 +66,7 @@ export class ArticleComponent {
         this.articleLikeCount = 99;
         this.previousArticle = Configs.nonePrevious;
         this.nextArticle = Configs.noneNext;
-        this.top5 = [this.articleTitle, this.articleTitle, this.articleTitle, this.articleTitle, this.articleTitle];
+        this.top5 = [];
 
         this.articleLoad(this.articleTitle);
     }
@@ -74,7 +74,6 @@ export class ArticleComponent {
     // dom handlers
     categoryClicked() {
         window.localStorage.setItem('category', this.categoryName);
-
         let navigate = this.router.navigate(['/category']);
     }
 

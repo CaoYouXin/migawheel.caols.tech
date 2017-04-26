@@ -27,11 +27,12 @@
             </defs>
             <g class="left" transform="translate(250,250)" (click)="leftClicked($event)">
                 <path d="M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z"></path>
-                <text x="-60" y="-40" fill="white">View Github</text>
+                <text x="-15" y="-55" fill="white">查看</text>
+                <text x="-30" y="-35" fill="white">Github</text>
             </g>
             <g class="right" transform="translate(250,250) rotate(180 0 0)" (click)="rightClicked($event)">
                 <path d="M 0,0 A 50,50 0 0,0 0,100 A 100,100 0 0,1 0,-100 A 50,50 0 0,1 0,0Z"></path>
-                <text x="-45" y="60" transform="rotate(180 0 0)" fill="black">View Resume</text>
+                <text x="-30" y="60" transform="rotate(180 0 0)" fill="black">查看简历</text>
             </g>
             <g class="elems" [attr.transform]="transform">
                 <g *ngFor="let elem of elems" class="cate" [attr.transform]="elem.transform"
