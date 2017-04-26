@@ -10,7 +10,7 @@ import {API} from "./const/api.const";
 export class AppComponent {
 
     ngOnInit() {
-        API.setDevMode(true);
+        API.setProductMode(true);
     }
 
 }

@@ -865,7 +865,7 @@ var AppComponent = (function () {
     function AppComponent() {
     }
     AppComponent.prototype.ngOnInit = function () {
-        __WEBPACK_IMPORTED_MODULE_1__const_api_const__["a" /* API */].setDevMode(true);
+        __WEBPACK_IMPORTED_MODULE_1__const_api_const__["a" /* API */].setProductMode(true);
     };
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
@@ -2130,17 +2130,17 @@ var DaoUtil = (function () {
 var API = (function () {
     function API() {
     }
-    API.setDevMode = function (devMode) {
-        API.DevMode = devMode;
-        if (devMode) {
-            API.CategoryJson = API.CategoryJsonDevMode;
-            API.PostJson = API.PostJsonDevMode;
-            API.DateIndexJson = API.DateIndexJsonDevMode;
-        }
-        else {
+    API.setProductMode = function (mode) {
+        API.Mode = mode;
+        if (mode) {
             API.CategoryJson = API.CategoryJsonProductMode;
             API.PostJson = API.PostJsonProductMode;
             API.DateIndexJson = API.DateIndexJsonProductMode;
+        }
+        else {
+            API.CategoryJson = API.CategoryJsonDevMode;
+            API.PostJson = API.PostJsonDevMode;
+            API.DateIndexJson = API.DateIndexJsonDevMode;
         }
     };
     API.CategoryJson = API.CategoryJsonProductMode;

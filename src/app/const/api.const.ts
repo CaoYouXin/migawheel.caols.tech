@@ -1,18 +1,18 @@
 export class API {
 
-    static DevMode: boolean;
+    static Mode: boolean;
 
-    static setDevMode(devMode: boolean) {
-        API.DevMode = devMode;
+    static setProductMode(mode: boolean) {
+        API.Mode = mode;
 
-        if (devMode) {
-            API.CategoryJson = API.CategoryJsonDevMode;
-            API.PostJson = API.PostJsonDevMode;
-            API.DateIndexJson = API.DateIndexJsonDevMode;
-        } else {
+        if (mode) {
             API.CategoryJson = API.CategoryJsonProductMode;
             API.PostJson = API.PostJsonProductMode;
             API.DateIndexJson = API.DateIndexJsonProductMode;
+        } else {
+            API.CategoryJson = API.CategoryJsonDevMode;
+            API.PostJson = API.PostJsonDevMode;
+            API.DateIndexJson = API.DateIndexJsonDevMode;
         }
     }
 
