@@ -111,7 +111,7 @@ export class CategoryComponent {
     // dom handlers
     categoryOnload() {
         this.showMenu = false;
-        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
+        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
     }
 
     list1PagerInfoChange(e) {

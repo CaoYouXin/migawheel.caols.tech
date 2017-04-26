@@ -451,7 +451,7 @@ var ArticleComponent = (function () {
     };
     ArticleComponent.prototype.articleOnload = function () {
         this.showMenu = false;
-        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
+        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
     };
     ArticleComponent.prototype.replyPublishBtnClicked = function () {
         console.log('评论: ' + this.replyContent);
@@ -557,7 +557,7 @@ var CategoryComponent = (function () {
     // dom handlers
     CategoryComponent.prototype.categoryOnload = function () {
         this.showMenu = false;
-        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 100;
+        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
     };
     CategoryComponent.prototype.list1PagerInfoChange = function (e) {
         var split = e.split('@');
