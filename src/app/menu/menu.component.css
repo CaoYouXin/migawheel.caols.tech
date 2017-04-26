@@ -44,6 +44,56 @@
     background-color, 1s ease-in-out .7s;
 
     background-color: rgb(249, 249, 249);
+
+    text-align: center;
+}
+
+.menu:before {
+    content: '';
+    width: 0;
+    height: 100%;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateZ(360deg);
+    }
+}
+
+.menu > .loading {
+    width: 64px;
+    height: 64px;
+    background: url("../../assets/loading.png");
+
+    transform-origin: 50% 50% 0;
+
+    animation: 3s linear 0s infinite;
+    animation-name: rotation;
+}
+
+.menu > .loading, .menu:before {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.menu > .loading + div {
+    position: fixed;
+    z-index: 20000;
+
+    right: 10px;
+    bottom: 12px;
+
+    font-size: 12px;
+
+    display: none;
+}
+
+.menu > .loading:hover + div {
+    display: block;
 }
 
 .menu.left {
