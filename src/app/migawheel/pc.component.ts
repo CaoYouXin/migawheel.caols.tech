@@ -218,7 +218,7 @@ export class MigaWheelPcComponent {
             return;
         }
 
-        alert('to show resume...');
+        window.open('http://demo.caols.tech/profile/index.html', '_blank');
     }
 
     private elemClicked(e) {

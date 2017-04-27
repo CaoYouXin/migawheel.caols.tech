@@ -1801,7 +1801,7 @@ var MigaWheelPcComponent = (function () {
         if (!this.clickFlag) {
             return;
         }
-        alert('to show resume...');
+        window.open('http://demo.caols.tech/profile/index.html', '_blank');
     };
     MigaWheelPcComponent.prototype.elemClicked = function (e) {
         if (!this.clickFlag) {
