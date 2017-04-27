@@ -83,6 +83,10 @@ text {
     fill: url(#gradient-thin);
 }
 
+.cateBack > text {
+    fill: wheat;
+}
+
 #miga-search {
     width: 500px;
     height: 50px;
