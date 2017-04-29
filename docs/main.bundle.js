@@ -444,7 +444,6 @@ var ArticleComponent = (function () {
             self.categoryName = post.category;
             self.articleContent = post.content;
             self.articleScriptSrc = post.script;
-            console.log('post', post);
         });
     };
     // ng handlers
@@ -554,7 +553,6 @@ var CategoryComponent = (function () {
             self.categoryUpdateTime = category.update;
             self.categoryContent = category.content;
             self.categoryScriptSrc = category.script;
-            console.log('category', category);
             self._imageList = category.imageList.map(function (ilItem) {
                 ilItem.imageSrc = self.sanitizer.bypassSecurityTrustStyle('url("' + ilItem._imageSrc + '")');
                 return ilItem;

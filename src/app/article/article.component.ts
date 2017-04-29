@@ -59,8 +59,6 @@ export class ArticleComponent {
                 self.categoryName = post.category;
                 self.articleContent = post.content;
                 self.articleScriptSrc = post.script;
-
-                console.log('post', post);
             });
     }
 

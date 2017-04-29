@@ -91,8 +91,6 @@ export class CategoryComponent {
                 self.categoryContent = category.content;
                 self.categoryScriptSrc = category.script;
 
-                console.log('category', category);
-
                 self._imageList = category.imageList.map(ilItem => {
                     ilItem.imageSrc = self.sanitizer.bypassSecurityTrustStyle('url("' + ilItem._imageSrc + '")');
                     return ilItem;
