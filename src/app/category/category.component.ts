@@ -1,22 +1,22 @@
 import {Component, ViewChild, ElementRef} from "@angular/core"
-import {Router} from "@angular/router";
-import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
+import {DomSanitizer} from "@angular/platform-browser";
 import {CategoryDao, ListItem} from "./category.dao";
 import {DaoUtil} from "../dao/dao.util";
 import {PostOpener} from "../common/post.opener";
 import {PostOpenerDao} from "../common/post.opener.dao";
+import {PostUnload} from "../common/post.unload";
 
 @Component({
     selector: 'category',
     templateUrl: 'category.component.html',
     styleUrls: ['category.component.css'],
-    providers: [CategoryDao, DaoUtil, PostOpener, PostOpenerDao]
+    providers: [CategoryDao, DaoUtil, PostOpener, PostOpenerDao, PostUnload]
 })
 export class CategoryComponent {
 
     constructor(private dao: CategoryDao,
                 private postOpener: PostOpener,
-                private router: Router,
+                private unload: PostUnload,
                 private sanitizer: DomSanitizer) {}
 
     @ViewChild('body')
@@ -85,10 +85,13 @@ export class CategoryComponent {
         let self = this;
         this.dao.category(this.categoryName)
             .subscribe(category => {
+
                 self.categoryCreateTime = category.create;
                 self.categoryUpdateTime = category.update;
                 self.categoryContent = category.content;
                 self.categoryScriptSrc = category.script;
+
+                console.log('category', category);
 
                 self._imageList = category.imageList.map(ilItem => {
                     ilItem.imageSrc = self.sanitizer.bypassSecurityTrustStyle('url("' + ilItem._imageSrc + '")');
@@ -127,4 +130,10 @@ export class CategoryComponent {
         this.list2PagerPageSize = split[1];
         this.list2Render();
     }
+
+    noneImageListItemClicked(title: string) {
+        this.unload.unload();
+        this.postOpener.postOpen(title);
+    }
+
 }

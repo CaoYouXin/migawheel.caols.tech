@@ -19,14 +19,14 @@ export class ContentComponent {
 
     // ng event handler
     ngOnChanges(changeRecords) {
-        if (changeRecords.innerHTML) {
-            this.contentContainer.nativeElement.innerHTML = this.innerHTML;
+        if (changeRecords.innerHTML && changeRecords.innerHTML.currentValue) {
+            this.contentContainer.nativeElement.innerHTML = changeRecords.innerHTML.currentValue;
         }
 
-        if (changeRecords.scriptSrc && this.scriptSrc) {
+        if (changeRecords.scriptSrc && changeRecords.scriptSrc.currentValue) {
             let self = this;
             let scriptElem = document.createElement('script');
-            scriptElem.src = this.scriptSrc;
+            scriptElem.src = changeRecords.scriptSrc.currentValue;
             scriptElem.onload = function () {
                 self.onload.emit();
             };

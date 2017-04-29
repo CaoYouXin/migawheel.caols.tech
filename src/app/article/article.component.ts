@@ -2,6 +2,7 @@ import {Component, ViewChild, ElementRef} from "@angular/core";
 import {Router} from "@angular/router"
 import {ArticleDao} from "./article.dao";
 import {DaoUtil} from "../dao/dao.util";
+import {PostUnload} from "../common/post.unload";
 
 class Configs {
     static nonePrevious = '没有上一篇了';
@@ -12,7 +13,7 @@ class Configs {
     selector: 'article',
     templateUrl: 'article.component.html',
     styleUrls: ['article.component.css'],
-    providers: [ArticleDao, DaoUtil]
+    providers: [ArticleDao, DaoUtil, PostUnload]
 })
 export class ArticleComponent {
 
@@ -37,7 +38,9 @@ export class ArticleComponent {
     private replyFocused: boolean;
     private replyContent: string;
 
-    constructor(private dao: ArticleDao, private router: Router) {}
+    constructor(private dao: ArticleDao,
+                private router: Router,
+                private unload: PostUnload) {}
 
     private articleLoad(title: string) {
         if (Configs.nonePrevious === title ||
@@ -45,6 +48,7 @@ export class ArticleComponent {
             return;
         }
 
+        this.unload.unload();
         this.showMenu = true;
         let self = this;
         this.dao.post(title)
@@ -55,6 +59,8 @@ export class ArticleComponent {
                 self.categoryName = post.category;
                 self.articleContent = post.content;
                 self.articleScriptSrc = post.script;
+
+                console.log('post', post);
             });
     }
 
@@ -73,6 +79,7 @@ export class ArticleComponent {
 
     // dom handlers
     categoryClicked() {
+        this.unload.unload();
         window.localStorage.setItem('category', this.categoryName);
         let navigate = this.router.navigate(['/category']);
     }
