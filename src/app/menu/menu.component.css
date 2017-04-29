@@ -1,7 +1,7 @@
 .banner, .left-banner, .menu {
     position: fixed;
 
-    background-color: rgba(249, 249, 249, 0.2);
+    background-color: rgba(249, 249, 249, 0.3);
 
     transition: background-color, 1s ease-in-out .7s;
 }
