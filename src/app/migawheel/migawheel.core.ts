@@ -26,7 +26,7 @@ export class MigaWheelCore {
 
     private chineseAngle: number[];
     private englishAngle: number[];
-    
+
     private dataProcessFn: Function;
 
     private renderedElems: Elem[];
@@ -231,8 +231,10 @@ export class MigaWheelCore {
         processedData.forEach((pd, index) => {
             let len = 0;
             for (let i = 0; i < pd.length; i++) {
-                contents.push(new Content(len, pd.charAt(i), self.radius[index]));
-                len += pd.charCodeAt(i) < 128 ? this.englishAngle[index] : this.chineseAngle[index];
+                let wordAngle = pd.charCodeAt(i) < 128 ? this.englishAngle[index] : this.chineseAngle[index];
+                contents.push(new Content(len + wordAngle / 2, pd.charAt(i), self.radius[index],
+                    pd.charCodeAt(i) < 128 ? self.fontSize / 2 : self.fontSize));
+                len += wordAngle;
             }
 
             if (len > maxLen) {
@@ -304,7 +306,7 @@ export class MigaWheelCore {
 
         let alpha0 = this.calcTotalAngle(ret[0], this.lineNum- 2);
         let alpha = this.calcTotalAngle(str, this.lineNum- 3);
-    
+
         let ratio = alpha / alpha0, line3, line4, line5;
 
         if (ratio <= 1) {
@@ -321,7 +323,7 @@ export class MigaWheelCore {
             line4 = this.splitToAngle(str.substr(line5.length), alpha / 3, this.lineNum- 4, false);
             ret = [line5, line4, str.substr(line5.length + line4.length)].concat(ret);
         }
-    
+
         return ret.map(function (s) {
             return ' ' + s.trim() + ' ';
         });
@@ -389,11 +391,13 @@ export class Content {
     transform: string;
     content: string;
     y: string;
+    x: string;
 
-    constructor(rad: number, content: string, radius: number) {
+    constructor(rad: number, content: string, radius: number, width: number) {
         this.transform = 'rotate(' + (rad / Math.PI * 180) + ' 0 0)';
         this.content = content;
         this.y = '-' + radius;
+        this.x = '-' + (width / 2);
     }
 }
 
