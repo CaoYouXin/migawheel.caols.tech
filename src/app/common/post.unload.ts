@@ -3,10 +3,9 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class PostUnload {
 
-    unload(): void {
+    unload(params: Array<any>): void {
         let unloadFn = (window['handlers'] || {unload: null}).unload || function() {};
-        console.log('unload', unloadFn.toString());
-        unloadFn();
+        unloadFn.apply(null, params);
     }
 
 }

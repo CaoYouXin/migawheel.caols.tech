@@ -130,7 +130,7 @@ export class CategoryComponent {
     }
 
     noneImageListItemClicked(title: string) {
-        this.unload.unload();
+        this.unload.unload(null);
         this.postOpener.postOpen(title);
     }
 

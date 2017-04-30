@@ -48,7 +48,7 @@ export class ArticleComponent {
             return;
         }
 
-        this.unload.unload();
+        this.unload.unload(null);
         this.showMenu = true;
         let self = this;
         this.dao.post(title)
@@ -77,7 +77,7 @@ export class ArticleComponent {
 
     // dom handlers
     categoryClicked() {
-        this.unload.unload();
+        this.unload.unload(null);
         window.localStorage.setItem('category', this.categoryName);
         let navigate = this.router.navigate(['/category']);
     }
