@@ -36,6 +36,8 @@
 .wrapper > .tao {
     width: 500px;
     height: 560px;
+
+    user-select: none;
 }
 
 #taiqi {
@@ -44,6 +46,8 @@
     background-color: #ddd;
 
     border-radius: 50%;
+
+    user-select: none;
 }
 
 .left {
