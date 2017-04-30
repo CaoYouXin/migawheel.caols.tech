@@ -60,6 +60,7 @@ export class PagerComponent {
     pageSizeChange(str) {
         let matched = str.match(/\d+|无限/);
         if (!matched) {
+            alert('输入不合法');
             return false;
         }
 
