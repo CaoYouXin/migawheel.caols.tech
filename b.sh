@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-ng build && cp -r ./dist/ ./docs/
+ng build -prod && cp -r ./dist/ ./docs/
