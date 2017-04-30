@@ -50,6 +50,11 @@ export class CategoryComponent {
     private top5: string[];
 
     private list1Render() {
+        if ('无限' === this.list1PagerPageSize) {
+            this.imageList = this._imageList;
+            return;
+        }
+
         let pageSize = parseInt(this.list1PagerPageSize);
         this.imageList = this._imageList.slice(
             (this.list1PagerCurrentPage - 1) * pageSize,
@@ -58,6 +63,11 @@ export class CategoryComponent {
     }
 
     private list2Render() {
+        if ('无限' === this.list2PagerPageSize) {
+            this.noneImageList = this._noneImageList;
+            return;
+        }
+
         let pageSize = parseInt(this.list2PagerPageSize);
         this.noneImageList = this._noneImageList.slice(
             (this.list2PagerCurrentPage - 1) * pageSize,
@@ -116,6 +126,10 @@ export class CategoryComponent {
     }
 
     list1PagerInfoChange(e) {
+        if (!e.split) {
+            return;
+        }
+
         let split = e.split('@');
         this.list1PagerCurrentPage = parseInt(split[0]);
         this.list1PagerPageSize = split[1];
@@ -123,6 +137,10 @@ export class CategoryComponent {
     }
 
     list2PagerInfoChange(e) {
+        if (!e.split) {
+            return;
+        }
+
         let split = e.split('@');
         this.list2PagerCurrentPage = parseInt(split[0]);
         this.list2PagerPageSize = split[1];

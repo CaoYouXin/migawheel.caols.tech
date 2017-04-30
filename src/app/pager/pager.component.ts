@@ -7,7 +7,7 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
 })
 export class PagerComponent {
 
-    private showSelector: boolean;
+    showSelector: boolean;
 
     @Input()
     private pageSize: string;
@@ -27,6 +27,7 @@ export class PagerComponent {
     }
 
     private reCalc() {
+        this.currentPage = 1;
         this.totalPage = '无限' === this.pageSize ? 1 : Math.ceil(this.totalCount / parseInt(this.pageSize));
     }
 
@@ -53,18 +54,17 @@ export class PagerComponent {
             return;
         }
 
-        this.pageSize = e.target.innerHTML;
-        this.reCalc();
-
-        this.currentPage = 1;
-        this.emit();
+        this.pageSizeChange(e.target.innerHTML);
     }
 
     pageSizeChange(str) {
-        this.pageSize = str.match(/\d+/);
-        this.reCalc();
+        let matched = str.match(/\d+|无限/);
+        if (!matched) {
+            return false;
+        }
 
-        this.currentPage = 1;
+        this.pageSize = matched[0];
+        this.reCalc();
         this.emit();
     }
 
