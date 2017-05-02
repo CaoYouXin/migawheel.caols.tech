@@ -30,10 +30,22 @@
     </script>
 
     <style>
+        @keyframes inSpace {
+            from {
+                background-size: 100%;
+            }
+
+            to {
+                background-size: 108%;
+            }
+        }
+
         body {
-            background: url("./assets/index_bg.gif") repeat;
+            background: url("./assets/stars_texture2942.jpg") repeat center;
 
             font-family: Monaco, "Lucida Console", "Comic Sans MS", monospace;
+
+            animation: inSpace 3s ease-in-out infinite alternate;
         }
     </style>
 
