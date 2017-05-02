@@ -32,20 +32,34 @@
     <style>
         @keyframes inSpace {
             from {
-                background-size: 100%;
+                transform: scale(1);
             }
 
             to {
-                background-size: 108%;
+                transform: scale(1.1);
             }
         }
 
-        body {
+        .bg {
+            position: fixed;
+            z-index: -1000;
+
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+
             background: url("./assets/stars.jpg") repeat center;
+            background-size: cover;
 
+            transform-origin: 50% 50%;
+
+            animation: 5s linear 0s infinite alternate;
+            animation-name: inSpace;
+        }
+
+        *, *:before, *:after {
             font-family: Monaco, "Lucida Console", "Comic Sans MS", monospace;
-
-            animation: inSpace 3s ease-in-out infinite alternate;
         }
     </style>
 
@@ -54,5 +68,6 @@
 <link href="styles.d41d8cd98f00b204e980.bundle.css" rel="stylesheet"/></head>
 <body>
 <app-root>Loading...</app-root>
+<div class="bg"></div>
 <script type="text/javascript" src="inline.3cb4f50c3ac217e5fb36.bundle.js"></script><script type="text/javascript" src="polyfills.454f5e4c1cab6fd5bf93.bundle.js"></script><script type="text/javascript" src="vendor.614a31d29228079613af.bundle.js"></script><script type="text/javascript" src="main.cde976231a5b97d03fc7.bundle.js"></script></body>
 </html>
