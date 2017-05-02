@@ -12,7 +12,7 @@
             <span *ngIf="hints.length === 0">{{searchErrorMsg}}</span>
         </div>
 
-        <svg id="taiqi" width="500" height="500" (mousedown)="svgMouseDown($event)" (mouseup)="svgMouseUp($event)" (mousemove)="svgMouseMove($event)">
+        <svg #taiqi id="taiqi" width="500" height="500" (mousedown)="svgMouseDown($event)" (mouseup)="svgMouseUp($event)" (mousemove)="svgMouseMove($event)">
             <defs>
                 <radialGradient id="gradient" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="250" spreadMethod="pad">
                     <stop offset="0%" stop-color="#3366CC"></stop>

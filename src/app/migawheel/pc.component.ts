@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {MigaWheelCore, Elem, Configs, RenderedText} from "./migawheel.core";
 import {MigaWheelSearch} from "./migawheel.search";
 import {MigaWheelDao} from "./migawheel.dao";
@@ -22,6 +22,9 @@ export class MigaWheelPcComponent {
                 private postOpener: PostOpener) {
     }
 
+    @ViewChild('taiqi')
+    private taiqiElem: ElementRef;
+
     private categorySelected: boolean;
     private renderedCategory: RenderedText[];
 
@@ -42,14 +45,11 @@ export class MigaWheelPcComponent {
     private lastAngle: number;
     private daCount: number;
 
-    private originX: number;
-    private originY: number;
-
     private firstKeyUp: boolean;
 
     private calcAngle(e) {
-        let dx = e.offsetX - this.originX;
-        let dy = e.offsetY - this.originY;
+        let dx = e.pageX - window.innerWidth / 2;
+        let dy = e.pageY - window.innerHeight / 2;
 
         let angle = Math.acos(dx / Math.sqrt(dx * dx + dy * dy));
         if (dy > 0) {
@@ -195,7 +195,7 @@ export class MigaWheelPcComponent {
         this.selectedHint = -1;
         this.searchErrorMsg = this.search.errorMsg;
         this.daCount = 0;
-        this.originX = this.originY = 250;
+
         this.firstKeyUp = true;
 
         this.dao.categories().subscribe(categories => {
