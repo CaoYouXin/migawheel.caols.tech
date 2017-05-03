@@ -3,6 +3,7 @@ import {Router} from "@angular/router"
 import {ArticleDao} from "./article.dao";
 import {DaoUtil} from "../dao/dao.util";
 import {PostUnload} from "../common/post.unload";
+import {URIUtil} from "../route/uri.util";
 
 class Configs {
     static nonePrevious = '没有上一篇了';
@@ -64,7 +65,7 @@ export class ArticleComponent {
 
     // ng handlers
     ngOnInit() {
-        this.articleTitle = window.localStorage.getItem('article');
+        this.articleTitle = URIUtil.getParam(this.router.routerState.snapshot.url, ['n'])['n'];
 
         this.categoryName = 'Demo';
         this.articleLikeCount = 99;
@@ -78,8 +79,7 @@ export class ArticleComponent {
     // dom handlers
     categoryClicked() {
         this.unload.unload(null);
-        window.localStorage.setItem('category', this.categoryName);
-        let navigate = this.router.navigate(['/category']);
+        let navigate = this.router.navigate(['/category', {n: this.categoryName}]);
     }
 
     articleOnload() {

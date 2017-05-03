@@ -18,8 +18,7 @@ export class PostOpener {
                         window.open(post.url, '_blank');
                         break;
                     case PostType.ARTICLE:
-                        window.localStorage.setItem('article', postName);
-                        let navigate = self.router.navigate(['/article']);
+                        let navigate = self.router.navigate(['/article', {n: postName}]);
                         break;
                     default:break;
                 }

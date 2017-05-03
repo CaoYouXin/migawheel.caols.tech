@@ -5,6 +5,8 @@ import {DaoUtil} from "../dao/dao.util";
 import {PostOpener} from "../common/post.opener";
 import {PostOpenerDao} from "../common/post.opener.dao";
 import {PostUnload} from "../common/post.unload";
+import {Router} from "@angular/router";
+import {URIUtil} from "../route/uri.util";
 
 @Component({
     selector: 'category',
@@ -15,6 +17,7 @@ import {PostUnload} from "../common/post.unload";
 export class CategoryComponent {
 
     constructor(private dao: CategoryDao,
+                private router: Router,
                 private postOpener: PostOpener,
                 private unload: PostUnload,
                 private sanitizer: DomSanitizer) {}
@@ -85,7 +88,7 @@ export class CategoryComponent {
         this.list2PagerTotalCount = 0;
 
         this.showMenu = true;
-        this.categoryName = window.localStorage.getItem('category');
+        this.categoryName = URIUtil.getParam(this.router.routerState.snapshot.url, ['n'])['n'];
         this.categoryLikeCount = 99;
         this.imageList = [];
         this.noneImageList = [];
