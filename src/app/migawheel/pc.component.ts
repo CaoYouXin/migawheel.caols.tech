@@ -15,6 +15,9 @@ import {PostOpenerDao} from "../common/post.opener.dao";
     providers: [MigaWheelCore, MigaWheelSearch, MigaWheelDao, DaoUtil, PostOpener, PostOpenerDao]
 })
 export class MigaWheelPcComponent {
+
+    clickEffect = false;
+
     constructor(private core: MigaWheelCore,
                 private search: MigaWheelSearch,
                 private dao: MigaWheelDao,
@@ -210,6 +213,9 @@ export class MigaWheelPcComponent {
             return;
         }
 
+        this.clickEffect = true;
+        setTimeout((self) => self.clickEffect = false, 1000, this);
+
         window.open('https://github.com/CaoYouXin', '_blank');
     }
 
@@ -217,6 +223,9 @@ export class MigaWheelPcComponent {
         if (!this.clickFlag) {
             return;
         }
+
+        this.clickEffect = true;
+        setTimeout((self) => self.clickEffect = false, 1000, this);
 
         window.open('http://demo.caols.tech/profile/index.html', '_blank');
     }
@@ -250,6 +259,8 @@ export class MigaWheelPcComponent {
 
         this.processClick(content);
 
+        this.clickEffect = true;
+        setTimeout((self) => self.clickEffect = false, 1000, this);
     }
 
     private svgMouseDown(e) {
@@ -304,6 +315,9 @@ export class MigaWheelPcComponent {
 
         this.categorySelected = false;
         this.render(Configs.CategoryMode + '[:]' + this.core.previousCategories.join('[.]'));
+
+        this.clickEffect = true;
+        setTimeout((self) => self.clickEffect = false, 1000, this);
     }
 
     // search extension

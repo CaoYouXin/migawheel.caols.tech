@@ -178,3 +178,22 @@ text {
 #miga-search-hints > p + p {
     border-top: solid 1px blanchedalmond;
 }
+
+.zi-1 {
+    margin-top: 50px;
+    z-index: -1;
+}
+
+.signal {
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background-image: radial-gradient(circle 300px at 50% 50%, transparent 0%, transparent 50%, blue 100%);
+
+    transform: scale(0.3);
+}
+
+.signal.ani {
+    transform: scale(10);
+    transition: transform 1s ease-in-out;
+}
