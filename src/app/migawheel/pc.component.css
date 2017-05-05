@@ -188,12 +188,12 @@ text {
     width: 600px;
     height: 600px;
     border-radius: 50%;
-    background-image: radial-gradient(circle 300px at 50% 50%, transparent 0%, transparent 50%, blue 100%);
+    background-image: radial-gradient(circle 300px at 50% 50%, transparent 0%, transparent 50%, blue 90%, white 95%, transparent 100%);
 
     transform: scale(0.3);
 }
 
 .signal.ani {
-    transform: scale(10);
+    transform: scale(6);
     transition: transform 1s ease-in-out;
 }

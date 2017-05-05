@@ -214,9 +214,10 @@ export class MigaWheelPcComponent {
         }
 
         this.clickEffect = true;
-        setTimeout((self) => self.clickEffect = false, 1000, this);
-
-        window.open('https://github.com/CaoYouXin', '_blank');
+        setTimeout((self) => {
+            self.clickEffect = false;
+            window.open('https://github.com/CaoYouXin', '_blank');
+        }, 1000, this);
     }
 
     private rightClicked() {
@@ -225,9 +226,10 @@ export class MigaWheelPcComponent {
         }
 
         this.clickEffect = true;
-        setTimeout((self) => self.clickEffect = false, 1000, this);
-
-        window.open('http://demo.caols.tech/profile/index.html', '_blank');
+        setTimeout((self) => {
+            self.clickEffect = false;
+            window.open('http://demo.caols.tech/profile/index.html', '_blank');
+        }, 1000, this);
     }
 
     private elemClicked(e) {
