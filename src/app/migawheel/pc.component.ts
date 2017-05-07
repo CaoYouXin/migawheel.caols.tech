@@ -259,10 +259,11 @@ export class MigaWheelPcComponent {
             }
         }
 
-        this.processClick(content);
-
         this.clickEffect = true;
-        setTimeout((self) => self.clickEffect = false, 1000, this);
+        setTimeout((self) => {
+            self.clickEffect = false;
+            self.processClick(content);
+        }, 1000, this);
     }
 
     private svgMouseDown(e) {
