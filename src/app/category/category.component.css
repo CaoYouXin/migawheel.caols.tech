@@ -160,7 +160,7 @@ p[data-rel]:before {
     display: block;
     float: left;
 
-    background-color: #eeebbc;
+    background: #eeebbc no-repeat;
 
     width: 370px;
     height: 210px;
