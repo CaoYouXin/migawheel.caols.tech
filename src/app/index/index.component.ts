@@ -5,4 +5,12 @@ import {Component} from "@angular/core";
     templateUrl: './index.component.html',
     styleUrls: ['./index.component.css']
 })
-export class IndexComponent {}
+export class IndexComponent {
+
+    loading: boolean;
+
+    needLoading(isLoading: boolean) {
+        this.loading = isLoading;
+    }
+
+}

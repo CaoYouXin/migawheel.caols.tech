@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Output, ViewChild} from "@angular/core";
 import {MigaWheelCore, Elem, Configs, RenderedText} from "./migawheel.core";
 import {MigaWheelSearch} from "./migawheel.search";
 import {MigaWheelDao} from "./migawheel.dao";
@@ -24,6 +24,9 @@ export class MigaWheelPcComponent {
                 private router: Router,
                 private postOpener: PostOpener) {
     }
+
+    @Output()
+    needLoading = new EventEmitter();
 
     @ViewChild('taiqi')
     private taiqiElem: ElementRef;
@@ -171,14 +174,17 @@ export class MigaWheelPcComponent {
     }
 
     private processClick(content: string) {
+        this.needLoading.emit(true);
         let self = this;
         switch (this.core.mode) {
             case Configs.CategoryMode:
                 this.renderedCategory = this.core.renderCategory(content);
                 this.categorySelected = true;
                 this.dao.posts(content)
-                    .subscribe(ret => self.render(Configs.PostMode + '[:]' + ret.join('[.]')),
-                        error => DaoUtil.logError(error));
+                    .subscribe(ret => {
+                        self.render(Configs.PostMode + '[:]' + ret.join('[.]'));
+                        self.needLoading.emit(false);
+                    }, error => DaoUtil.logError(error));
                 break;
             case Configs.PostMode:
                 this.postOpener.postOpen(content);
@@ -201,8 +207,11 @@ export class MigaWheelPcComponent {
 
         this.firstKeyUp = true;
 
+        this.needLoading.emit(true);
+        let self = this;
         this.dao.categories().subscribe(categories => {
-                this.render(Configs.CategoryMode + '[:]' + categories.join('[.]'));
+                self.render(Configs.CategoryMode + '[:]' + categories.join('[.]'));
+                self.needLoading.emit(false);
             },
             error => DaoUtil.logError(error));
     }

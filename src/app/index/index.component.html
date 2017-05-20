@@ -1,3 +1,7 @@
 <div class="blur"></div>
 
-<migawheel></migawheel>
+<migawheel (needLoading)="needLoading($event)"></migawheel>
+
+<div class="myself" *ngIf="loading">
+    <div class="photo"></div>
+</div>

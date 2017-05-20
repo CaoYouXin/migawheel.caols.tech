@@ -11,3 +11,43 @@
     opacity: 0.1;
     background-color: blanchedalmond;
 }
+
+.myself {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    z-index: 11000;
+
+    background-color: transparent;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateZ(360deg);
+    }
+}
+
+.photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: solid 1px transparent;
+    box-shadow: 0 0 10px #f7ff5d;
+    position: fixed;
+    left: calc(50% - 95px);
+    top: calc(50% - 70px);
+
+    background: transparent url("../../assets/avatar.jpg") no-repeat 30% 18%;
+    background-size: 150%;
+
+    animation: 13s linear 0s infinite;
+    animation-name: rotation;
+}
