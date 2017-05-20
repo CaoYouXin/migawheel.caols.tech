@@ -1,0 +1,38 @@
+<div class="zi4 info" (click)="infoClicked()">{{info}}</div>
+
+<div class="screen-wrapper zi4 login-wrapper" *ngIf="showLogin || showRegister"></div>
+
+<div class="zi5 login" *ngIf="showLogin">
+    <input type="text" autofocus placeholder="用户名">
+    <input type="password" placeholder="密码">
+
+    <div style="overflow: hidden">
+        <p class="register-btn" (click)="register()">注册</p>
+        <p class="forget-pwd">忘记密码</p>
+    </div>
+
+    <div style="overflow: hidden">
+        <span class="submit btn">登录</span>
+        <span class="return btn" (click)="showLogin=false;">返回</span>
+    </div>
+</div>
+
+<div class="zi5 register" *ngIf="showRegister">
+    <div style="overflow: hidden">
+        <input type="text" autofocus placeholder="用户名">
+        <input type="password" placeholder="密码">
+        <input type="password" placeholder="确认">
+        <input type="text" placeholder="手机号">
+        <input class="short" type="text" placeholder="验证码">
+        <span class="btn">获取验证码</span>
+    </div>
+
+    <div style="overflow: hidden">
+        <span class="submit btn">注册</span>
+        <span class="return btn" (click)="showRegister=false;">返回</span>
+    </div>
+
+    <div class="photo-wrapper" style="overflow: hidden;">
+        <div class="photo"></div>
+    </div>
+</div>

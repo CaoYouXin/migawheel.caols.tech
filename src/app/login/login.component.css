@@ -1,0 +1,157 @@
+.zi4 {
+    z-index: 4;
+}
+
+.zi5 {
+    z-index: 5;
+}
+
+.login, .register {
+    position: fixed;
+
+    background-color: #111111;
+
+    border-radius: 10px;
+}
+
+.login {
+    width: 300px;
+    height: 200px;
+
+    left: calc(50% - 150px);
+    top: calc(50% - 100px);
+}
+
+.register {
+    width: 300px;
+    height: 450px;
+
+    left: calc(50% - 150px);
+    top: calc(50% - 225px);
+}
+
+.login input, .register input {
+    width: 220px;
+    height: 30px;
+    line-height: 16px;
+    font-size: 12px;
+
+    margin-top: 20px;
+    margin-left: 40px;
+
+    outline: none;
+
+    border-radius: 5px;
+}
+
+.login input:focus, .register input:focus {
+    box-shadow: 0 0 5px yellow;
+}
+
+.register input.short {
+    width: 90px;
+
+    float: left;
+}
+
+.register input.short + .btn {
+    float: left;
+
+    margin-left: 10px;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    text-align: center;
+
+    background-color: #d4d8ff;
+}
+
+.register input.short + .btn:hover {
+    background-color: #e5eb93;
+    box-shadow: 0 0 5px #fffa04;
+}
+
+.login .register-btn, .login .forget-pwd {
+    color: #00fafa;
+    margin-top: 20px;
+
+    cursor: pointer;
+}
+
+.login .register-btn {
+    float: left;
+    margin-left: 40px;
+}
+
+.login .forget-pwd {
+    float: right;
+    margin-right: 40px;
+}
+
+.login .register-btn:hover, .login .forget-pwd:hover {
+    color: #e1fac1;
+}
+
+.btn {
+    margin-top: 20px;
+
+    border-radius: 5px;
+    padding: 3px 20px;
+
+    user-select: none;
+
+    cursor: default;
+}
+
+.btn:hover {
+    background-color: #e5eb93;
+    box-shadow: 0 0 5px #fffa04;
+}
+
+.submit {
+    float: left;
+    margin-left: 40px;
+
+    background-color: #d4d8ff;
+}
+
+.return {
+    float: right;
+    margin-right: 40px;
+
+    background-color: #ebcc7c;
+}
+
+.login-wrapper {
+    background-color: #333333;
+}
+
+.info {
+    position: fixed;
+
+    top: 3em;
+    right: 4em;
+
+    color: white;
+    text-shadow: 1px 1px 2px #f9f9f9, 0 0 1em blue, 0 0 0.2em #ffee00;
+
+    cursor: pointer;
+}
+
+.photo-wrapper {
+    width: 300px;
+}
+
+.photo {
+    margin: 0 auto;
+
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: solid 1px transparent;
+    box-shadow: inset 0 0 10px #6463ff;
+
+    background: transparent url("../../assets/avatar.jpg") no-repeat 30% 18%;
+    background-size: 150%;
+}

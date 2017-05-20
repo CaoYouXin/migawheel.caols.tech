@@ -11,6 +11,7 @@ import {CategoryComponent} from "./category/category.component";
 import {MenuComponent} from "./menu/menu.component";
 import {ContentComponent} from "./content/content.component";
 import {PagerComponent} from "./pager/pager.component";
+import {LoginComponent} from "./login/login.component";
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import {PagerComponent} from "./pager/pager.component";
         CategoryComponent,
         MenuComponent,
         ContentComponent,
-        PagerComponent
+        PagerComponent,
+        LoginComponent
     ],
     bootstrap: [AppComponent]
 })
