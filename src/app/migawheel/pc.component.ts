@@ -211,7 +211,9 @@ export class MigaWheelPcComponent {
         let self = this;
         this.dao.categories().subscribe(categories => {
                 self.render(Configs.CategoryMode + '[:]' + categories.join('[.]'));
-                self.needLoading.emit(false);
+                setTimeout(function () {
+                    self.needLoading.emit(false);
+                }, 1.618 * 1000);
             },
             error => DaoUtil.logError(error));
     }

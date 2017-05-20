@@ -12,27 +12,8 @@
     background-color: blanchedalmond;
 }
 
-.myself {
-    position: fixed;
-
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-
-    z-index: 11000;
-
-    background-color: transparent;
-}
-
-@keyframes rotation {
-    from {
-        transform: rotateZ(0deg);
-    }
-
-    to {
-        transform: rotateZ(360deg);
-    }
+.zi3 {
+    z-index: 3;
 }
 
 .photo {
@@ -42,7 +23,7 @@
     border: solid 1px transparent;
     box-shadow: 0 0 10px #f7ff5d;
     position: fixed;
-    left: calc(50% - 95px);
+    left: calc(50% - 105px);
     top: calc(50% - 70px);
 
     background: transparent url("../../assets/avatar.jpg") no-repeat 30% 18%;

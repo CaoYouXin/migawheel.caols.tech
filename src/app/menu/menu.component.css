@@ -52,22 +52,6 @@
     text-align: center;
 }
 
-.menu:before {
-    content: '';
-    width: 0;
-    height: 100%;
-}
-
-@keyframes rotation {
-    from {
-        transform: rotateZ(0deg);
-    }
-
-    to {
-        transform: rotateZ(360deg);
-    }
-}
-
 .menu > .loading {
     width: 64px;
     height: 64px;
@@ -77,11 +61,6 @@
 
     animation: 3s linear 0s infinite;
     animation-name: rotation;
-}
-
-.menu > .loading, .menu:before {
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .menu > .loading + div {
