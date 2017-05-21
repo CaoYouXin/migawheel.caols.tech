@@ -1,6 +1,6 @@
-<div class="zi5 login">
+<div class="zi11001 login">
     <input type="text" [(ngModel)]="username" placeholder="用户名">
-    <input type="password" [(ngModel)]="password" placeholder="密码">
+    <input type="password" [(ngModel)]="password" (keyup.enter)="login()" placeholder="密码">
 
     <div style="overflow: hidden">
         <p class="register-btn" (click)="register()">注册</p>

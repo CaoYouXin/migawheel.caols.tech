@@ -17,6 +17,38 @@ export class API {
         "login": {
             "prod": "http://localhost:8080/user_api/user/login",
             "dev": "http://localhost:8080/user_api/user/login"
+        },
+        "register": {
+            "prod": "http://localhost:8080/user_api/user/register",
+            "dev": "http://localhost:8080/user_api/user/register"
+        },
+        "CheckUserName": {
+            "prod": function(username) {
+                return `http://localhost:8080/user_api/username/check?username=${username}`;
+            },
+            "dev": function(username) {
+                return `http://localhost:8080/user_api/username/check?username=${username}`;
+            }
+        },
+        "captcha": {
+            "prod": function(phone) {
+                return `http://localhost:8080/user_api/captcha?phone=${phone}`;
+            },
+            "dev": function(phone) {
+                return `http://localhost:8080/user_api/captcha?phone=${phone}`;
+            }
+        },
+        "FindPassword": {
+            "prod": function(phone) {
+                return `http://localhost:8080/user_api/password/find?phone=${phone}`;
+            },
+            "dev": function(phone) {
+                return `http://localhost:8080/user_api/password/find?phone=${phone}`;
+            }
+        },
+        "ResetPassword": {
+            "prod": "http://localhost:8080/user_api/password/reset",
+            "dev": "http://localhost:8080/user_api/password/reset"
         }
     };
 
