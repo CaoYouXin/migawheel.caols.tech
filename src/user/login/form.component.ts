@@ -1,5 +1,7 @@
 import {Component} from "@angular/core";
 import {DaoUtil} from "../../app/dao/dao.util";
+import {API} from "../../const/api.const";
+import "rxjs/add/operator/map";
 
 @Component({
     selector: 'login-form',
@@ -25,7 +27,13 @@ export class LoginFormComponent {
             return;
         }
 
-        // this.dao.post()
+        this.dao.post(API.getAPI('login'), {
+            userName: this.username,
+            password: this.password
+        }).map(res => res.json())
+            .subscribe(ret => {
+                console.log(ret);
+            });
     }
 
     register() {

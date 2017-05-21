@@ -4,7 +4,7 @@ import {Configs} from "./migawheel.core";
 import {DaoUtil} from "../dao/dao.util";
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
-import {API} from "../const/api.const";
+import {API} from "../../const/api.const";
 
 @Injectable()
 export class MigaWheelDao {

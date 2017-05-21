@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
-import {Configs} from "./migawheel/migawheel.core";
-import {API} from "./const/api.const";
+import {API} from "../const/api.const";
 import {environment} from "../environments/environment";
 
 @Component({

@@ -14,6 +14,10 @@ export class API {
             "prod": "http://caols.tech/api/date_index.json",
             "dev": "/assets/date_index.json"
         },
+        "login": {
+            "prod": "http://localhost:8080/user_api/user/login",
+            "dev": "http://localhost:8080/user_api/user/login"
+        }
     };
 
     static setProductMode(mode: boolean) {

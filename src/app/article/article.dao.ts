@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {DaoUtil} from "../dao/dao.util";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
-import {API} from "../const/api.const";
+import {API} from "../../const/api.const";
 
 @Injectable()
 export class ArticleDao {

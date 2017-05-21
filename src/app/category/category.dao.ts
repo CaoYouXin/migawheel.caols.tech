@@ -3,8 +3,8 @@ import {Observable} from "rxjs";
 import {DaoUtil} from "../dao/dao.util";
 import "rxjs/add/operator/map";
 import {SafeStyle} from "@angular/platform-browser";
-import {PostType} from "../const/post.type.const";
-import {API} from "../const/api.const";
+import {PostType} from "../../const/post.type.const";
+import {API} from "../../const/api.const";
 
 @Injectable()
 export class CategoryDao {
