@@ -10,7 +10,7 @@ export class ArticleDao {
     constructor(private dao: DaoUtil) {}
 
     post(title: string): Observable<Post> {
-        let post = this.dao.get(API.PostJson)
+        let post = this.dao.get(API.getAPI('post'))
             .map(res => res.json())
             .map(ret => ret[Object.keys(ret).filter(k => k === title)[0]]);
 

@@ -14,12 +14,12 @@ export class MigaWheelDao {
 
     categories(): Observable<string[]> {
         // return ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'];
-        return this.dao.get(API.CategoryJson)
+        return this.dao.get(API.getAPI('category'))
             .map(res => Object.keys(res.json()));
     }
 
     posts(category: string): Observable<string[]> {
-        return this.dao.get(API.PostJson)
+        return this.dao.get(API.getAPI('post'))
             .map(res => {
                 let o = res.json();
                 return Object.keys(o).filter(k => o[k].category === category)
@@ -104,17 +104,17 @@ export class MigaWheelDao {
             postTitles: string[] = [];
 
         if (isUseIndex) {
-            dateIndex = this.dao.get(API.DateIndexJson)
+            dateIndex = this.dao.get(API.getAPI('date_index'))
                 .map(res => res.json());
         }
 
         if (categoryAnalysis) {
-            categories = this.dao.get(API.CategoryJson)
+            categories = this.dao.get(API.getAPI('category'))
                 .map(res => res.json());
         }
 
         if (postAnalysis) {
-            posts = this.dao.get(API.PostJson)
+            posts = this.dao.get(API.getAPI('post'))
                 .map(res => res.json());
 
             if (isUseIndex) {

@@ -12,7 +12,7 @@ export class CategoryDao {
     constructor(private dao: DaoUtil) {}
 
     category(categoryName: string): Observable<Category> {
-        let category = this.dao.get(API.CategoryJson)
+        let category = this.dao.get(API.getAPI('category'))
             .map(res => res.json())
             .map(ret => ret[Object.keys(ret).filter(k => k === categoryName)[0]]);
 
@@ -47,7 +47,7 @@ export class CategoryDao {
     }
 
     posts(): Observable<any> {
-        return this.dao.get(API.PostJson)
+        return this.dao.get(API.getAPI('post'))
             .map(res => res.json());
     }
 

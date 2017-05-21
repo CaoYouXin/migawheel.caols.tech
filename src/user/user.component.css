@@ -1,10 +1,4 @@
-.zi4 {
-    z-index: 4;
-}
 
-.zi5 {
-    z-index: 5;
-}
 
 .login, .register {
     position: fixed;
@@ -72,58 +66,7 @@
     box-shadow: 0 0 5px #fffa04;
 }
 
-.login .register-btn, .login .forget-pwd {
-    color: #00fafa;
-    margin-top: 20px;
-
-    cursor: pointer;
-}
-
-.login .register-btn {
-    float: left;
-    margin-left: 40px;
-}
-
-.login .forget-pwd {
-    float: right;
-    margin-right: 40px;
-}
-
-.login .register-btn:hover, .login .forget-pwd:hover {
-    color: #e1fac1;
-}
-
-.btn {
-    margin-top: 20px;
-
-    border-radius: 5px;
-    padding: 3px 20px;
-
-    user-select: none;
-
-    cursor: default;
-}
-
-.btn:hover {
-    background-color: #e5eb93;
-    box-shadow: 0 0 5px #fffa04;
-}
-
-.submit {
-    float: left;
-    margin-left: 40px;
-
-    background-color: #d4d8ff;
-}
-
-.return {
-    float: right;
-    margin-right: 40px;
-
-    background-color: #ebcc7c;
-}
-
-.login-wrapper {
+.blur {
     background-color: #333333;
 }
 

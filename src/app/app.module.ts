@@ -11,14 +11,15 @@ import {CategoryComponent} from "./category/category.component";
 import {MenuComponent} from "./menu/menu.component";
 import {ContentComponent} from "./content/content.component";
 import {PagerComponent} from "./pager/pager.component";
-import {LoginComponent} from "./login/login.component";
+import {UserModule} from "../user/user.module";
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+        UserModule
     ],
     declarations: [
         AppComponent,
@@ -28,8 +29,7 @@ import {LoginComponent} from "./login/login.component";
         CategoryComponent,
         MenuComponent,
         ContentComponent,
-        PagerComponent,
-        LoginComponent
+        PagerComponent
     ],
     bootstrap: [AppComponent]
 })

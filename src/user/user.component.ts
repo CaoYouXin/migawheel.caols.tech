@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 
 @Component({
-    selector: 'login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    selector: 'user',
+    templateUrl: './user.component.html',
+    styleUrls: ['./user.component.css']
 })
-export class LoginComponent {
+export class UserComponent {
 
     showLogin = false;
     showRegister = false;

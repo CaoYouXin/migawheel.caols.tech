@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Configs} from "./migawheel/migawheel.core";
 import {API} from "./const/api.const";
+import {environment} from "../environments/environment";
 
 @Component({
     selector: 'app-root',
@@ -10,6 +11,7 @@ import {API} from "./const/api.const";
 export class AppComponent {
 
     ngOnInit() {
+        // API.setProductMode(environment.production);
         API.setProductMode(true);
     }
 
