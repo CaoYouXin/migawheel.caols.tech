@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {PostOpenerDao} from "./post.opener.dao";
-import {PostType} from "../const/post.type.const";
+import {PostType} from "../../const/post.type.const";
 
 @Injectable()
 export class PostOpener {

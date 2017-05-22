@@ -10,8 +10,7 @@ import {environment} from "../environments/environment";
 export class AppComponent {
 
     ngOnInit() {
-        // API.setProductMode(environment.production);
-        API.setProductMode(true);
+        API.setProductMode(environment.production);
     }
 
 }

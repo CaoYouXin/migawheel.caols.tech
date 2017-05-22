@@ -4,7 +4,6 @@ import {MigaWheelSearch} from "./migawheel.search";
 import {MigaWheelDao} from "./migawheel.dao";
 import {DaoUtil} from "../dao/dao.util";
 import {Router} from "@angular/router";
-import {PostType} from "../const/post.type.const";
 import {PostOpener} from "../common/post.opener";
 import {PostOpenerDao} from "../common/post.opener.dao";
 
