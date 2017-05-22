@@ -121,6 +121,7 @@ export class RegisterFormComponent implements OnInit{
                     .subscribe(ret => {
                         if (ret.code === 50202) {
                             alert("验证码错误！");
+                            self.getImageCaptcha();
                         } else if (ret.code === 50203) {
                             alert("该手机号已注册");
                         } else if (ret.code !== 20000) {
