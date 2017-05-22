@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {DaoUtil} from "../../app/dao/dao.util";
 import {API} from "../../const/api.const";
 import "rxjs/add/operator/map";
@@ -10,7 +10,7 @@ import {LocalStorageKeys} from "../../const/localstorage.const";
     styleUrls: ['./form.component.css', '../form.component.css'],
     providers: [DaoUtil]
 })
-export class RegisterFormComponent {
+export class RegisterFormComponent implements OnInit{
 
     private validColor = '#C5FFA6';
     private invalidColor = 'red';
@@ -22,6 +22,7 @@ export class RegisterFormComponent {
     confirmValidColor = '#fff';
     phoneValidColor = '#fff';
 
+    captchaImage: string;
     getCaptchaBtnText = this.defaultText;
 
     username = '';
@@ -29,11 +30,16 @@ export class RegisterFormComponent {
     confirm = '';
     phone = '';
     captcha = '';
+    token: string;
 
     @Output()
     eventOccur = new EventEmitter();
 
     constructor(private dao: DaoUtil) {}
+
+    ngOnInit() {
+        this.getImageCaptcha();
+    }
 
     checkUserNameValid() {
         this.checkUserName(function () {
@@ -109,7 +115,8 @@ export class RegisterFormComponent {
                     userName: self.username,
                     password: window['md5'](self.password),
                     phone: self.phone,
-                    captcha: self.captcha
+                    captcha: self.captcha,
+                    token: self.token
                 }).map(res => res.json())
                     .subscribe(ret => {
                         if (ret.code === 50202) {
@@ -158,6 +165,11 @@ export class RegisterFormComponent {
                     let timeout = setTimeout(handler, 1000, 60);
                 }
             });
+    }
+
+    getImageCaptcha() {
+        this.token = window['md5'](new Date());
+        this.captchaImage = API.getAPI("CaptchaImage")(this.token);
     }
 
 }

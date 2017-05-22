@@ -5,7 +5,10 @@
         <input type="password" [style.backgroundColor]="confirmValidColor" [(ngModel)]="confirm" (blur)="checkConfirm()" placeholder="确认">
         <input type="text" [style.backgroundColor]="phoneValidColor" [(ngModel)]="phone" (blur)="checkPhone()" placeholder="手机号">
         <input class="short" type="text" [(ngModel)]="captcha" placeholder="验证码">
-        <span class="btn" (click)="getCaptcha()">{{getCaptchaBtnText}}</span>
+        <span class="btn" (click)="getImageCaptcha()"
+            [style.backgroundImage]="captchaImage"></span>
+        <!--<input class="short" type="text" [(ngModel)]="captcha" placeholder="验证码">-->
+        <!--<span class="btn" (click)="getCaptcha()">{{getCaptchaBtnText}}</span>-->
     </div>
 
     <div style="overflow: hidden">

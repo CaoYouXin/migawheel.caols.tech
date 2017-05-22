@@ -23,32 +23,40 @@ export class API {
             "dev": "http://localhost:8080/user_api/user/register"
         },
         "CheckUserName": {
-            "prod": function(username) {
+            "prod": function (username) {
                 return `http://localhost:8080/user_api/username/check?username=${username}`;
             },
-            "dev": function(username) {
+            "dev": function (username) {
                 return `http://localhost:8080/user_api/username/check?username=${username}`;
             }
         },
         "captcha": {
-            "prod": function(phone) {
+            "prod": function (phone) {
                 return `http://localhost:8080/user_api/captcha?phone=${phone}`;
             },
-            "dev": function(phone) {
+            "dev": function (phone) {
                 return `http://localhost:8080/user_api/captcha?phone=${phone}`;
             }
         },
         "FindPassword": {
-            "prod": function(phone) {
+            "prod": function (phone) {
                 return `http://localhost:8080/user_api/password/find?phone=${phone}`;
             },
-            "dev": function(phone) {
+            "dev": function (phone) {
                 return `http://localhost:8080/user_api/password/find?phone=${phone}`;
             }
         },
         "ResetPassword": {
             "prod": "http://localhost:8080/user_api/password/reset",
             "dev": "http://localhost:8080/user_api/password/reset"
+        },
+        "CaptchaImage": {
+            "prod": function (token) {
+                return `url(http://localhost:8080/user_api/captcha/image?token=${token})`;
+            },
+            "dev": function (token) {
+                return `url(http://localhost:8080/user_api/captcha/image?token=${token})`;
+            }
         }
     };
 

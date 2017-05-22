@@ -59,7 +59,8 @@ export class LoginFormComponent {
     }
 
     forgetPwd() {
-        this.eventOccur.emit(2);
+        alert("等待接入短信验证码");
+        // this.eventOccur.emit(2);
     }
 
     back(){
