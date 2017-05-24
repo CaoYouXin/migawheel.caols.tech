@@ -187,6 +187,7 @@ export class MigaWheelPcComponent {
                 break;
             case Configs.PostMode:
                 this.postOpener.postOpen(content);
+                this.needLoading.emit(false);
                 break;
             default:
                 break;

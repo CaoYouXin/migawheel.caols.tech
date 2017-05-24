@@ -8,11 +8,11 @@ export class API {
         },
         "post": {
             "prod": "http://caols.tech/api/post.json",
-            "dev": "http://caols.tech/assets/post.json"
+            "dev": "http://caols.tech/api/post.json"
         },
         "date_index": {
             "prod": "http://caols.tech/api/date_index.json",
-            "dev": "http://caols.tech/assets/date_index.json"
+            "dev": "http://caols.tech/api/date_index.json"
         },
         "login": {
             "prod": "/user_api/user/login",
