@@ -14,16 +14,32 @@ export class MigaWheelDao {
 
     categories(): Observable<string[]> {
         // return ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'];
-        return this.dao.get(API.getAPI('category'))
-            .map(res => Object.keys(res.json()));
+        let categories = this.dao.get(API.getAPI('categories'))
+            .map(res => res.json());
+
+        return new Observable(observer => {
+            categories.subscribe(ret => {
+                if (ret.code !== 20000) {
+                    alert(ret.body);
+                    return;
+                }
+
+                observer.next(ret.body.map(cate => cate.name));
+                observer.complete();
+            });
+        });
     }
 
     posts(category: string): Observable<string[]> {
-        return this.dao.get(API.getAPI('post'))
+        return this.dao.get(API.getAPI('posts')(category))
             .map(res => {
-                let o = res.json();
-                return Object.keys(o).filter(k => o[k].category === category)
-                    .map(k => k + '[]' + o[k].create + '||' + o[k].update);
+                let ret = res.json();
+                if (ret.code !== 20000) {
+                    alert(ret.body);
+                    return;
+                }
+
+                return ret.body.map(k => k.name + '[]' + k.create + '||' + k.update);
             });
     }
 

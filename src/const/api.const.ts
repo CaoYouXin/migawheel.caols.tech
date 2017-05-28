@@ -1,14 +1,37 @@
+import {environment} from "../environments/environment";
+
 export class API {
 
-    static mode: string;
+    static mode = environment.production ? 'prod' : 'dev';
+
     static api = {
+        "categories": {
+            "prod": "/blog/category/list",
+            "dev": "http://localhost:8080/blog/category/list"
+        },
         "category": {
-            "prod": "http://caols.tech/api/category.json",
-            "dev": "http://caols.tech/api/category.json"
+            "prod": function (name) {
+                return `/blog/category/fetch_by_name?name=${name}`;
+            },
+            "dev": function (name) {
+                return `http://localhost:8080/blog/category/fetch_by_name?name=${name}`;
+            }
+        },
+        "posts": {
+            "prod": function (category) {
+                return `/blog/post/list_by_category?platform=All,Pc,Mobile&category=${category}`;
+            },
+            "dev": function (category) {
+                return `http://localhost:8080/blog/post/list_by_category?platform=All,Pc,Mobile&category=${category}`;
+            }
         },
         "post": {
-            "prod": "http://caols.tech/api/post.json",
-            "dev": "http://caols.tech/api/post.json"
+            "prod": function (name) {
+                return `/blog/post/fetch_by_name?name=${name}`;
+            },
+            "dev": function (name) {
+                return `http://localhost:8080/blog/post/fetch_by_name?name=${name}`;
+            }
         },
         "date_index": {
             "prod": "http://caols.tech/api/date_index.json",
@@ -59,10 +82,6 @@ export class API {
             }
         }
     };
-
-    static setProductMode(mode: boolean) {
-        API.mode = mode ? 'prod' : 'dev';
-    }
 
     static getAPI(name: string) {
         return API.api[name][API.mode];

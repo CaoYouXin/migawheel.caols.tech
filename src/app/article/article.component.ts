@@ -57,7 +57,7 @@ export class ArticleComponent {
                 self.articleTitle = title;
                 self.articleCreateTime = post.create;
                 self.articleUpdateTime = post.update;
-                self.categoryName = post.category;
+                self.categoryName = post.categoryName;
                 self.articleContent = post.content;
                 self.articleScriptSrc = post.script;
             });

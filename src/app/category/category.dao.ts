@@ -12,19 +12,26 @@ export class CategoryDao {
     constructor(private dao: DaoUtil) {}
 
     category(categoryName: string): Observable<Category> {
-        let category = this.dao.get(API.getAPI('category'))
+        let category = this.dao.get(API.getAPI('category')(categoryName))
             .map(res => res.json())
-            .map(ret => ret[Object.keys(ret).filter(k => k === categoryName)[0]]);
+            .map(ret => {
+                if (ret.code !== 20000) {
+                    alert(ret.body);
+                    return;
+                }
+
+                return ret.body;
+            });
 
         let self = this;
         return new Observable<Category>(observer => {
             category.subscribe(cate => {
-                self.posts().subscribe(ret => {
+                self.posts(categoryName).subscribe(ret => {
                     let imageList = [], noneImageList = [];
                     cate.posts.forEach(pt => {
                         switch (ret[pt].type) {
                             case PostType.APP:
-                                imageList.push(new ListItem(pt, null, ret[pt].imageSrc));
+                                imageList.push(new ListItem(pt, null, ret[pt].screenshot));
                                 break;
                             case PostType.ARTICLE:
                                 noneImageList.push(new ListItem(pt, ret[pt].brief, null));
@@ -46,9 +53,17 @@ export class CategoryDao {
         });
     }
 
-    posts(): Observable<any> {
-        return this.dao.get(API.getAPI('post'))
-            .map(res => res.json());
+    posts(categoryName: string): Observable<any> {
+        return this.dao.get(API.getAPI('posts')(categoryName))
+            .map(res => {
+                let o = res.json();
+                if (o.code !== 20000) {
+                    alert(o.body);
+                    return;
+                }
+
+                return o.body;
+            });
     }
 
 }
