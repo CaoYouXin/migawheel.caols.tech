@@ -6,31 +6,31 @@ export class API {
 
     static api = {
         "categories": {
-            "prod": "/blog/category/list",
-            "dev": "http://localhost:8080/blog/category/list"
+            "prod": "/blog_api/category/list",
+            "dev": "http://localhost:8080/blog_api/category/list"
         },
         "category": {
             "prod": function (name) {
-                return `/blog/category/fetch_by_name?name=${name}`;
+                return `/blog_api/category/fetch_by_name?name=${name}`;
             },
             "dev": function (name) {
-                return `http://localhost:8080/blog/category/fetch_by_name?name=${name}`;
+                return `http://localhost:8080/blog_api/category/fetch_by_name?name=${name}`;
             }
         },
         "posts": {
             "prod": function (category) {
-                return `/blog/post/list_by_category?platform=All,Pc,Mobile&category=${category}`;
+                return `/blog_api/post/list_by_category?platform=All,Pc,Mobile&category=${category}`;
             },
             "dev": function (category) {
-                return `http://localhost:8080/blog/post/list_by_category?platform=All,Pc,Mobile&category=${category}`;
+                return `http://localhost:8080/blog_api/post/list_by_category?platform=All,Pc,Mobile&category=${category}`;
             }
         },
         "post": {
             "prod": function (name) {
-                return `/blog/post/fetch_by_name?name=${name}`;
+                return `/blog_api/post/fetch_by_name?name=${name}`;
             },
             "dev": function (name) {
-                return `http://localhost:8080/blog/post/fetch_by_name?name=${name}`;
+                return `http://localhost:8080/blog_api/post/fetch_by_name?name=${name}`;
             }
         },
         "date_index": {

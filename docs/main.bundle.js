@@ -459,7 +459,7 @@ var ArticleComponent = (function () {
             self.articleTitle = title;
             self.articleCreateTime = post.create;
             self.articleUpdateTime = post.update;
-            self.categoryName = post.category;
+            self.categoryName = post.categoryName;
             self.articleContent = post.content;
             self.articleScriptSrc = post.script;
         });
@@ -1226,9 +1226,15 @@ var ArticleDao = (function () {
         this.dao = dao;
     }
     ArticleDao.prototype.post = function (title) {
+        var _this = this;
         return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
-            observer.next(JSON.parse(localStorage.getItem(__WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__["a" /* LocalStorageKeys */].OpenedPost)));
-            observer.complete();
+            var ret = JSON.parse(localStorage.getItem(__WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__["a" /* LocalStorageKeys */].OpenedPost));
+            _this.dao.get(ret.url)
+                .map(function (res) { return res.text(); })
+                .subscribe(function (content) {
+                observer.next(new Post(content, ret.script, ret.create, ret.update, ret.categoryName));
+                observer.complete();
+            });
         });
     };
     ArticleDao = __decorate([
@@ -1244,7 +1250,7 @@ var Post = (function () {
         this.script = script;
         this.create = create;
         this.update = update;
-        this.category = category;
+        this.categoryName = category;
     }
     return Post;
 }());
@@ -3038,31 +3044,31 @@ var API = (function () {
     API.mode = __WEBPACK_IMPORTED_MODULE_0__environments_environment__["a" /* environment */].production ? 'prod' : 'dev';
     API.api = {
         "categories": {
-            "prod": "/blog/category/list",
-            "dev": "http://localhost:8080/blog/category/list"
+            "prod": "/blog_api/category/list",
+            "dev": "http://localhost:8080/blog_api/category/list"
         },
         "category": {
             "prod": function (name) {
-                return "/blog/category/fetch_by_name?name=" + name;
+                return "/blog_api/category/fetch_by_name?name=" + name;
             },
             "dev": function (name) {
-                return "http://localhost:8080/blog/category/fetch_by_name?name=" + name;
+                return "http://localhost:8080/blog_api/category/fetch_by_name?name=" + name;
             }
         },
         "posts": {
             "prod": function (category) {
-                return "/blog/post/list_by_category?platform=All,Pc,Mobile&category=" + category;
+                return "/blog_api/post/list_by_category?platform=All,Pc,Mobile&category=" + category;
             },
             "dev": function (category) {
-                return "http://localhost:8080/blog/post/list_by_category?platform=All,Pc,Mobile&category=" + category;
+                return "http://localhost:8080/blog_api/post/list_by_category?platform=All,Pc,Mobile&category=" + category;
             }
         },
         "post": {
             "prod": function (name) {
-                return "/blog/post/fetch_by_name?name=" + name;
+                return "/blog_api/post/fetch_by_name?name=" + name;
             },
             "dev": function (name) {
-                return "http://localhost:8080/blog/post/fetch_by_name?name=" + name;
+                return "http://localhost:8080/blog_api/post/fetch_by_name?name=" + name;
             }
         },
         "date_index": {
