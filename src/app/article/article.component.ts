@@ -4,6 +4,7 @@ import {ArticleDao} from "./article.dao";
 import {DaoUtil} from "../dao/dao.util";
 import {PostUnload} from "../common/post.unload";
 import {URIUtil} from "../route/uri.util";
+import {LocalStorageKeys} from "../../const/localstorage.const";
 
 class Configs {
     static nonePrevious = '没有上一篇了';
@@ -20,6 +21,9 @@ export class ArticleComponent {
 
     @ViewChild('body')
     private bodyContainer: ElementRef;
+
+    @ViewChild('reply')
+    private reply: ElementRef;
 
     private postId: number;
 
@@ -41,6 +45,8 @@ export class ArticleComponent {
 
     private replyFocused: boolean;
     private replyContent: string;
+    private replyUserName: string;
+    private replyCommentIndex: number;
 
     private comments: Array<any>;
 
@@ -49,11 +55,23 @@ export class ArticleComponent {
                 private unload: PostUnload) {
     }
 
+    private resetReplyUserName(atUserName: string) {
+        this.replyUserName = JSON.parse(localStorage.getItem(LocalStorageKeys.User)).userView.userName;
+
+        if (atUserName !== null) {
+            this.replyUserName = this.replyUserName + '@' + atUserName;
+        } else {
+            this.replyCommentIndex = null;
+        }
+    }
+
     private articleLoad(title: string) {
         if (Configs.nonePrevious === title ||
             Configs.noneNext === title) {
             return;
         }
+
+        this.resetReplyUserName(null);
 
         this.unload.unload(null);
         this.loading = true;
@@ -122,19 +140,38 @@ export class ArticleComponent {
         }
 
         const self = this;
-        this.dao.commentPost(this.postId, this.replyContent)
-            .subscribe(ret =>
-                DaoUtil.process(ret, function (comment) {
-                    let reverse = self.comments.reverse();
-                    reverse.push(comment);
-                    self.comments = reverse.reverse();
-                    self.replyContent = '';
-                }), error => DaoUtil.logError(error)
-            );
+        if (this.replyCommentIndex !== null) {
+            this.dao.commentComment(this.postId, this.comments[this.replyCommentIndex].id,
+                this.replyUserName.substr(this.replyUserName.indexOf('@') + 1), this.replyContent)
+                .subscribe(ret =>
+                    DaoUtil.process(ret, function (comment) {
+                        self.comments[self.replyCommentIndex] = comment;
+                        self.replyContent = '';
+                        self.resetReplyUserName(null);
+                    }), error => DaoUtil.logError(error)
+                );
+        } else {
+            this.dao.commentPost(this.postId, this.replyContent)
+                .subscribe(ret =>
+                    DaoUtil.process(ret, function (comment) {
+                        let reverse = self.comments.reverse();
+                        reverse.push(comment);
+                        self.comments = reverse.reverse();
+                        self.replyContent = '';
+                    }), error => DaoUtil.logError(error)
+                );
+        }
     }
 
-    makeComment(comment, follow) {
+    makeComment(i, comment, follow) {
+        this.replyCommentIndex = i;
 
+        this.resetReplyUserName(comment.userName);
+        if (follow !== undefined) {
+            this.resetReplyUserName(follow.userName);
+        }
+
+        this.reply.nativeElement.focus();
     }
 
 }

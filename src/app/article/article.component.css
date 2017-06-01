@@ -186,6 +186,11 @@ p[data-rel]:before {
     background-color: cyan;
 }
 
+.reply > .title > span:hover {
+    background-color: indianred;
+    cursor: default;
+}
+
 .reply > .title > span:before {
     content: '『';
 }
@@ -247,4 +252,20 @@ p[data-rel]:before {
 
 .comments .comments-of-comment > li + li {
     border-top: dashed 1px cyan;
+}
+
+.comment-content {
+    padding: 0.5em;
+}
+
+.comment-create {
+    font-size: 0.7em;
+    color: blueviolet;
+}
+
+.comment-username {
+    text-align: right;
+    cursor: pointer;
+    color: blue;
+    background-image: linear-gradient(61.8deg, #fff, #fff 61.8%, #b084e2);
 }

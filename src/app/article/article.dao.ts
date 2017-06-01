@@ -52,6 +52,15 @@ export class ArticleDao {
         }).map(res => res.json());
     }
 
+    commentComment(postId: number, commentId: number, atUserName: string, content: string): Observable<any> {
+        return this.dao.post(API.getAPI("CommentComment")(postId), {
+            idWhatEver: commentId,
+            userName: JSON.parse(localStorage.getItem(LocalStorageKeys.User)).userView.userName,
+            content: content,
+            atUserName: atUserName,
+        }).map(res => res.json());
+    }
+
 }
 
 export class Post {

@@ -54,8 +54,20 @@ export class API {
             "dev": "http://localhost:8080/blog_api/feedback/comment/post"
         },
         "CommentComment": {
-            "prod": "/blog_api/feedback/comment/comment",
-            "dev": "http://localhost:8080/blog_api/feedback/comment/comment"
+            "prod": function(postId) {
+                return `/blog_api/feedback/comment/comment?postId=${postId}`;
+            },
+            "dev": function (postId) {
+                return `http://localhost:8080/blog_api/feedback/comment/comment?postId=${postId}`;
+            }
+        },
+        "login": {
+            "prod": "/user_api/user/login",
+            "dev": "http://localhost:8080/user_api/user/login"
+        },
+        "register": {
+            "prod": "/user_api/user/register",
+            "dev": "http://localhost:8080/user_api/user/register"
         },
         "CheckUserName": {
             "prod": function (username) {

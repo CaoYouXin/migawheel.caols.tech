@@ -23,8 +23,8 @@ module.exports = "input {\n    width: 220px;\n    height: 30px;\n    line-height
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_api_const__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_api_const__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostOpenerDao; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -417,6 +417,7 @@ var RenderedText = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_post_unload__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__route_uri_util__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -427,6 +428,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -446,23 +448,36 @@ var ArticleComponent = (function () {
         this.router = router;
         this.unload = unload;
     }
+    ArticleComponent.prototype.resetReplyUserName = function (atUserName) {
+        this.replyUserName = JSON.parse(localStorage.getItem(__WEBPACK_IMPORTED_MODULE_6__const_localstorage_const__["a" /* LocalStorageKeys */].User)).userView.userName;
+        if (atUserName !== null) {
+            this.replyUserName = this.replyUserName + '@' + atUserName;
+        }
+        else {
+            this.replyCommentIndex = null;
+        }
+    };
     ArticleComponent.prototype.articleLoad = function (title) {
         if (Configs.nonePrevious === title ||
             Configs.noneNext === title) {
             return;
         }
+        this.resetReplyUserName(null);
         this.unload.unload(null);
+        this.loading = true;
         this.showMenu = true;
         var self = this;
         this.dao.post(title)
             .subscribe(function (post) {
+            self.postId = post.postId;
             self.articleTitle = title;
             self.articleCreateTime = post.create;
             self.articleUpdateTime = post.update;
             self.categoryName = post.categoryName;
             self.articleContent = post.content;
             self.articleScriptSrc = post.script;
-        });
+            self.articleLikeCount = post.articleLikeCount;
+        }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
     };
     // ng handlers
     ArticleComponent.prototype.ngOnInit = function () {
@@ -475,21 +490,75 @@ var ArticleComponent = (function () {
         this.articleLoad(this.articleTitle);
     };
     // dom handlers
+    ArticleComponent.prototype.like = function () {
+        var self = this;
+        this.dao.like(this.postId)
+            .subscribe(function (ret) {
+            return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].process(ret, function (articleLikeCount) {
+                self.articleLikeCount = articleLikeCount;
+            });
+        }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+    };
     ArticleComponent.prototype.categoryClicked = function () {
         this.unload.unload(null);
         var navigate = this.router.navigate(['/category', { n: this.categoryName }]);
     };
     ArticleComponent.prototype.articleOnload = function () {
+        this.loading = false;
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
+        var self = this;
+        this.dao.fetchComments(this.postId)
+            .subscribe(function (ret) {
+            return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].process(ret, function (comments) {
+                self.comments = comments;
+            });
+        }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
     };
     ArticleComponent.prototype.replyPublishBtnClicked = function () {
-        console.log('评论: ' + this.replyContent);
+        if (!Boolean(this.replyContent)) {
+            alert("请写下评论！");
+            return;
+        }
+        var self = this;
+        if (this.replyCommentIndex !== null) {
+            this.dao.commentComment(this.postId, this.comments[this.replyCommentIndex].id, this.replyUserName.substr(this.replyUserName.indexOf('@') + 1), this.replyContent)
+                .subscribe(function (ret) {
+                return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].process(ret, function (comment) {
+                    self.comments[self.replyCommentIndex] = comment;
+                    self.replyContent = '';
+                    self.resetReplyUserName(null);
+                });
+            }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        }
+        else {
+            this.dao.commentPost(this.postId, this.replyContent)
+                .subscribe(function (ret) {
+                return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].process(ret, function (comment) {
+                    var reverse = self.comments.reverse();
+                    reverse.push(comment);
+                    self.comments = reverse.reverse();
+                    self.replyContent = '';
+                });
+            }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        }
+    };
+    ArticleComponent.prototype.makeComment = function (i, comment, follow) {
+        this.replyCommentIndex = i;
+        this.resetReplyUserName(comment.userName);
+        if (follow !== undefined) {
+            this.resetReplyUserName(follow.userName);
+        }
+        this.reply.nativeElement.focus();
     };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["g" /* ViewChild */])('body'), 
         __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */]) === 'function' && _a) || Object)
     ], ArticleComponent.prototype, "bodyContainer", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["g" /* ViewChild */])('reply'), 
+        __metadata('design:type', (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */]) === 'function' && _b) || Object)
+    ], ArticleComponent.prototype, "reply", void 0);
     ArticleComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'article',
@@ -497,10 +566,10 @@ var ArticleComponent = (function () {
             styles: [__webpack_require__(451)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */], __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */], __WEBPACK_IMPORTED_MODULE_4__common_post_unload__["a" /* PostUnload */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__common_post_unload__["a" /* PostUnload */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__common_post_unload__["a" /* PostUnload */]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__article_dao__["a" /* ArticleDao */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__common_post_unload__["a" /* PostUnload */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__common_post_unload__["a" /* PostUnload */]) === 'function' && _e) || Object])
     ], ArticleComponent);
     return ArticleComponent;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 //# sourceMappingURL=/Users/cls/Dev/Git/personal/migawheel.caols.tech/src/article.component.js.map
 
@@ -570,6 +639,7 @@ var CategoryComponent = (function () {
         this.list2PagerPageSize = '5';
         this.list1PagerTotalCount = 0;
         this.list2PagerTotalCount = 0;
+        this.loading = true;
         this.showMenu = true;
         this.categoryName = __WEBPACK_IMPORTED_MODULE_8__route_uri_util__["a" /* URIUtil */].getParam(this.router.routerState.snapshot.url, ['n'])['n'];
         this.categoryLikeCount = 99;
@@ -599,6 +669,7 @@ var CategoryComponent = (function () {
     };
     // dom handlers
     CategoryComponent.prototype.categoryOnload = function () {
+        this.loading = false;
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
     };
@@ -863,6 +934,13 @@ var DaoUtil = (function () {
     DaoUtil.logError = function (err) {
         console.log('sth wrong when fetching data. ' + err);
     };
+    DaoUtil.process = function (ret, cb) {
+        if (ret.code !== 20000) {
+            alert(ret.body);
+            return;
+        }
+        cb(ret.body);
+    };
     DaoUtil = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* Injectable */])(), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Http */]) === 'function' && _a) || Object])
@@ -922,14 +1000,14 @@ module.exports = ""
 /***/ 451:
 /***/ (function(module, exports) {
 
-module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nh1 {\n    font-size: 1.5em;\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n    cursor: pointer;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol > li {\n    cursor: pointer;\n}\n\n.top5 + ol, .comments {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: pointer;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/follow.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* reply */\n.reply {\n    width: 740px;\n    height: 75px;\n\n    margin-top: 10px;\n    margin-left: 10px;\n\n    border-radius: 5px;\n    box-shadow: 0 0 10px cyan;\n\n    overflow: hidden;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n\n    font-size: 0;\n}\n\n.reply > * {\n    font-family: Monaco, \"Lucida Console\", monospace;\n    font-size: 20px;\n\n    width: 730px;\n    height: 30px;\n\n    margin-top: 5px;\n    margin-left: 5px;\n\n    line-height: 30px;\n}\n\n.reply > .title {\n    text-align: center;\n\n    color: white;\n    background-color: cyan;\n}\n\n.reply > .title > span:before {\n    content: '『';\n}\n\n.reply > .title > span:after {\n    content: '』';\n}\n\n.reply > textarea {\n    outline: none;\n    resize: none;\n\n    line-height: 28px;\n\n    border: dashed 1px cyan;\n\n    background-color: transparent;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n}\n\n.reply > .publish-btn {\n    text-align: center;\n\n    cursor: pointer;\n\n    color: white;\n    background-image: -webkit-linear-gradient(bottom, #07fff2 0%, #43fdff 50%, cyan 100%);\n    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);\n}\n\n.reply > .publish-btn:hover {\n    background-image: -webkit-linear-gradient(bottom, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n}\n\n.reply.focused {\n    height: 230px;\n}\n\n.reply > textarea.focused {\n    height: 150px;\n}\n\n.comments > li {\n    border: dashed 1px cyan;\n    background-image: -webkit-radial-gradient(0 0 800px, white 0%, transparent 100%);\n    background-image: radial-gradient(800px at 0 0, white 0%, transparent 100%);\n}\n\n.comments > li + li {\n    border-top: none;\n}\n\n.comments .comments-of-comment {\n    list-style: none;\n\n    margin: 10px;\n\n    background-color: rgb(248, 248, 248);\n}\n\n.comments .comments-of-comment > li + li {\n    border-top: dashed 1px cyan;\n}\n"
+module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nh1 {\n    font-size: 1.5em;\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n    cursor: pointer;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol > li {\n    cursor: pointer;\n}\n\n.top5 + ol, .comments {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: pointer;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/c.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* reply */\n.reply {\n    width: 740px;\n    height: 75px;\n\n    margin-top: 10px;\n    margin-left: 10px;\n\n    border-radius: 5px;\n    box-shadow: 0 0 10px cyan;\n\n    overflow: hidden;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n\n    font-size: 0;\n}\n\n.reply > * {\n    font-family: Monaco, \"Lucida Console\", monospace;\n    font-size: 20px;\n\n    width: 730px;\n    height: 30px;\n\n    margin-top: 5px;\n    margin-left: 5px;\n\n    line-height: 30px;\n}\n\n.reply > .title {\n    text-align: center;\n\n    color: white;\n    background-color: cyan;\n}\n\n.reply > .title > span:hover {\n    background-color: indianred;\n    cursor: default;\n}\n\n.reply > .title > span:before {\n    content: '『';\n}\n\n.reply > .title > span:after {\n    content: '』';\n}\n\n.reply > textarea {\n    outline: none;\n    resize: none;\n\n    line-height: 28px;\n\n    border: dashed 1px cyan;\n\n    background-color: transparent;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n}\n\n.reply > .publish-btn {\n    text-align: center;\n\n    cursor: pointer;\n\n    color: white;\n    background-image: -webkit-linear-gradient(bottom, #07fff2 0%, #43fdff 50%, cyan 100%);\n    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);\n}\n\n.reply > .publish-btn:hover {\n    background-image: -webkit-linear-gradient(bottom, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n}\n\n.reply.focused {\n    height: 230px;\n}\n\n.reply > textarea.focused {\n    height: 150px;\n}\n\n.comments > li {\n    border: dashed 1px cyan;\n    background-image: -webkit-radial-gradient(0 0 800px, white 0%, transparent 100%);\n    background-image: radial-gradient(800px at 0 0, white 0%, transparent 100%);\n}\n\n.comments > li + li {\n    border-top: none;\n}\n\n.comments .comments-of-comment {\n    list-style: none;\n\n    margin: 10px;\n\n    background-color: rgb(248, 248, 248);\n}\n\n.comments .comments-of-comment > li + li {\n    border-top: dashed 1px cyan;\n}\n\n.comment-content {\n    padding: 0.5em;\n}\n\n.comment-create {\n    font-size: 0.7em;\n    color: blueviolet;\n}\n\n.comment-username {\n    text-align: right;\n    cursor: pointer;\n    color: blue;\n    background-image: -webkit-linear-gradient(28.2deg, #fff, #fff 61.8%, #b084e2);\n    background-image: linear-gradient(61.8deg, #fff, #fff 61.8%, #b084e2);\n}\n"
 
 /***/ }),
 
 /***/ 452:
 /***/ (function(module, exports) {
 
-module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nh1 {\n    font-size: 1.5em;\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n.category-header > h1:first-child:before {\n    content: '分类: ';\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: default;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/follow.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* list */\n.category-list1, .category-list2 {\n    overflow: hidden;\n}\n\n.category-list1 > ul, .category-list2 > ul {\n    list-style: none;\n}\n\n.category-list1 > ul > li {\n    display: block;\n    float: left;\n\n    background: #eeebbc no-repeat;\n\n    width: 370px;\n    height: 210px;\n\n    margin-top: 30px;\n    margin-left: 10px;\n    margin-right: 10px;\n}\n\n.category-list1 > ul > li:nth-child(1),\n.category-list1 > ul > li:nth-child(2) {\n     margin-top: 0;\n }\n\n.category-list1 > ul > li:nth-child(2n + 1) {\n    margin-left: 0;\n}\n\n.category-list1 > ul > li:nth-child(2n) {\n    margin-right: 0;\n}\n\n.category-list1 > ul > li > p {\n    padding: 10px;\n    color: white;\n    background-color: rgba(0, 0, 0, 0.6);\n}\n\n.category-list2 > ul > li {\n    cursor: default;\n}\n\n.category-list2 > ul > li + li {\n    margin-top: 20px;\n}\n\n.category-list2 > ul > li:hover {\n    background-color: rgb(240, 240, 240);\n}\n"
+module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nh1 {\n    font-size: 1.5em;\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n.category-header > h1:first-child:before {\n    content: '分类: ';\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: default;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/c.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* list */\n.category-list1, .category-list2 {\n    overflow: hidden;\n}\n\n.category-list1 > ul, .category-list2 > ul {\n    list-style: none;\n}\n\n.category-list1 > ul > li {\n    display: block;\n    float: left;\n\n    background: #eeebbc no-repeat;\n\n    width: 370px;\n    height: 210px;\n\n    margin-top: 30px;\n    margin-left: 10px;\n    margin-right: 10px;\n}\n\n.category-list1 > ul > li:nth-child(1),\n.category-list1 > ul > li:nth-child(2) {\n     margin-top: 0;\n }\n\n.category-list1 > ul > li:nth-child(2n + 1) {\n    margin-left: 0;\n}\n\n.category-list1 > ul > li:nth-child(2n) {\n    margin-right: 0;\n}\n\n.category-list1 > ul > li > p {\n    padding: 10px;\n    color: white;\n    background-color: rgba(0, 0, 0, 0.6);\n}\n\n.category-list2 > ul > li {\n    cursor: default;\n}\n\n.category-list2 > ul > li + li {\n    margin-top: 20px;\n}\n\n.category-list2 > ul > li:hover {\n    background-color: rgb(240, 240, 240);\n}\n"
 
 /***/ }),
 
@@ -1006,14 +1084,14 @@ module.exports = "<router-outlet></router-outlet>\n\n<user></user>\n"
 /***/ 463:
 /***/ (function(module, exports) {
 
-module.exports = "<menu [show]=\"showMenu\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"article-header\">\n                <h1>{{articleTitle}}</h1>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{articleCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{articleUpdateTime}}</p>\n                <br>\n                <hr>\n                <br>\n                <br>\n            </div>\n\n            <div class=\"article-content\">\n                <content [innerHTML]=\"articleContent\" [scriptSrc]=\"articleScriptSrc\" (onload)=\"articleOnload()\"></content>\n            </div>\n\n            <div class=\"article-footer\">\n                <br>\n                <br>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"former-article\" data-rel=\"上一篇: \"\n                    (click)=\"articleLoad(previousArticle)\">{{previousArticle}}</p>\n                <p class=\"latter-article\" data-rel=\"下一篇: \"\n                    (click)=\"articleLoad(nextArticle)\">{{nextArticle}}</p>\n                <br>\n                <hr>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li *ngFor=\"let top of top5\" (click)=\"articleLoad(top)\">{{top}}</li>\n                </ol>\n                <br>\n                <hr>\n                <br>\n                <div id=\"reply\" class=\"reply\" [class.focused]=\"replyFocused\">\n                    <div class=\"title\"><span>awesome</span>发布评论...</div>\n                    <textarea placeholder=\"输入评论...\"\n                              [(ngModel)]=\"replyContent\"\n                              [class.focused]=\"replyFocused\"\n                              (focus)=\"replyFocused=true\" (blur)=\"replyFocused=false\"></textarea>\n                    <div class=\"publish-btn\" (click)=\"replyPublishBtnClicked()\">发布</div>\n                </div>\n                <br>\n                <ol class=\"comments\" reversed>\n                    <li>\n                        <span>Coffee</span>\n                        <ul class=\"comments-of-comment\">\n                            <li>Sugar</li>\n                            <li>Spoon</li>\n                            <li>Cup</li>\n                        </ul>\n                    </li>\n                    <li><span>Tea</span></li>\n                    <li><span>Milk</span></li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
+module.exports = "<menu [show]=\"showMenu\" [loading]=\"loading\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"article-header\">\n                <h1>{{articleTitle}}</h1>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\" (click)=\"like()\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{articleCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{articleUpdateTime}}</p>\n                <br>\n                <hr>\n                <br>\n                <br>\n            </div>\n\n            <div class=\"article-content\">\n                <content [innerHTML]=\"articleContent\" [scriptSrc]=\"articleScriptSrc\" (onload)=\"articleOnload()\"></content>\n            </div>\n\n            <div class=\"article-footer\">\n                <br>\n                <br>\n                <hr>\n                <div class=\"category box\" (click)=\"categoryClicked()\">\n                    <i></i>\n                    <span>{{categoryName}}</span>\n                </div>\n                <div class=\"like box\" (click)=\"like()\">\n                    <i></i>\n                    <span>{{articleLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"former-article\" data-rel=\"上一篇: \"\n                    (click)=\"articleLoad(previousArticle)\">{{previousArticle}}</p>\n                <p class=\"latter-article\" data-rel=\"下一篇: \"\n                    (click)=\"articleLoad(nextArticle)\">{{nextArticle}}</p>\n                <br>\n                <hr>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li *ngFor=\"let top of top5\" (click)=\"articleLoad(top)\">{{top}}</li>\n                </ol>\n                <br>\n                <hr>\n                <br>\n                <div id=\"reply\" class=\"reply\" [class.focused]=\"replyFocused\">\n                    <div class=\"title\"><span (click)=\"resetReplyUserName(null)\">{{replyUserName}}</span>发布评论...</div>\n                    <textarea #reply placeholder=\"输入评论...\"\n                              [(ngModel)]=\"replyContent\"\n                              [class.focused]=\"replyFocused\"\n                              (focus)=\"replyFocused=true\" (blur)=\"replyFocused=false\"></textarea>\n                    <div class=\"publish-btn\" (click)=\"replyPublishBtnClicked()\">发布</div>\n                </div>\n                <br>\n                <ol class=\"comments\" reversed>\n                    <li *ngFor=\"let comment of comments; let i = index;\">\n                        <span class=\"comment-at-username\">@{{comment.atUserName}} : </span>\n                        <span class=\"comment-create\">{{comment.create}}</span>\n                        <p class=\"comment-content\">{{comment.content}}</p>\n                        <p class=\"comment-username\" (click)=\"makeComment(i, comment)\">----{{comment.userName}}</p>\n                        <ul class=\"comments-of-comment\">\n                            <li *ngFor=\"let follow of comment.follows\">\n                                <span class=\"comment-at-username\">@{{follow.atUserName}} : </span>\n                                <span class=\"comment-create\">{{follow.create}}</span>\n                                <p class=\"comment-content\">{{follow.content}}</p>\n                                <p class=\"comment-username\" (click)=\"makeComment(i, comment, follow)\">----{{follow.userName}}</p>\n                            </li>\n                        </ul>\n                    </li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
 
 /***/ }),
 
 /***/ 464:
 /***/ (function(module, exports) {
 
-module.exports = "<menu [show]=\"showMenu\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"category-header\">\n                <h1>{{categoryName}}</h1>\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{categoryCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{categoryUpdateTime}}</p>\n                <br>\n                <hr>\n            </div>\n            <br>\n            <br>\n\n            <div class=\"category-content\">\n                <content [innerHTML]=\"categoryContent\" [scriptSrc]=\"categoryScriptSrc\" (onload)=\"categoryOnload()\"></content>\n            </div>\n\n            <br>\n            <br>\n            <hr *ngIf=\"imageList.length + noneImageList.length > 0\">\n            <br *ngIf=\"imageList.length > 0\">\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list1\">\n                <ul>\n                    <li *ngFor=\"let imageListItem of imageList\"\n                        [style.background-size]=\"imageListItemBackgroundSize\"\n                        [style.background-image]=\"imageListItem.imageSrc\"\n                        (click)=\"postOpener.postOpen(imageListItem.title)\">\n                        <p>{{imageListItem.title}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"imageList.length > 0\">\n            <hr *ngIf=\"imageList.length + noneImageList.length > 1\">\n            <br *ngIf=\"noneImageList.length > 0\">\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list2\">\n                <ul>\n                    <li *ngFor=\"let noneImageListItem of noneImageList\" (click)=\"noneImageListItemClicked(noneImageListItem.title)\">\n                        <h1>{{noneImageListItem.title}}</h1>\n                        <p>{{noneImageListItem.brief}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"noneImageList.length > 0\">\n\n            <div class=\"category-footer\">\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li *ngFor=\"let top of top5\" (click)=\"postOpener.postOpen(top)\">{{top}}</li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
+module.exports = "<menu [show]=\"showMenu\" [loading]=\"loading\"></menu>\n\n<section class=\"body-sec\">\n    <div class=\"body-wrapper\">\n        <div class=\"body\" #body>\n            <div class=\"category-header\">\n                <h1>{{categoryName}}</h1>\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"create-time\" data-rel=\"创建时间: \">{{categoryCreateTime}}</p>\n                <p class=\"update-time\" data-rel=\"最后更新时间: \">{{categoryUpdateTime}}</p>\n                <br>\n                <hr>\n            </div>\n            <br>\n            <br>\n\n            <div class=\"category-content\">\n                <content [innerHTML]=\"categoryContent\" [scriptSrc]=\"categoryScriptSrc\" (onload)=\"categoryOnload()\"></content>\n            </div>\n\n            <br>\n            <br>\n            <hr *ngIf=\"imageList.length + noneImageList.length > 0\">\n            <br *ngIf=\"imageList.length > 0\">\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list1\">\n                <ul>\n                    <li *ngFor=\"let imageListItem of imageList\"\n                        [style.background-size]=\"imageListItemBackgroundSize\"\n                        [style.background-image]=\"imageListItem.imageSrc\"\n                        (click)=\"postOpener.postOpen(imageListItem.title)\">\n                        <p>{{imageListItem.title}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"imageList.length > 0\"\n                   [totalCount]=\"list1PagerTotalCount\"\n                   [pageSize]=\"list1PagerPageSize\"\n                   [currentPage]=\"list1PagerCurrentPage\"\n                   (change)=\"list1PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"imageList.length > 0\">\n            <hr *ngIf=\"imageList.length + noneImageList.length > 1\">\n            <br *ngIf=\"noneImageList.length > 0\">\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n\n            <div class=\"category-list2\">\n                <ul>\n                    <li *ngFor=\"let noneImageListItem of noneImageList\" (click)=\"noneImageListItemClicked(noneImageListItem.title)\">\n                        <h1>{{noneImageListItem.title}}</h1>\n                        <p>{{noneImageListItem.brief}}</p>\n                    </li>\n                </ul>\n            </div>\n\n            <pager *ngIf=\"noneImageList.length > 0\"\n                   [totalCount]=\"list2PagerTotalCount\"\n                   [pageSize]=\"list2PagerPageSize\"\n                   [currentPage]=\"list2PagerCurrentPage\"\n                   (change)=\"list2PagerInfoChange($event)\"></pager>\n            <br *ngIf=\"noneImageList.length > 0\">\n\n            <div class=\"category-footer\">\n                <hr>\n                <div class=\"like box\">\n                    <i></i>\n                    <span>{{categoryLikeCount}}</span>\n                </div>\n                <br>\n                <br>\n                <p class=\"top5\" data-rel=\"TOP 5:\"></p>\n                <ol>\n                    <li *ngFor=\"let top of top5\" (click)=\"postOpener.postOpen(top)\">{{top}}</li>\n                </ol>\n                <br>\n            </div>\n        </div>\n        <div class=\"footer\" [class.fixed]=\"footerFixed\">\n            人在劳作，天在看！@2017\n        </div>\n    </div>\n</section>\n"
 
 /***/ }),
 
@@ -1034,7 +1112,7 @@ module.exports = "<div class=\"blur\"></div>\n\n<migawheel (needLoading)=\"needL
 /***/ 467:
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"menu-bar\">\n    <div class=\"banner\" [class.untransparent]=\"!bannerTransparent\">\n        <div class=\"menu-btn\" (click)=\"menuClicked()\">MENU</div>\n    </div>\n    <div class=\"left-banner\" [class.untransparent]=\"!bannerTransparent\"></div>\n    <div class=\"menu wrapper\" [class.left]=\"menuTransform === 'left'\" [class.right]=\"menuTransform === 'right'\">\n        <div class=\"loading\"></div>\n        <div>Icons made by <a href=\"http://www.freepik.com\" title=\"Freepik\">Freepik</a> from <a href=\"http://www.flaticon.com\" title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div>\n    </div>\n</section>\n"
+module.exports = "<section class=\"menu-bar\">\n    <div class=\"banner\" [class.untransparent]=\"!bannerTransparent\">\n        <div class=\"menu-btn\" (click)=\"menuClicked()\">MENU</div>\n    </div>\n    <div class=\"left-banner\" [class.untransparent]=\"!bannerTransparent\"></div>\n    <div class=\"menu wrapper\" [class.left]=\"menuTransform === 'left'\" [class.right]=\"menuTransform === 'right'\">\n        <div class=\"loading\" *ngIf=\"loading\"></div>\n        <div *ngIf=\"loading\">Icons made by <a href=\"http://www.freepik.com\" title=\"Freepik\">Freepik</a> from <a href=\"http://www.flaticon.com\" title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div>\n    </div>\n</section>\n"
 
 /***/ }),
 
@@ -1202,9 +1280,10 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_api_const__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleDao; });
 /* unused harmony export Post */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1221,21 +1300,55 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ArticleDao = (function () {
     function ArticleDao(dao) {
         this.dao = dao;
     }
     ArticleDao.prototype.post = function (title) {
         var _this = this;
-        return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
-            var ret = JSON.parse(localStorage.getItem(__WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__["a" /* LocalStorageKeys */].OpenedPost));
-            _this.dao.get(ret.url)
-                .map(function (res) { return res.text(); })
-                .subscribe(function (content) {
-                observer.next(new Post(content, ret.script, ret.create, ret.update, ret.categoryName));
-                observer.complete();
-            });
+        var post = this.dao.get(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("post")(title))
+            .map(function (res) { return res.json(); })
+            .map(function (ret) {
+            if (ret.code !== 20000) {
+                alert(ret.body);
+                return;
+            }
+            return ret.body;
         });
+        return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
+            post.subscribe(function (ret) {
+                _this.dao.get(ret.url)
+                    .map(function (res) { return res.text(); })
+                    .subscribe(function (content) {
+                    observer.next(new Post(ret.id, content, ret.script, ret.create, ret.update, ret.categoryName, ret.like));
+                    observer.complete();
+                });
+            }, function (error) { return __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        });
+    };
+    ArticleDao.prototype.like = function (postId) {
+        return this.dao.get(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("like")(postId))
+            .map(function (res) { return res.json(); });
+    };
+    ArticleDao.prototype.fetchComments = function (postId) {
+        return this.dao.get(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("FetchComments")(postId))
+            .map(function (res) { return res.json(); });
+    };
+    ArticleDao.prototype.commentPost = function (postId, content) {
+        return this.dao.post(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("CommentPost"), {
+            idWhatEver: postId,
+            userName: JSON.parse(localStorage.getItem(__WEBPACK_IMPORTED_MODULE_5__const_localstorage_const__["a" /* LocalStorageKeys */].User)).userView.userName,
+            content: content
+        }).map(function (res) { return res.json(); });
+    };
+    ArticleDao.prototype.commentComment = function (postId, commentId, atUserName, content) {
+        return this.dao.post(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("CommentComment")(postId), {
+            idWhatEver: commentId,
+            userName: JSON.parse(localStorage.getItem(__WEBPACK_IMPORTED_MODULE_5__const_localstorage_const__["a" /* LocalStorageKeys */].User)).userView.userName,
+            content: content,
+            atUserName: atUserName,
+        }).map(function (res) { return res.json(); });
     };
     ArticleDao = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Injectable */])(), 
@@ -1245,12 +1358,14 @@ var ArticleDao = (function () {
     var _a;
 }());
 var Post = (function () {
-    function Post(content, script, create, update, category) {
+    function Post(postId, content, script, create, update, category, articleLikeCount) {
+        this.postId = postId;
         this.content = content;
         this.script = script;
         this.create = create;
         this.update = update;
         this.categoryName = category;
+        this.articleLikeCount = articleLikeCount;
     }
     return Post;
 }());
@@ -1266,10 +1381,10 @@ var Post = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(414);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_post_type_const__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(59);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CategoryDao; });
 /* unused harmony export Category */
 /* unused harmony export ListItem */
@@ -1308,13 +1423,13 @@ var CategoryDao = (function () {
             category.subscribe(function (cate) {
                 self.posts(categoryName).subscribe(function (ret) {
                     var imageList = [], noneImageList = [];
-                    cate.posts.forEach(function (pt) {
-                        switch (ret[pt].type) {
+                    ret.forEach(function (pt) {
+                        switch (pt.type) {
                             case __WEBPACK_IMPORTED_MODULE_4__const_post_type_const__["a" /* PostType */].APP:
-                                imageList.push(new ListItem(pt, null, ret[pt].screenshot));
+                                imageList.push(new ListItem(pt.name, null, pt.screenshot));
                                 break;
                             case __WEBPACK_IMPORTED_MODULE_4__const_post_type_const__["a" /* PostType */].ARTICLE:
-                                noneImageList.push(new ListItem(pt, ret[pt].brief, null));
+                                noneImageList.push(new ListItem(pt.name, pt.brief, null));
                                 break;
                             default: break;
                         }
@@ -1471,6 +1586,10 @@ var MenuComponent = (function () {
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Input */])('show'), 
         __metadata('design:type', Boolean)
     ], MenuComponent.prototype, "show", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Input */])('loading'), 
+        __metadata('design:type', Boolean)
+    ], MenuComponent.prototype, "loading", void 0);
     MenuComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* Component */])({
             selector: 'menu',
@@ -1494,9 +1613,9 @@ var MenuComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(414);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(59);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MigaWheelDao; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1540,7 +1659,7 @@ var MigaWheelDao = (function () {
                 alert(ret.body);
                 return;
             }
-            return ret.body.map(function (k) { return k.name + '[]' + k.create + '||' + k.update; });
+            return ret.body.map(function (k) { return k.name + '[]' + k.create.substr(0, '1991-11-06'.length) + '||' + k.update.substr(0, '1991-11-06'.length); });
         });
     };
     MigaWheelDao.prototype.isNullObj = function (obj) {
@@ -2363,10 +2482,10 @@ var AppRoutingModule = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgetPasswordComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2444,10 +2563,10 @@ var ForgetPasswordComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginFormComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2542,10 +2661,10 @@ var LoginFormComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterFormComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2730,10 +2849,10 @@ var RegisterFormComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResetPasswordComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2873,7 +2992,7 @@ var ResetPasswordComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__const_localstorage_const__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3028,7 +3147,7 @@ var UserModule = (function () {
 
 /***/ }),
 
-/***/ 72:
+/***/ 59:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3071,9 +3190,33 @@ var API = (function () {
                 return "http://localhost:8080/blog_api/post/fetch_by_name?name=" + name;
             }
         },
-        "date_index": {
-            "prod": "http://caols.tech/api/date_index.json",
-            "dev": "http://caols.tech/api/date_index.json"
+        "like": {
+            "prod": function (postId) {
+                return "/blog_api/feedback/like?postId=" + postId;
+            },
+            "dev": function (postId) {
+                return "http://localhost:8080/blog_api/feedback/like?postId=" + postId;
+            }
+        },
+        "FetchComments": {
+            "prod": function (postId) {
+                return "/blog_api/feedback/comment/list?postId=" + postId;
+            },
+            "dev": function (postId) {
+                return "http://localhost:8080/blog_api/feedback/comment/list?postId=" + postId;
+            }
+        },
+        "CommentPost": {
+            "prod": "/blog_api/feedback/comment/post",
+            "dev": "http://localhost:8080/blog_api/feedback/comment/post"
+        },
+        "CommentComment": {
+            "prod": function (postId) {
+                return "/blog_api/feedback/comment/comment?postId=" + postId;
+            },
+            "dev": function (postId) {
+                return "http://localhost:8080/blog_api/feedback/comment/comment?postId=" + postId;
+            }
         },
         "login": {
             "prod": "/user_api/user/login",
@@ -3126,7 +3269,7 @@ var API = (function () {
 
 /***/ }),
 
-/***/ 73:
+/***/ 60:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

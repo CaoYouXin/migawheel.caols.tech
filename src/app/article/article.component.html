@@ -57,7 +57,7 @@
                 <hr>
                 <br>
                 <div id="reply" class="reply" [class.focused]="replyFocused">
-                    <div class="title"><span>awesome</span>发布评论...</div>
+                    <div class="title"><span (click)="resetReplyUserName(null)">{{replyUserName}}</span>发布评论...</div>
                     <textarea #reply placeholder="输入评论..."
                               [(ngModel)]="replyContent"
                               [class.focused]="replyFocused"
@@ -66,11 +66,17 @@
                 </div>
                 <br>
                 <ol class="comments" reversed>
-                    <li *ngFor="let comment of comments; let i of index;">
-                        <span (click)="makeComment(comment)">{{comment.userName}}</span><span> @ {{comment.atUserName}} : {{comment.create}} : {{comment.content}}</span>
+                    <li *ngFor="let comment of comments; let i = index;">
+                        <span class="comment-at-username">@{{comment.atUserName}} : </span>
+                        <span class="comment-create">{{comment.create}}</span>
+                        <p class="comment-content">{{comment.content}}</p>
+                        <p class="comment-username" (click)="makeComment(i, comment)">----{{comment.userName}}</p>
                         <ul class="comments-of-comment">
-                            <li *ngFor="let follow of comment.follows; let j of index;">
-                                <span (click)="makeComment(comment, follow)">{{follow.userName}}</span><span> @ {{follow.atUserName}} : {{follow.create}} : {{follow.content}}</span>
+                            <li *ngFor="let follow of comment.follows">
+                                <span class="comment-at-username">@{{follow.atUserName}} : </span>
+                                <span class="comment-create">{{follow.create}}</span>
+                                <p class="comment-content">{{follow.content}}</p>
+                                <p class="comment-username" (click)="makeComment(i, comment, follow)">----{{follow.userName}}</p>
                             </li>
                         </ul>
                     </li>
