@@ -250,22 +250,32 @@ p[data-rel]:before {
     background-color: rgb(248, 248, 248);
 }
 
-.comments .comments-of-comment > li + li {
+.comments .comments-of-comment > li {
     border-top: dashed 1px cyan;
+}
+
+.comments .comments-of-comment > li:last-child {
+    border-bottom: dashed 1px cyan;
 }
 
 .comment-content {
     padding: 0.5em;
+    color: #111111;
 }
 
 .comment-create {
     font-size: 0.7em;
     color: blueviolet;
+    font-family: "Courier New", sans-serif;
 }
 
 .comment-username {
     text-align: right;
     cursor: pointer;
-    color: blue;
-    background-image: linear-gradient(61.8deg, #fff, #fff 61.8%, #b084e2);
+    color: blueviolet;
+    font-family: "Courier New", sans-serif;
+}
+
+.comment-at-username {
+    font-family: "Courier New", sans-serif;
 }

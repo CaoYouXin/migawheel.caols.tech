@@ -455,11 +455,15 @@ var ArticleComponent = (function () {
         }
         else {
             this.replyCommentIndex = null;
+            this.reply.nativeElement.focus();
         }
     };
     ArticleComponent.prototype.articleLoad = function (title) {
         if (Configs.nonePrevious === title ||
             Configs.noneNext === title) {
+            return;
+        }
+        if (title === this.articleTitle) {
             return;
         }
         this.resetReplyUserName(null);
@@ -481,13 +485,12 @@ var ArticleComponent = (function () {
     };
     // ng handlers
     ArticleComponent.prototype.ngOnInit = function () {
-        this.articleTitle = __WEBPACK_IMPORTED_MODULE_5__route_uri_util__["a" /* URIUtil */].getParam(this.router.routerState.snapshot.url, ['n'])['n'];
-        this.categoryName = 'Demo';
+        this.categoryName = '';
         this.articleLikeCount = 99;
         this.previousArticle = Configs.nonePrevious;
         this.nextArticle = Configs.noneNext;
         this.top5 = [];
-        this.articleLoad(this.articleTitle);
+        this.articleLoad(__WEBPACK_IMPORTED_MODULE_5__route_uri_util__["a" /* URIUtil */].getParam(this.router.routerState.snapshot.url, ['n'])['n']);
     };
     // dom handlers
     ArticleComponent.prototype.like = function () {
@@ -513,6 +516,18 @@ var ArticleComponent = (function () {
             return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].process(ret, function (comments) {
                 self.comments = comments;
             });
+        }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        this.dao.previous(this.articleUpdateTime)
+            .subscribe(function (ret) {
+            self.previousArticle = ret;
+        }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        this.dao.next(this.articleUpdateTime)
+            .subscribe(function (ret) {
+            self.nextArticle = ret;
+        }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        this.dao.top5()
+            .subscribe(function (ret) {
+            self.top5 = ret;
         }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__["a" /* DaoUtil */].logError(error); });
     };
     ArticleComponent.prototype.replyPublishBtnClicked = function () {
@@ -1000,7 +1015,7 @@ module.exports = ""
 /***/ 451:
 /***/ (function(module, exports) {
 
-module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nh1 {\n    font-size: 1.5em;\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n    cursor: pointer;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol > li {\n    cursor: pointer;\n}\n\n.top5 + ol, .comments {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: pointer;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/c.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* reply */\n.reply {\n    width: 740px;\n    height: 75px;\n\n    margin-top: 10px;\n    margin-left: 10px;\n\n    border-radius: 5px;\n    box-shadow: 0 0 10px cyan;\n\n    overflow: hidden;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n\n    font-size: 0;\n}\n\n.reply > * {\n    font-family: Monaco, \"Lucida Console\", monospace;\n    font-size: 20px;\n\n    width: 730px;\n    height: 30px;\n\n    margin-top: 5px;\n    margin-left: 5px;\n\n    line-height: 30px;\n}\n\n.reply > .title {\n    text-align: center;\n\n    color: white;\n    background-color: cyan;\n}\n\n.reply > .title > span:hover {\n    background-color: indianred;\n    cursor: default;\n}\n\n.reply > .title > span:before {\n    content: '『';\n}\n\n.reply > .title > span:after {\n    content: '』';\n}\n\n.reply > textarea {\n    outline: none;\n    resize: none;\n\n    line-height: 28px;\n\n    border: dashed 1px cyan;\n\n    background-color: transparent;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n}\n\n.reply > .publish-btn {\n    text-align: center;\n\n    cursor: pointer;\n\n    color: white;\n    background-image: -webkit-linear-gradient(bottom, #07fff2 0%, #43fdff 50%, cyan 100%);\n    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);\n}\n\n.reply > .publish-btn:hover {\n    background-image: -webkit-linear-gradient(bottom, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n}\n\n.reply.focused {\n    height: 230px;\n}\n\n.reply > textarea.focused {\n    height: 150px;\n}\n\n.comments > li {\n    border: dashed 1px cyan;\n    background-image: -webkit-radial-gradient(0 0 800px, white 0%, transparent 100%);\n    background-image: radial-gradient(800px at 0 0, white 0%, transparent 100%);\n}\n\n.comments > li + li {\n    border-top: none;\n}\n\n.comments .comments-of-comment {\n    list-style: none;\n\n    margin: 10px;\n\n    background-color: rgb(248, 248, 248);\n}\n\n.comments .comments-of-comment > li + li {\n    border-top: dashed 1px cyan;\n}\n\n.comment-content {\n    padding: 0.5em;\n}\n\n.comment-create {\n    font-size: 0.7em;\n    color: blueviolet;\n}\n\n.comment-username {\n    text-align: right;\n    cursor: pointer;\n    color: blue;\n    background-image: -webkit-linear-gradient(28.2deg, #fff, #fff 61.8%, #b084e2);\n    background-image: linear-gradient(61.8deg, #fff, #fff 61.8%, #b084e2);\n}\n"
+module.exports = "/* content */\n*, *:before, *:after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\n.body-wrapper {\n    position: absolute;\n\n    top: 100px;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\n.body {\n    display: block;\n\n    width: 800px;\n\n    margin: 0 auto;\n    padding: 20px;\n\n    background-color: rgb(249, 249, 249);\n}\n\n.footer {\n    display: block;\n\n    width: 100%;\n    height: 50px;\n\n    background-color: rgba(249, 249, 249, 0.2);\n\n    line-height: 50px;\n    text-align: center;\n\n    color: goldenrod;\n}\n\n.footer.fixed {\n    position: fixed;\n\n    bottom: 0;\n    left: 100px;\n\n    width: calc(100% - 100px);\n}\n\nh1 {\n    font-size: 1.5em;\n}\n\nhr {\n    width: 100%;\n    border-bottom: solid 1px #DDDDDD;\n}\n\np[data-rel] {\n    text-indent: 0;\n    cursor: pointer;\n}\n\np[data-rel]:before {\n    content: attr(data-rel);\n}\n\n.top5 + ol > li {\n    cursor: pointer;\n}\n\n.top5 + ol, .comments {\n    list-style-position: inside;\n\n    font-family: \"Source Code Pro\", monospace;\n}\n\n/* box */\n.box {\n    display: inline-block;\n\n    height: 36px;\n\n    margin-top: 10px;\n\n    border-radius: 3px;\n\n    cursor: pointer;\n}\n\n.box:before {\n    content: '';\n    display: inline-block;\n\n    width: 0;\n    height: 100%;\n\n    vertical-align: middle;\n}\n\n.box > * {\n    display: inline-block;\n\n    vertical-align: middle;\n}\n\n.box > i {\n    width: 25px;\n    height: 25px;\n}\n\n.box > span {\n    line-height: 30px;\n\n    margin-left: 5px;\n    padding: 0 10px;\n}\n\n.category.box {\n    border: solid 1px cornflowerblue;\n    box-shadow: 0 0 5px cornflowerblue;\n}\n\n.like.box {\n    border: solid 1px indianred;\n    box-shadow: 0 0 5px indianred;\n}\n\n.category.box > i {\n    background: url(\"../../assets/c.png\") no-repeat;\n    background-size: 100%;\n}\n\n.like.box > i {\n    background: url(\"../../assets/like.png\") no-repeat;\n    background-size: 100%;\n}\n\n.category.box > span {\n    color: cornflowerblue;\n    border-left: solid 1px cornflowerblue;\n}\n\n.like.box > span {\n    color: indianred;\n    border-left: solid 1px indianred;\n}\n\n/* reply */\n.reply {\n    width: 740px;\n    height: 75px;\n\n    margin-top: 10px;\n    margin-left: 10px;\n\n    border-radius: 5px;\n    box-shadow: 0 0 10px cyan;\n\n    overflow: hidden;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n\n    font-size: 0;\n}\n\n.reply > * {\n    font-family: Monaco, \"Lucida Console\", monospace;\n    font-size: 20px;\n\n    width: 730px;\n    height: 30px;\n\n    margin-top: 5px;\n    margin-left: 5px;\n\n    line-height: 30px;\n}\n\n.reply > .title {\n    text-align: center;\n\n    color: white;\n    background-color: cyan;\n}\n\n.reply > .title > span:hover {\n    background-color: indianred;\n    cursor: default;\n}\n\n.reply > .title > span:before {\n    content: '『';\n}\n\n.reply > .title > span:after {\n    content: '』';\n}\n\n.reply > textarea {\n    outline: none;\n    resize: none;\n\n    line-height: 28px;\n\n    border: dashed 1px cyan;\n\n    background-color: transparent;\n\n    -webkit-transition: height 1s ease-in-out;\n\n    transition: height 1s ease-in-out;\n}\n\n.reply > .publish-btn {\n    text-align: center;\n\n    cursor: pointer;\n\n    color: white;\n    background-image: -webkit-linear-gradient(bottom, #07fff2 0%, #43fdff 50%, cyan 100%);\n    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);\n}\n\n.reply > .publish-btn:hover {\n    background-image: -webkit-linear-gradient(bottom, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n}\n\n.reply.focused {\n    height: 230px;\n}\n\n.reply > textarea.focused {\n    height: 150px;\n}\n\n.comments > li {\n    border: dashed 1px cyan;\n    background-image: -webkit-radial-gradient(0 0 800px, white 0%, transparent 100%);\n    background-image: radial-gradient(800px at 0 0, white 0%, transparent 100%);\n}\n\n.comments > li + li {\n    border-top: none;\n}\n\n.comments .comments-of-comment {\n    list-style: none;\n\n    margin: 10px;\n\n    background-color: rgb(248, 248, 248);\n}\n\n.comments .comments-of-comment > li {\n    border-top: dashed 1px cyan;\n}\n\n.comments .comments-of-comment > li:last-child {\n    border-bottom: dashed 1px cyan;\n}\n\n.comment-content {\n    padding: 0.5em;\n    color: #111111;\n}\n\n.comment-create {\n    font-size: 0.7em;\n    color: blueviolet;\n    font-family: \"Courier New\", sans-serif;\n}\n\n.comment-username {\n    text-align: right;\n    cursor: pointer;\n    color: blueviolet;\n    font-family: \"Courier New\", sans-serif;\n}\n\n.comment-at-username {\n    font-family: \"Courier New\", sans-serif;\n}\n"
 
 /***/ }),
 
@@ -1349,6 +1364,45 @@ var ArticleDao = (function () {
             content: content,
             atUserName: atUserName,
         }).map(function (res) { return res.json(); });
+    };
+    ArticleDao.prototype.previous = function (date) {
+        var previousPost = this.dao.post(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("PreviousPost"), {
+            date: date
+        }).map(function (res) { return res.json(); });
+        return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
+            previousPost.subscribe(function (ret) {
+                return __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__["a" /* DaoUtil */].process(ret, function (post) {
+                    observer.next(post.name);
+                    observer.complete();
+                });
+            }, function (error) { return __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        });
+    };
+    ArticleDao.prototype.next = function (date) {
+        var nextPost = this.dao.post(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("NextPost"), {
+            date: date
+        }).map(function (res) { return res.json(); });
+        return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
+            nextPost.subscribe(function (ret) {
+                return __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__["a" /* DaoUtil */].process(ret, function (post) {
+                    observer.next(post.name);
+                    observer.complete();
+                });
+            }, function (error) { return __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        });
+    };
+    ArticleDao.prototype.top5 = function () {
+        var top5Posts = this.dao.get(__WEBPACK_IMPORTED_MODULE_4__const_api_const__["a" /* API */].getAPI("Top5Posts")).map(function (res) { return res.json(); });
+        return new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
+            top5Posts.subscribe(function (ret) {
+                return __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__["a" /* DaoUtil */].process(ret, function (posts) {
+                    var top5 = [];
+                    posts.forEach(function (post) { return top5.push(post.name); });
+                    observer.next(top5);
+                    observer.complete();
+                });
+            }, function (error) { return __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+        });
     };
     ArticleDao = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Injectable */])(), 
@@ -3261,6 +3315,18 @@ var API = (function () {
             "dev": function (token) {
                 return "url(http://localhost:8080/user_api/captcha/image?token=" + token + ")";
             }
+        },
+        "PreviousPost": {
+            "prod": "/blog_api/post/previous",
+            "dev": "http://localhost:8080/blog_api/post/previous"
+        },
+        "NextPost": {
+            "prod": "/blog_api/post/next",
+            "dev": "http://localhost:8080/blog_api/post/next"
+        },
+        "Top5Posts": {
+            "prod": "/blog_api/post/list_top_5",
+            "dev": "http://localhost:8080/blog_api/post/list_top_5"
         }
     };
     return API;

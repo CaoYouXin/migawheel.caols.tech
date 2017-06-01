@@ -62,12 +62,17 @@ export class ArticleComponent {
             this.replyUserName = this.replyUserName + '@' + atUserName;
         } else {
             this.replyCommentIndex = null;
+            this.reply.nativeElement.focus();
         }
     }
 
     private articleLoad(title: string) {
         if (Configs.nonePrevious === title ||
             Configs.noneNext === title) {
+            return;
+        }
+
+        if (title === this.articleTitle) {
             return;
         }
 
@@ -92,15 +97,13 @@ export class ArticleComponent {
 
     // ng handlers
     ngOnInit() {
-        this.articleTitle = URIUtil.getParam(this.router.routerState.snapshot.url, ['n'])['n'];
-
-        this.categoryName = 'Demo';
+        this.categoryName = '';
         this.articleLikeCount = 99;
         this.previousArticle = Configs.nonePrevious;
         this.nextArticle = Configs.noneNext;
         this.top5 = [];
 
-        this.articleLoad(this.articleTitle);
+        this.articleLoad(URIUtil.getParam(this.router.routerState.snapshot.url, ['n'])['n']);
     }
 
     // dom handlers
@@ -131,6 +134,21 @@ export class ArticleComponent {
                     self.comments = comments;
                 }), error => DaoUtil.logError(error)
             );
+
+        this.dao.previous(this.articleUpdateTime)
+            .subscribe(ret => {
+                self.previousArticle = ret;
+            }, error => DaoUtil.logError(error));
+
+        this.dao.next(this.articleUpdateTime)
+            .subscribe(ret => {
+                self.nextArticle = ret;
+            }, error => DaoUtil.logError(error));
+
+        this.dao.top5()
+            .subscribe(ret => {
+                self.top5 = ret;
+            }, error => DaoUtil.logError(error));
     }
 
     replyPublishBtnClicked() {

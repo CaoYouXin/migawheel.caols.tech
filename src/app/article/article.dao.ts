@@ -61,6 +61,51 @@ export class ArticleDao {
         }).map(res => res.json());
     }
 
+    previous(date): Observable<string> {
+        let previousPost = this.dao.post(API.getAPI("PreviousPost"), {
+            date: date
+        }).map(res => res.json());
+
+        return new Observable<string>(observer => {
+            previousPost.subscribe(ret =>
+                DaoUtil.process(ret, function (post) {
+                    observer.next(post.name);
+                    observer.complete();
+                }), error => DaoUtil.logError(error)
+            );
+        });
+    }
+
+    next(date): Observable<string> {
+        let nextPost = this.dao.post(API.getAPI("NextPost"), {
+            date: date
+        }).map(res => res.json());
+
+        return new Observable<string>(observer => {
+            nextPost.subscribe(ret =>
+                DaoUtil.process(ret, function (post) {
+                    observer.next(post.name);
+                    observer.complete();
+                }), error => DaoUtil.logError(error)
+            );
+        });
+    }
+
+    top5(): Observable<Array<string>> {
+        let top5Posts = this.dao.get(API.getAPI("Top5Posts")).map(res => res.json());
+
+        return new Observable<Array<string>>(observer => {
+            top5Posts.subscribe(ret =>
+                DaoUtil.process(ret, function (posts) {
+                    let top5 = [];
+                    posts.forEach(post => top5.push(post.name));
+                    observer.next(top5);
+                    observer.complete();
+                }), error => DaoUtil.logError(error)
+            );
+        });
+    }
+
 }
 
 export class Post {

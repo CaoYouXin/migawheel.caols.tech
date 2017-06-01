@@ -104,6 +104,18 @@ export class API {
             "dev": function (token) {
                 return `url(http://localhost:8080/user_api/captcha/image?token=${token})`;
             }
+        },
+        "PreviousPost": {
+            "prod": "/blog_api/post/previous",
+            "dev": "http://localhost:8080/blog_api/post/previous"
+        },
+        "NextPost": {
+            "prod": "/blog_api/post/next",
+            "dev": "http://localhost:8080/blog_api/post/next"
+        },
+        "Top5Posts": {
+            "prod": "/blog_api/post/list_top_5",
+            "dev": "http://localhost:8080/blog_api/post/list_top_5"
         }
     };
 
