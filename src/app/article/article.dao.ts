@@ -11,36 +11,71 @@ export class ArticleDao {
     constructor(private dao: DaoUtil) {}
 
     post(title: string): Observable<Post> {
-        return new Observable<Post>(observer => {
-            let ret = JSON.parse(localStorage.getItem(LocalStorageKeys.OpenedPost));
+        let post = this.dao.get(API.getAPI("post")(title))
+            .map(res => res.json())
+            .map(ret => {
+                if (ret.code !== 20000) {
+                    alert(ret.body);
+                    return;
+                }
 
-            this.dao.get(ret.url)
-                .map(res => res.text())
-                .subscribe(content => {
-                    observer.next(new Post(content, ret.script, ret.create, ret.update, ret.categoryName));
-                    observer.complete();
-                });
+                return ret.body;
+            });
+
+        return new Observable<Post>(observer => {
+            post.subscribe(ret => {
+                this.dao.get(ret.url)
+                    .map(res => res.text())
+                    .subscribe(content => {
+                        observer.next(new Post(ret.id, content, ret.script, ret.create, ret.update, ret.categoryName, ret.like));
+                        observer.complete();
+                    });
+            }, error => DaoUtil.logError(error));
         });
+    }
+
+    like(postId: number) :Observable<any> {
+        return this.dao.get(API.getAPI("like")(postId))
+            .map(res => res.json());
+    }
+
+    fetchComments(postId: number): Observable<any> {
+        return this.dao.get(API.getAPI("FetchComments")(postId))
+            .map(res => res.json());
+    }
+
+    commentPost(postId: number, content: string): Observable<any> {
+        return this.dao.post(API.getAPI("CommentPost"), {
+            idWhatEver: postId,
+            userName: JSON.parse(localStorage.getItem(LocalStorageKeys.User)).userView.userName,
+            content: content
+        }).map(res => res.json());
     }
 
 }
 
 export class Post {
+    postId: number;
     content: string;
     script: string;
     create: string;
     update: string;
     categoryName: string;
+    articleLikeCount: number;
 
-    constructor(content: string,
+    constructor(postId: number,
+                content: string,
                 script: string,
                 create: string,
                 update: string,
-                category: string) {
+                category: string,
+                articleLikeCount: number) {
+        this.postId = postId;
         this.content = content;
         this.script = script;
         this.create = create;
         this.update = update;
         this.categoryName = category;
+        this.articleLikeCount = articleLikeCount;
     }
 }

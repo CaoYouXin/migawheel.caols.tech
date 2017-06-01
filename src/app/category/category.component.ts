@@ -27,6 +27,7 @@ export class CategoryComponent {
 
     private footerFixed: boolean;
     private showMenu: boolean;
+    private loading: boolean;
 
     private categoryName: string;
     private categoryLikeCount: number;
@@ -87,6 +88,7 @@ export class CategoryComponent {
         this.list1PagerTotalCount = 0;
         this.list2PagerTotalCount = 0;
 
+        this.loading = true;
         this.showMenu = true;
         this.categoryName = URIUtil.getParam(this.router.routerState.snapshot.url, ['n'])['n'];
         this.categoryLikeCount = 99;
@@ -124,6 +126,7 @@ export class CategoryComponent {
 
     // dom handlers
     categoryOnload() {
+        this.loading = false;
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
     }

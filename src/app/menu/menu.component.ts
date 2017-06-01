@@ -12,6 +12,9 @@ export class MenuComponent {
     @Input('show')
     private show: boolean;
 
+    @Input('loading')
+    loading: boolean;
+
     private replaceMenu(showMenu: boolean) {
         this.bannerTransparent = !showMenu;
         this.menuTransform = showMenu ? null : (window.innerWidth > window.innerHeight ? 'left' : 'right');

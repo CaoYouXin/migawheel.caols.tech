@@ -8388,9 +8388,9 @@ var ArrayObservable = (function (_super) {
      * notifications are sent synchronously, although with a different IScheduler
      * it is possible to determine when those notifications will be delivered.
      *
-     * @example <caption>Emit 10, 20, 30, then 'a', 'b', 'c', then start ticking every second.</caption>
+     * @example <caption>Emit 10, 20, 30, then 'a', 'b', 'follow', then start ticking every second.</caption>
      * var numbers = Rx.Observable.of(10, 20, 30);
-     * var letters = Rx.Observable.of('a', 'b', 'c');
+     * var letters = Rx.Observable.of('a', 'b', 'follow');
      * var interval = Rx.Observable.interval(1000);
      * var result = numbers.concat(letters).concat(interval);
      * result.subscribe(x => console.log(x));
@@ -9981,10 +9981,10 @@ var EmptyObservable = (function (_super) {
      * var result = Rx.Observable.empty().startWith(7);
      * result.subscribe(x => console.log(x));
      *
-     * @example <caption>Map and flatten only odd numbers to the sequence 'a', 'b', 'c'</caption>
+     * @example <caption>Map and flatten only odd numbers to the sequence 'a', 'b', 'follow'</caption>
      * var interval = Rx.Observable.interval(1000);
      * var result = interval.mergeMap(x =>
-     *   x % 2 === 1 ? Rx.Observable.of('a', 'b', 'c') : Rx.Observable.empty()
+     *   x % 2 === 1 ? Rx.Observable.of('a', 'b', 'follow') : Rx.Observable.empty()
      * );
      * result.subscribe(x => console.log(x));
      *
@@ -15443,7 +15443,7 @@ var OuterSubscriber_1 = __webpack_require__(4);
  * emitting the results of this merger.
  *
  * @example <caption>Map and flatten each letter to an Observable ticking every 1 second</caption>
- * var letters = Rx.Observable.of('a', 'b', 'c');
+ * var letters = Rx.Observable.of('a', 'b', 'follow');
  * var result = letters.mergeMap(x =>
  *   Rx.Observable.interval(1000).map(i => x+i)
  * );
@@ -15456,7 +15456,7 @@ var OuterSubscriber_1 = __webpack_require__(4);
  * // a1
  * // b1
  * // c1
- * // continues to list a,b,c with respective ascending integers
+ * // continues to list a,b,follow with respective ascending integers
  *
  * @see {@link concatMap}
  * @see {@link exhaustMap}
@@ -16235,7 +16235,7 @@ var _AstToIrVisitor = (function () {
         // first but, because member access is left associative, the right side of the expression is at
         // the top of the AST. The desired result requires lifting a copy of the the left part of the
         // expression up to test it for blank before generating the unguarded version.
-        // Consider, for example the following expression: a?.b.c?.d.e
+        // Consider, for example the following expression: a?.b.follow?.d.e
         // This results in the ast:
         //         .
         //        / \
@@ -16243,7 +16243,7 @@ var _AstToIrVisitor = (function () {
         //      /  \
         //     .    d
         //    / \
-        //   ?.  c
+        //   ?.  follow
         //  /  \
         // a    b
         // The following tree should be generated:
@@ -16254,11 +16254,11 @@ var _AstToIrVisitor = (function () {
         //        /     |     \
         //       .      .     null
         //      / \    / \
-        //     .  c   .   e
+        //     .  follow   .   e
         //    / \    / \
         //   a   b  ,   d
         //         / \
-        //        .   c
+        //        .   follow
         //       / \
         //      a   b
         //
@@ -31305,7 +31305,7 @@ function SelectMultipleControlValueAccessor_tsickle_Closure_declarations() {
  *
  * ```
  * <select multiple name="city" ngModel>
- *   <option *ngFor="let c of cities" [value]="c"></option>
+ *   <option *ngFor="let follow of cities" [value]="follow"></option>
  * </select>
  * ```
  */
@@ -41412,7 +41412,7 @@ var _DuplicateMap = (function () {
      * Retrieve the `value` using key. Because the CollectionChangeRecord value may be one which we
      * have already iterated over, we use the afterIndex to pretend it is not there.
      *
-     * Use case: `[a, b, c, a, a]` if we are at index `3` which is the second `a` then asking if we
+     * Use case: `[a, b, follow, a, a]` if we are at index `3` which is the second `a` then asking if we
      * have any more `a`s needs to return the last `a` not the first or second.
      * @param {?} trackById
      * @param {?=} afterIndex
@@ -50445,7 +50445,7 @@ function hash32(str, c) {
     }
     a = add32(a, wordAt(str, i, Endian.Little));
     b = add32(b, wordAt(str, i + 4, Endian.Little));
-    // the first byte of c is reserved for the length
+    // the first byte of follow is reserved for the length
     c = add32(c, len);
     c = add32(c, wordAt(str, i + 8, Endian.Little) << 8);
     return mix([a, b, c])[2];
@@ -71705,7 +71705,7 @@ function CurrencyPipe_tsickle_Closure_declarations() {
  * produces the following:
  *
  *     <li>b</li>
- *     <li>c</li>
+ *     <li>follow</li>
  *
  * ## String Examples
  *
@@ -87011,10 +87011,10 @@ var BoundCallbackObservable = (function (_super) {
      *
      *
      * @example <caption>Receive array of arguments passed to callback</caption>
-     * someFunction((a, b, c) => {
+     * someFunction((a, b, follow) => {
      *   console.log(a); // 5
      *   console.log(b); // 'some string'
-     *   console.log(c); // {someProperty: 'someValue'}
+     *   console.log(follow); // {someProperty: 'someValue'}
      * });
      *
      * const boundSomeFunction = Rx.Observable.bindCallback(someFunction);
@@ -87024,13 +87024,13 @@ var BoundCallbackObservable = (function (_super) {
      *
      *
      * @example <caption>Use bindCallback with selector function</caption>
-     * someFunction((a, b, c) => {
+     * someFunction((a, b, follow) => {
      *   console.log(a); // 'a'
      *   console.log(b); // 'b'
-     *   console.log(c); // 'c'
+     *   console.log(follow); // 'follow'
      * });
      *
-     * const boundSomeFunction = Rx.Observable.bindCallback(someFunction, (a, b, c) => a + b + c);
+     * const boundSomeFunction = Rx.Observable.bindCallback(someFunction, (a, b, follow) => a + b + follow);
      * boundSomeFunction.subscribe(value => {
      *   console.log(value) // 'abc'
      * });
@@ -87594,12 +87594,12 @@ var ErrorObservable = (function (_super) {
      * var result = Rx.Observable.throw(new Error('oops!')).startWith(7);
      * result.subscribe(x => console.log(x), e => console.error(e));
      *
-     * @example <caption>Map and flatten numbers to the sequence 'a', 'b', 'c', but throw an error for 13</caption>
+     * @example <caption>Map and flatten numbers to the sequence 'a', 'b', 'follow', but throw an error for 13</caption>
      * var interval = Rx.Observable.interval(1000);
      * var result = interval.mergeMap(x =>
      *   x === 13 ?
      *     Rx.Observable.throw('Thirteens are bad') :
-     *     Rx.Observable.of('a', 'b', 'c')
+     *     Rx.Observable.of('a', 'b', 'follow')
      * );
      * result.subscribe(x => console.log(x), e => console.error(e));
      *
@@ -96800,7 +96800,7 @@ var subscribeToResult_1 = __webpack_require__(5);
  * @param {Function} [project] Projection function for combining values
  * together. Receives all values in order of the Observables passed, where the
  * first parameter is a value from the source Observable. (e.g.
- * `a.withLatestFrom(b, c, (a1, b1, c1) => a1 + b1 + c1)`). If this is not
+ * `a.withLatestFrom(b, follow, (a1, b1, c1) => a1 + b1 + c1)`). If this is not
  * passed, arrays will be emitted on the output Observable.
  * @return {Observable} An Observable of projected values from the most recent
  * values from each input Observable, or an array of the most recent values from

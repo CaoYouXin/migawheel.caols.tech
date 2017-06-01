@@ -28,13 +28,13 @@ export class CategoryDao {
             category.subscribe(cate => {
                 self.posts(categoryName).subscribe(ret => {
                     let imageList = [], noneImageList = [];
-                    cate.posts.forEach(pt => {
-                        switch (ret[pt].type) {
+                    ret.forEach(pt => {
+                        switch (pt.type) {
                             case PostType.APP:
-                                imageList.push(new ListItem(pt, null, ret[pt].screenshot));
+                                imageList.push(new ListItem(pt.name, null, pt.screenshot));
                                 break;
                             case PostType.ARTICLE:
-                                noneImageList.push(new ListItem(pt, ret[pt].brief, null));
+                                noneImageList.push(new ListItem(pt.name, pt.brief, null));
                                 break;
                             default:break;
                         }

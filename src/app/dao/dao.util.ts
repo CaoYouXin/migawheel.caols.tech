@@ -24,4 +24,13 @@ export class DaoUtil {
     static logError(err) {
         console.log('sth wrong when fetching data. ' + err);
     }
+
+    static process(ret, cb) {
+        if (ret.code !== 20000) {
+            alert(ret.body);
+            return;
+        }
+
+        cb(ret.body);
+    }
 }

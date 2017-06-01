@@ -1,5 +1,5 @@
-import {Component, ViewChild, ElementRef} from "@angular/core";
-import {Router} from "@angular/router"
+import {Component, ElementRef, ViewChild} from "@angular/core";
+import {Router} from "@angular/router";
 import {ArticleDao} from "./article.dao";
 import {DaoUtil} from "../dao/dao.util";
 import {PostUnload} from "../common/post.unload";
@@ -21,8 +21,11 @@ export class ArticleComponent {
     @ViewChild('body')
     private bodyContainer: ElementRef;
 
+    private postId: number;
+
     private footerFixed: boolean;
     private showMenu: boolean;
+    private loading: boolean;
 
     private articleContent: string;
     private articleScriptSrc: string;
@@ -39,9 +42,12 @@ export class ArticleComponent {
     private replyFocused: boolean;
     private replyContent: string;
 
+    private comments: Array<any>;
+
     constructor(private dao: ArticleDao,
                 private router: Router,
-                private unload: PostUnload) {}
+                private unload: PostUnload) {
+    }
 
     private articleLoad(title: string) {
         if (Configs.nonePrevious === title ||
@@ -50,17 +56,20 @@ export class ArticleComponent {
         }
 
         this.unload.unload(null);
+        this.loading = true;
         this.showMenu = true;
         let self = this;
         this.dao.post(title)
             .subscribe(post => {
+                self.postId = post.postId;
                 self.articleTitle = title;
                 self.articleCreateTime = post.create;
                 self.articleUpdateTime = post.update;
                 self.categoryName = post.categoryName;
                 self.articleContent = post.content;
                 self.articleScriptSrc = post.script;
-            });
+                self.articleLikeCount = post.articleLikeCount;
+            }, error => DaoUtil.logError(error));
     }
 
     // ng handlers
@@ -77,18 +86,55 @@ export class ArticleComponent {
     }
 
     // dom handlers
+    like() {
+        const self = this;
+        this.dao.like(this.postId)
+            .subscribe(ret =>
+                DaoUtil.process(ret, function (articleLikeCount) {
+                    self.articleLikeCount = articleLikeCount;
+                }), error => DaoUtil.logError(error)
+            );
+    }
+
     categoryClicked() {
         this.unload.unload(null);
         let navigate = this.router.navigate(['/category', {n: this.categoryName}]);
     }
 
     articleOnload() {
+        this.loading = false;
         this.showMenu = false;
         this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
+
+        const self = this;
+        this.dao.fetchComments(this.postId)
+            .subscribe(ret =>
+                DaoUtil.process(ret, function (comments) {
+                    self.comments = comments;
+                }), error => DaoUtil.logError(error)
+            );
     }
 
     replyPublishBtnClicked() {
-        console.log('评论: ' + this.replyContent);
+        if (!Boolean(this.replyContent)) {
+            alert("请写下评论！");
+            return;
+        }
+
+        const self = this;
+        this.dao.commentPost(this.postId, this.replyContent)
+            .subscribe(ret =>
+                DaoUtil.process(ret, function (comment) {
+                    let reverse = self.comments.reverse();
+                    reverse.push(comment);
+                    self.comments = reverse.reverse();
+                    self.replyContent = '';
+                }), error => DaoUtil.logError(error)
+            );
+    }
+
+    makeComment(comment, follow) {
+
     }
 
 }

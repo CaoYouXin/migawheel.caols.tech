@@ -1,4 +1,4 @@
-<menu [show]="showMenu"></menu>
+<menu [show]="showMenu" [loading]="loading"></menu>
 
 <section class="body-sec">
     <div class="body-wrapper">
@@ -10,7 +10,7 @@
                     <i></i>
                     <span>{{categoryName}}</span>
                 </div>
-                <div class="like box">
+                <div class="like box" (click)="like()">
                     <i></i>
                     <span>{{articleLikeCount}}</span>
                 </div>
@@ -36,7 +36,7 @@
                     <i></i>
                     <span>{{categoryName}}</span>
                 </div>
-                <div class="like box">
+                <div class="like box" (click)="like()">
                     <i></i>
                     <span>{{articleLikeCount}}</span>
                 </div>
@@ -58,7 +58,7 @@
                 <br>
                 <div id="reply" class="reply" [class.focused]="replyFocused">
                     <div class="title"><span>awesome</span>发布评论...</div>
-                    <textarea placeholder="输入评论..."
+                    <textarea #reply placeholder="输入评论..."
                               [(ngModel)]="replyContent"
                               [class.focused]="replyFocused"
                               (focus)="replyFocused=true" (blur)="replyFocused=false"></textarea>
@@ -66,16 +66,14 @@
                 </div>
                 <br>
                 <ol class="comments" reversed>
-                    <li>
-                        <span>Coffee</span>
+                    <li *ngFor="let comment of comments; let i of index;">
+                        <span (click)="makeComment(comment)">{{comment.userName}}</span><span> @ {{comment.atUserName}} : {{comment.create}} : {{comment.content}}</span>
                         <ul class="comments-of-comment">
-                            <li>Sugar</li>
-                            <li>Spoon</li>
-                            <li>Cup</li>
+                            <li *ngFor="let follow of comment.follows; let j of index;">
+                                <span (click)="makeComment(comment, follow)">{{follow.userName}}</span><span> @ {{follow.atUserName}} : {{follow.create}} : {{follow.content}}</span>
+                            </li>
                         </ul>
                     </li>
-                    <li><span>Tea</span></li>
-                    <li><span>Milk</span></li>
                 </ol>
                 <br>
             </div>

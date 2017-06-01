@@ -39,7 +39,7 @@ export class MigaWheelDao {
                     return;
                 }
 
-                return ret.body.map(k => k.name + '[]' + k.create + '||' + k.update);
+                return ret.body.map(k => k.name + '[]' + k.create.substr(0, '1991-11-06'.length) + '||' + k.update.substr(0, '1991-11-06'.length));
             });
     }
 

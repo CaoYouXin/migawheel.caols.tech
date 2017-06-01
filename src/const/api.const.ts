@@ -33,17 +33,29 @@ export class API {
                 return `http://localhost:8080/blog_api/post/fetch_by_name?name=${name}`;
             }
         },
-        "date_index": {
-            "prod": "http://caols.tech/api/date_index.json",
-            "dev": "http://caols.tech/api/date_index.json"
+        "like": {
+            "prod": function (postId) {
+                return `/blog_api/feedback/like?postId=${postId}`;
+            },
+            "dev": function (postId) {
+                return `http://localhost:8080/blog_api/feedback/like?postId=${postId}`;
+            }
         },
-        "login": {
-            "prod": "/user_api/user/login",
-            "dev": "http://localhost:8080/user_api/user/login"
+        "FetchComments": {
+            "prod": function (postId) {
+                return `/blog_api/feedback/comment/list?postId=${postId}`;
+            },
+            "dev": function (postId) {
+                return `http://localhost:8080/blog_api/feedback/comment/list?postId=${postId}`;
+            }
         },
-        "register": {
-            "prod": "/user_api/user/register",
-            "dev": "http://localhost:8080/user_api/user/register"
+        "CommentPost": {
+            "prod": "/blog_api/feedback/comment/post",
+            "dev": "http://localhost:8080/blog_api/feedback/comment/post"
+        },
+        "CommentComment": {
+            "prod": "/blog_api/feedback/comment/comment",
+            "dev": "http://localhost:8080/blog_api/feedback/comment/comment"
         },
         "CheckUserName": {
             "prod": function (username) {
