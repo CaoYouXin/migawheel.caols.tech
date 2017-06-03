@@ -116,6 +116,18 @@ export class API {
         "Top5Posts": {
             "prod": "/blog_api/post/list_top_5",
             "dev": "http://localhost:8080/blog_api/post/list_top_5"
+        },
+        "SearchCategory": {
+            "prod": "/blog_api/search/category",
+            "dev": "http://localhost:8080/blog_api/search/category"
+        },
+        "SearchPost": {
+            "prod": "/blog_api/search/post",
+            "dev": "http://localhost:8080/blog_api/search/post"
+        },
+        "SearchPostWithCategory": {
+            "prod": "/blog_api/search/post_with_category",
+            "dev": "http://localhost:8080/blog_api/search/post_with_category"
         }
     };
 

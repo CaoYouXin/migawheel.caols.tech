@@ -19,7 +19,6 @@ export class PostOpenerDao {
                         return;
                     }
 
-                    localStorage.setItem(LocalStorageKeys.OpenedPost, JSON.stringify(ret.body));
                     observer.next(ret.body);
                     observer.complete();
                 });
