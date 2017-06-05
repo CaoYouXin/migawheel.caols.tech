@@ -158,7 +158,7 @@ export class MigaWheelDao {
                     );
                 });
             }
-        } else {
+        } else if (analysis.length === 2) {
             let categoryAnalysis = this.pickAnalysisResult(Configs.CategoryMode, analysis),
                 postAnalysis = this.pickAnalysisResult(Configs.PostMode, analysis);
 

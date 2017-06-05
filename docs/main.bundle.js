@@ -24,7 +24,6 @@ module.exports = "input {\n    width: 220px;\n    height: 30px;\n    line-height
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_api_const__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostOpenerDao; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -35,7 +34,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -54,7 +52,6 @@ var PostOpenerDao = (function () {
                     alert(ret.body);
                     return;
                 }
-                localStorage.setItem(__WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__["a" /* LocalStorageKeys */].OpenedPost, JSON.stringify(ret.body));
                 observer.next(ret.body);
                 observer.complete();
             });
@@ -417,7 +414,7 @@ var RenderedText = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_post_unload__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__route_uri_util__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__const_localstorage_const__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__const_localstorage_const__ = __webpack_require__(73);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1295,10 +1292,10 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_api_const__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_localstorage_const__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_localstorage_const__ = __webpack_require__(73);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleDao; });
 /* unused harmony export Post */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1435,7 +1432,7 @@ var Post = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(414);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_post_type_const__ = __webpack_require__(288);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(59);
@@ -1667,7 +1664,7 @@ var MenuComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(414);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__const_api_const__ = __webpack_require__(59);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MigaWheelDao; });
@@ -1772,146 +1769,232 @@ var MigaWheelDao = (function () {
     };
     MigaWheelDao.prototype.search = function (analysis) {
         // console.log(analysis);
-        var _this = this;
-        var dateIndex, categories, posts, isUseIndex = this.isUseDateIndex(analysis), categoryAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].CategoryMode, analysis), postAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].PostMode, analysis), categoryNames = [], postTitles = [];
-        if (isUseIndex) {
-            dateIndex = this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].getAPI('date_index'))
-                .map(function (res) { return res.json(); });
-        }
-        if (categoryAnalysis) {
-            categories = this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].getAPI('category'))
-                .map(function (res) { return res.json(); });
-        }
-        if (postAnalysis) {
-            posts = this.dao.get(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].getAPI('post'))
-                .map(function (res) { return res.json(); });
-            if (isUseIndex) {
-                if (categoryAnalysis) {
-                    return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) {
-                        dateIndex.subscribe(function (dateIndexRet) {
-                            categories.subscribe(function (categoryRet) {
-                                posts.subscribe(function (postRet) {
-                                    _this.exam(dateIndexRet, categoryAnalysis.year, function (passedYear) {
-                                        return _this.exam(passedYear, categoryAnalysis.month, function (passedMonth) {
-                                            return _this.exam(passedMonth, categoryAnalysis.day, function (passedDay) {
-                                                return categoryNames = categoryNames.concat(passedDay.categories);
-                                            });
-                                        });
-                                    });
-                                    categoryNames = categoryNames.filter(function (cn) {
-                                        return categoryAnalysis.keyWords.reduce(function (p, v) {
-                                            return p && cn.indexOf(v) !== -1;
-                                        }, true);
-                                    });
-                                    _this.exam(dateIndexRet, postAnalysis.year, function (passedYear) {
-                                        return _this.exam(passedYear, postAnalysis.month, function (passedMonth) {
-                                            return _this.exam(passedMonth, postAnalysis.day, function (passedDay) {
-                                                return postTitles = postTitles.concat(passedDay.posts);
-                                            });
-                                        });
-                                    });
-                                    observer.next(postTitles.filter(function (pt) {
-                                        return categoryNames.reduce(function (p, cn) {
-                                            return p || cn === postRet[pt].category;
-                                        }, false);
-                                    }).filter(function (pt) {
-                                        return postAnalysis.keyWords.reduce(function (p, v) {
-                                            return p && pt.indexOf(v) !== -1;
-                                        }, true);
-                                    }).map(function (pt) { return pt + '[]' + postRet[pt].create + '||' + postRet[pt].update; }));
-                                    observer.complete();
-                                });
-                            });
+        if (analysis.length === 1) {
+            if (analysis[0].mode === __WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].CategoryMode) {
+                var searchCategory_1 = this.dao.post(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].getAPI("SearchCategory"), {
+                    yearStart: analysis[0].year.start,
+                    yearEnd: analysis[0].year.end,
+                    monthStart: analysis[0].month.start,
+                    monthEnd: analysis[0].month.end,
+                    dayStart: analysis[0].day.start,
+                    dayEnd: analysis[0].day.end,
+                    keywords: analysis[0].keyWords,
+                    platform: 'All,Pc'
+                }).map(function (res) { return res.json(); });
+                return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) {
+                    searchCategory_1.subscribe(function (ret) {
+                        return __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__["a" /* DaoUtil */].process(ret, function (categories) {
+                            var categoryNames = [];
+                            categories.forEach(function (category) { return categoryNames.push(category.name); });
+                            observer.next(categoryNames);
+                            observer.complete();
                         });
-                    });
-                }
-                else {
-                    return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) {
-                        dateIndex.subscribe(function (dateIndexRet) {
-                            posts.subscribe(function (postRet) {
-                                _this.exam(dateIndexRet, postAnalysis.year, function (passedYear) {
-                                    return _this.exam(passedYear, postAnalysis.month, function (passedMonth) {
-                                        return _this.exam(passedMonth, postAnalysis.day, function (passedDay) {
-                                            return postTitles = postTitles.concat(passedDay.posts);
-                                        });
-                                    });
-                                });
-                                observer.next(postTitles.filter(function (pt) {
-                                    return postAnalysis.keyWords.reduce(function (p, v) {
-                                        return p && pt.indexOf(v) !== -1;
-                                    }, true);
-                                })
-                                    .map(function (pt) { return pt + '[]' + postRet[pt].create + '||' + postRet[pt].update; }));
-                                observer.complete();
-                            });
-                        });
-                    });
-                }
+                    }, function (error) { return __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+                });
             }
-            else {
-                if (categoryAnalysis) {
-                    return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) {
-                        categories.subscribe(function (categoryRet) {
-                            posts.subscribe(function (postRet) {
-                                observer.next(Object.keys(categoryRet).reduce(function (pts, cn) {
-                                    if (categoryAnalysis.keyWords.reduce(function (p, v) {
-                                        return p && cn.indexOf(v) !== -1;
-                                    }, true)) {
-                                        return pts.concat(categoryRet[cn].posts);
-                                    }
-                                    else {
-                                        return pts;
-                                    }
-                                }, []).filter(function (pt) {
-                                    return postAnalysis.keyWords.reduce(function (p, v) {
-                                        return p && pt.indexOf(v) !== -1;
-                                    }, true);
-                                })
-                                    .map(function (pt) { return pt + '[]' + postRet[pt].create + '||' + postRet[pt].update; }));
-                                observer.complete();
-                            });
+            else if (analysis[0].mode === __WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].PostMode) {
+                var searchPost_1 = this.dao.post(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].getAPI("SearchPost"), {
+                    yearStart: analysis[0].year.start,
+                    yearEnd: analysis[0].year.end,
+                    monthStart: analysis[0].month.start,
+                    monthEnd: analysis[0].month.end,
+                    dayStart: analysis[0].day.start,
+                    dayEnd: analysis[0].day.end,
+                    keywords: analysis[0].keyWords,
+                    platform: 'All,Pc'
+                }).map(function (res) { return res.json(); });
+                return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) {
+                    searchPost_1.subscribe(function (ret) {
+                        return __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__["a" /* DaoUtil */].process(ret, function (posts) {
+                            var postRenders = [];
+                            posts.forEach(function (post) { return postRenders.push(post.name + '[]'
+                                + post.create.substr(0, '1991-11-06'.length) + '||'
+                                + post.update.substr(0, '1991-11-06'.length)); });
+                            observer.next(postRenders);
+                            observer.complete();
                         });
-                    });
-                }
-                else {
-                    return posts.map(function (ret) { return Object.keys(ret).filter(function (pt) {
-                        return postAnalysis.keyWords.reduce(function (p, v) {
-                            return p && pt.indexOf(v) !== -1;
-                        }, true);
-                    })
-                        .map(function (pt) { return pt + '[]' + ret[pt].create + '||' + ret[pt].update; }); });
-                }
+                    }, function (error) { return __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+                });
             }
         }
-        else {
-            if (categoryAnalysis) {
-                if (isUseIndex) {
-                    return dateIndex.map(function (ret) {
-                        _this.exam(ret, categoryAnalysis.year, function (passedYear) {
-                            return _this.exam(passedYear, categoryAnalysis.month, function (passedMonth) {
-                                return _this.exam(passedMonth, categoryAnalysis.day, function (passedDay) {
-                                    return categoryNames = categoryNames.concat(passedDay.categories);
-                                });
-                            });
-                        });
-                        return categoryNames.filter(function (cn) {
-                            return categoryAnalysis.keyWords.reduce(function (p, v) {
-                                return p && cn.indexOf(v) !== -1;
-                            }, true);
-                        });
-                    });
+        else if (analysis.length === 2) {
+            var categoryAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].CategoryMode, analysis), postAnalysis = this.pickAnalysisResult(__WEBPACK_IMPORTED_MODULE_1__migawheel_core__["a" /* Configs */].PostMode, analysis);
+            var searchPost_2 = this.dao.post(__WEBPACK_IMPORTED_MODULE_5__const_api_const__["a" /* API */].getAPI("SearchPostWithCategory"), {
+                category: {
+                    yearStart: categoryAnalysis.year.start,
+                    yearEnd: categoryAnalysis.year.end,
+                    monthStart: categoryAnalysis.month.start,
+                    monthEnd: categoryAnalysis.month.end,
+                    dayStart: categoryAnalysis.day.start,
+                    dayEnd: categoryAnalysis.day.end,
+                    keywords: categoryAnalysis.keyWords,
+                    platform: 'All,Pc'
+                },
+                post: {
+                    yearStart: postAnalysis.year.start,
+                    yearEnd: postAnalysis.year.end,
+                    monthStart: postAnalysis.month.start,
+                    monthEnd: postAnalysis.month.end,
+                    dayStart: postAnalysis.day.start,
+                    dayEnd: postAnalysis.day.end,
+                    keywords: postAnalysis.keyWords,
+                    platform: 'All,Pc'
                 }
-                else {
-                    return categories.map(function (ret) {
-                        return Object.keys(ret).filter(function (cn) {
-                            return categoryAnalysis.keyWords.reduce(function (p, v) {
-                                return p && cn.indexOf(v) !== -1;
-                            }, true);
-                        });
+            }).map(function (res) { return res.json(); });
+            return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) {
+                searchPost_2.subscribe(function (ret) {
+                    return __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__["a" /* DaoUtil */].process(ret, function (posts) {
+                        var postRenders = [];
+                        posts.forEach(function (post) { return postRenders.push(post.name + '[]'
+                            + post.create.substr(0, '1991-11-06'.length) + '||'
+                            + post.update.substr(0, '1991-11-06'.length)); });
+                        observer.next(postRenders);
+                        observer.complete();
                     });
-                }
-            }
+                }, function (error) { return __WEBPACK_IMPORTED_MODULE_2__dao_dao_util__["a" /* DaoUtil */].logError(error); });
+            });
         }
+        // let dateIndex: Observable<any>,
+        //     categories: Observable<any>,
+        //     posts: Observable<any>,
+        //     isUseIndex = this.isUseDateIndex(analysis),
+        //     categoryAnalysis = this.pickAnalysisResult(Configs.CategoryMode, analysis),
+        //     postAnalysis = this.pickAnalysisResult(Configs.PostMode, analysis),
+        //     categoryNames: string[] = [],
+        //     postTitles: string[] = [];
+        //
+        // if (isUseIndex) {
+        //     dateIndex = this.dao.get(API.getAPI('date_index'))
+        //         .map(res => res.json());
+        // }
+        //
+        // if (categoryAnalysis) {
+        //     categories = this.dao.get(API.getAPI('category'))
+        //         .map(res => res.json());
+        // }
+        //
+        // if (postAnalysis) {
+        //     posts = this.dao.get(API.getAPI('post'))
+        //         .map(res => res.json());
+        //
+        //     if (isUseIndex) {
+        //         if (categoryAnalysis) {
+        //             return new Observable<string[]>(observer => {
+        //                 dateIndex.subscribe(dateIndexRet => {
+        //                     categories.subscribe(categoryRet => {
+        //                         posts.subscribe(postRet => {
+        //                             this.exam(dateIndexRet, categoryAnalysis.year, passedYear =>
+        //                                 this.exam(passedYear, categoryAnalysis.month, passedMonth =>
+        //                                     this.exam(passedMonth, categoryAnalysis.day, passedDay =>
+        //                                         categoryNames = categoryNames.concat(passedDay.categories)
+        //                                     )
+        //                                 )
+        //                             );
+        //
+        //                             categoryNames = categoryNames.filter(cn =>
+        //                                 categoryAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                                     p && cn.indexOf(v) !== -1
+        //                                     , true));
+        //
+        //                             this.exam(dateIndexRet, postAnalysis.year, passedYear =>
+        //                                 this.exam(passedYear, postAnalysis.month, passedMonth =>
+        //                                     this.exam(passedMonth, postAnalysis.day, passedDay =>
+        //                                         postTitles = postTitles.concat(passedDay.posts)
+        //                                     )
+        //                                 )
+        //                             );
+        //
+        //                             observer.next(postTitles.filter(pt =>
+        //                                 categoryNames.reduce((p: boolean, cn: string) =>
+        //                                 p || cn === postRet[pt].category, false)
+        //                             ).filter(pt =>
+        //                                 postAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                                     p && pt.indexOf(v) !== -1
+        //                                     , true)
+        //                             ).map(pt => pt + '[]' + postRet[pt].create + '||' + postRet[pt].update));
+        //                             observer.complete();
+        //                         });
+        //                     });
+        //                 });
+        //             });
+        //         } else {
+        //             return new Observable<string[]>(observer => {
+        //                 dateIndex.subscribe(dateIndexRet => {
+        //                     posts.subscribe(postRet => {
+        //                         this.exam(dateIndexRet, postAnalysis.year, passedYear =>
+        //                             this.exam(passedYear, postAnalysis.month, passedMonth =>
+        //                                 this.exam(passedMonth, postAnalysis.day, passedDay =>
+        //                                     postTitles = postTitles.concat(passedDay.posts)
+        //                                 )
+        //                             )
+        //                         );
+        //
+        //                         observer.next(postTitles.filter(pt =>
+        //                             postAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                                 p && pt.indexOf(v) !== -1
+        //                                 , true))
+        //                             .map(pt => pt + '[]' + postRet[pt].create + '||' + postRet[pt].update));
+        //                         observer.complete();
+        //                     });
+        //                 });
+        //             });
+        //         }
+        //     } else {
+        //         if (categoryAnalysis) {
+        //             return new Observable<string[]>(observer => {
+        //                 categories.subscribe(categoryRet => {
+        //                     posts.subscribe(postRet => {
+        //                         observer.next(Object.keys(categoryRet).reduce((pts: string[], cn: string) => {
+        //                             if (categoryAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                                     p && cn.indexOf(v) !== -1
+        //                                     , true)) {
+        //                                 return pts.concat(categoryRet[cn].posts);
+        //                             } else {
+        //                                 return pts;
+        //                             }
+        //                         }, []).filter(pt =>
+        //                             postAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                                 p && pt.indexOf(v) !== -1
+        //                                 , true))
+        //                             .map(pt => pt + '[]' + postRet[pt].create + '||' + postRet[pt].update));
+        //                         observer.complete();
+        //                     });
+        //                 });
+        //             });
+        //         } else {
+        //             return posts.map(ret => Object.keys(ret).filter(pt =>
+        //                 postAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                     p && pt.indexOf(v) !== -1
+        //                     , true))
+        //                 .map(pt => pt + '[]' + ret[pt].create + '||' + ret[pt].update));
+        //         }
+        //     }
+        // } else {
+        //     if (categoryAnalysis) {
+        //         if (isUseIndex) {
+        //             return dateIndex.map(ret => {
+        //                 this.exam(ret, categoryAnalysis.year, passedYear =>
+        //                     this.exam(passedYear, categoryAnalysis.month, passedMonth =>
+        //                         this.exam(passedMonth, categoryAnalysis.day, passedDay =>
+        //                             categoryNames = categoryNames.concat(passedDay.categories)
+        //                         )
+        //                     )
+        //                 );
+        //                 return categoryNames.filter(cn =>
+        //                     categoryAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                         p && cn.indexOf(v) !== -1
+        //                         , true));
+        //             });
+        //         } else {
+        //             return categories.map(ret => {
+        //                 return Object.keys(ret).filter(cn =>
+        //                     categoryAnalysis.keyWords.reduce((p: boolean, v: string) =>
+        //                         p && cn.indexOf(v) !== -1
+        //                         , true));
+        //             });
+        //         }
+        //     }
+        // }
         return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) { return observer.complete(); });
     };
     MigaWheelDao = __decorate([
@@ -2537,9 +2620,9 @@ var AppRoutingModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgetPasswordComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2618,9 +2701,9 @@ var ForgetPasswordComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginFormComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2716,9 +2799,9 @@ var LoginFormComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterFormComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2904,9 +2987,9 @@ var RegisterFormComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_dao_dao_util__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_api_const__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_localstorage_const__ = __webpack_require__(73);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResetPasswordComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3046,7 +3129,7 @@ var ResetPasswordComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__const_localstorage_const__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__const_localstorage_const__ = __webpack_require__(73);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3327,6 +3410,18 @@ var API = (function () {
         "Top5Posts": {
             "prod": "/blog_api/post/list_top_5",
             "dev": "http://localhost:8080/blog_api/post/list_top_5"
+        },
+        "SearchCategory": {
+            "prod": "/blog_api/search/category",
+            "dev": "http://localhost:8080/blog_api/search/category"
+        },
+        "SearchPost": {
+            "prod": "/blog_api/search/post",
+            "dev": "http://localhost:8080/blog_api/search/post"
+        },
+        "SearchPostWithCategory": {
+            "prod": "/blog_api/search/post_with_category",
+            "dev": "http://localhost:8080/blog_api/search/post_with_category"
         }
     };
     return API;
@@ -3335,7 +3430,7 @@ var API = (function () {
 
 /***/ }),
 
-/***/ 60:
+/***/ 73:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
