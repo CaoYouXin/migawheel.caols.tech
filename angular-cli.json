@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.30",
-    "name": "webapp"
+    "name": "migawheel"
   },
   "apps": [
     {
@@ -23,6 +23,7 @@
       "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
+        "nginx": "environments/environment.nginx.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }

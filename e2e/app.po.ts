@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class WebappPage {
+export class MigawheelPage {
   navigateTo() {
     return browser.get('/');
   }

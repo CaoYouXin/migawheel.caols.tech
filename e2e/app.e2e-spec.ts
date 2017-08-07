@@ -1,10 +1,10 @@
-import { WebappPage } from './app.po';
+import { MigawheelPage } from './app.po';
 
-describe('webapp App', function() {
-  let page: WebappPage;
+describe('migawheel App', function() {
+  let page: MigawheelPage;
 
   beforeEach(() => {
-    page = new WebappPage();
+    page = new MigawheelPage();
   });
 
   it('should display message saying app works', () => {
