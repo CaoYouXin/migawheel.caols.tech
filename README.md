@@ -1,31 +1,24 @@
-# Migawheel
+## 代码统计 【oldSrc】
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.30.
+      71 text files.
+      71 unique files.                              
+       2 files ignored.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+| Language | files | blank | comment | code |
+| -------- | ----- | ----- | ------- | ---- |
+| TypeScript | 38 | 478 | 194 | 2386 |
+| CSS        | 13 | 330 | 13  | 850  |
+| HTML       | 14 | 41  | 2   | 386  |
+| JSON       | 5  | 0   | 0   | 165  |
+| JavaScript | 1  | 0   | 1   | 1    |
+| SUM:       | 71 | 849 | 210 | 3788 |
 
-## Code scaffolding
+github.com/AlDanial/cloc v 1.72  T=0.36 s (197.6 files/s, 13489.5 lines/s)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+---
 
-## Build
+## 代码统计 【webapp/src】
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+暂无
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Deploying to GitHub Pages
-
-Run `ng github-pages:deploy` to deploy to GitHub Pages.
-
-## Further help
-
-To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+---

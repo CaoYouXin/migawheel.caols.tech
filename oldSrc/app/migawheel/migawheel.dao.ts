@@ -12,22 +12,9 @@ export class MigaWheelDao {
     constructor(private dao: DaoUtil) {
     }
 
-    categories(): Observable<string[]> {
-        // return ['Demo', 'APP', '学习笔记', '生活纪实', '感言', '灵感', '知识总结'];
-        let categories = this.dao.get(API.getAPI('categories'))
+    categories(): Observable<any[]> {
+        return this.dao.get(API.getAPI('categories'))
             .map(res => res.json());
-
-        return new Observable(observer => {
-            categories.subscribe(ret => {
-                if (ret.code !== 20000) {
-                    alert(ret.body);
-                    return;
-                }
-
-                observer.next(ret.body.map(cate => cate.name));
-                observer.complete();
-            });
-        });
     }
 
     posts(category: string): Observable<string[]> {
