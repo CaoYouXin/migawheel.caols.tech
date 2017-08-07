@@ -1,18 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
+import { BlogModule } from '../blog';
+import { AppRoutingModule } from './app.router';
 import { AppComponent } from './app.component';
+import { FallbackComponent } from './fallback.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FallbackComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule
+    AppRoutingModule,
+    BlogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

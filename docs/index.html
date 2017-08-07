@@ -1,74 +1,14 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>人在劳作</title>
+  <meta charset="utf-8">
+  <title>Webapp</title>
+  <base href="/">
 
-    <script>
-
-        window.top.parseHref = window.top.parseHref || function () {
-            var domain = 'migawheel.caols.tech';
-            var isProductEnv = domain === document.domain;
-            var regExp = new RegExp('^http.*?\/(?:\/.*?)?(\/.*?' + domain + '\/)(.*)$');
-            var matched = window.location.href.toString().match(regExp);
-            var rootHref = isProductEnv ? '/' : matched[1];
-
-            return {
-                hrefParseInfo: matched,
-                rootHref: rootHref
-            };
-        };
-
-        var hrefConf = {rootHref: '/'};
-        try {
-            hrefConf = window.top.parseHref();
-        } catch (e) {
-        } finally {
-            document.write('<base href="' + hrefConf.rootHref + '">');
-        }
-
-    </script>
-
-    <style>
-        @keyframes inSpace {
-            from {
-                transform: scale(1);
-            }
-
-            to {
-                transform: scale(1.1);
-            }
-        }
-
-        .bg {
-            position: fixed;
-            z-index: -1000;
-
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-
-            background: url("./assets/stars.jpg") repeat center;
-            background-size: cover;
-
-            transform-origin: 50% 50%;
-
-            animation: 5s linear 0s infinite alternate;
-            animation-name: inSpace;
-        }
-
-        *, *:before, *:after {
-            font-family: Monaco, "微软雅黑", "文驿泉微米黑", "Comic Sans MS", monospace;
-        }
-    </style>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="./assets/c.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-<app-root>Loading...</app-root>
-<div class="bg"></div>
-<script src="./assets/md5/md5.min.js"></script>
+  <app-root></app-root>
 <script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
 </html>

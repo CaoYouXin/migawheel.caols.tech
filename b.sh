@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-ng build --env=prod \
+cd webapp \
+    && ng build --env=prod \
+    && cd .. \
     && rm -rf ./docs/ \
     && git checkout -- docs/CNAME \
-    && cp -r ./dist/ ./docs/
+    && cp -r ./webapp/dist/ ./docs/
 #    && git add --all \
 #    && git commit -m "$1" \
 #    && git push origin master
