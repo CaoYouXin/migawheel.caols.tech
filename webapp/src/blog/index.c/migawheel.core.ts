@@ -42,7 +42,7 @@ export class MigaWheelCore {
   private tailElemIndex: number;
   private ellipsisElem: Elem;
 
-  private hasEllipsis(): boolean {
+  hasEllipsis(): boolean {
     let dIndex = this.tailElemIndex - this.headElemIndex;
     if (dIndex < 0) {
       dIndex += this.renderedElems.length;

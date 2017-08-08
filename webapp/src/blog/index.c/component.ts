@@ -23,10 +23,25 @@ export class BlogIndexComponent implements OnInit {
 
   private categories: any;
   private history: History;
+  private svgMoving: boolean;
+  private daCount: number = 0;
+  private lastAngle: number;
 
   constructor(private core: MigaWheelCore,
     private dao: DaoUtil,
     private rest: RestCode) { }
+
+  private calcAngle(e) {
+    let dx = e.pageX - window.innerWidth / 2;
+    let dy = e.pageY - window.innerHeight / 2;
+
+    let angle = Math.acos(dx / Math.sqrt(dx * dx + dy * dy));
+    if (dy > 0) {
+      angle = 2 * Math.PI - angle;
+    }
+
+    return angle;
+  }
 
   private render(data: any[]) {
     if (!data.length) {
@@ -88,11 +103,57 @@ export class BlogIndexComponent implements OnInit {
 
   }
 
-  svgMouseMove(e) {
+  svgMouseDown(e) {
+    if (1 === e.buttons) {
+      this.lastAngle = this.calcAngle(e);
+      this.svgMoving = true;
+    }
+  }
 
+  svgMouseMove(e) {
+    if (!this.svgMoving) {
+      return;
+    }
+
+    let angle = this.calcAngle(e);
+    let da = angle - this.lastAngle;
+    if (da < -Math.PI) {
+      da += 2 * Math.PI;
+    } else if (da > Math.PI) {
+      da -= 2 * Math.PI;
+    }
+
+    this.elemsTransform = this.elemsTransform.replace(/rotate\((\S+) /, function ($0, $1) {
+      return 'rotate(' + (parseFloat($1) - da / Math.PI * 180) + ' ';
+    });
+
+    this.daCount -= da;
+    if (Math.abs(this.daCount) / Math.PI >= .25 && this.core.hasEllipsis()) {
+
+      if (this.daCount < 0) {
+
+        this.elems = this.core.shiftLeft();
+      } else {
+
+        this.elems = this.core.shiftRight();
+      }
+
+      this.daCount = 0;
+    }
+
+    this.lastAngle = angle;
+  }
+
+  svgMouseUp(e) {
+    this.svgMoving = false;
   }
 
   leftClicked(e) {
+    if (this.svgMoving) {
+      this.svgMoving = false;
+      return;
+    }
+
     this.loading = true;
     this.clickEffect = true;
     setTimeout((self) => {
@@ -103,6 +164,11 @@ export class BlogIndexComponent implements OnInit {
   }
 
   rightClicked(e) {
+    if (this.svgMoving) {
+      this.svgMoving = false;
+      return;
+    }
+
     this.loading = true;
     this.clickEffect = true;
     setTimeout((self) => {
@@ -113,6 +179,11 @@ export class BlogIndexComponent implements OnInit {
   }
 
   elemClicked(e, elem) {
+    if (this.svgMoving) {
+      this.svgMoving = false;
+      return;
+    }
+
     if (!elem.source) {
       return null;
     }
@@ -153,6 +224,11 @@ export class BlogIndexComponent implements OnInit {
   }
 
   backClicked(e) {
+    if (this.svgMoving) {
+      this.svgMoving = false;
+      return;
+    }
+
     if (!this.history) {
       return;
     }
