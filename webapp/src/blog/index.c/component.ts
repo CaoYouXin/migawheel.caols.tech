@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { Elem, Content, RenderedText, CoreHistory, MigaWheelCore } from "./migawheel.core";
 import { API, DaoUtil, RestCode } from "../../http";
 
@@ -29,7 +30,8 @@ export class BlogIndexComponent implements OnInit {
 
   constructor(private core: MigaWheelCore,
     private dao: DaoUtil,
-    private rest: RestCode) { }
+    private rest: RestCode,
+    private router: Router) { }
 
   private calcAngle(e) {
     let dx = e.pageX - window.innerWidth / 2;
@@ -217,7 +219,16 @@ export class BlogIndexComponent implements OnInit {
           err => DaoUtil.logError(err)
         );
       } else {
-
+        self.loading = false;
+        switch (elem.source.BlogPostType) {
+          case 2:
+            self.router.navigate(['/post', '' + elem.source.BlogPostId]);
+            return;
+          case 1:
+          default:
+            window.open(elem.source.BlogPostUrl, '_blank');
+            return;
+        }
       }
 
     }, 1000, this);
