@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from "@angular/http";
 
 import { BlogModule } from '../blog';
 import { AppRoutingModule } from './app.router';
@@ -13,6 +14,7 @@ import { FallbackComponent } from './fallback.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     AppRoutingModule,
     BlogModule
   ],

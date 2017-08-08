@@ -13,3 +13,65 @@
 code {
   font-family: "CQ Mono", Monaco, "Lucida Console", "Courier New", monospace;
 }
+
+.screen-wrapper {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    text-align: center;
+}
+
+.wrapper > *, .wrapper:after {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wrapper:after {
+    content: '';
+    width: 0;
+    height: 100%;
+}
+
+/* keyframes */
+@keyframes rotation {
+    from {
+        transform: rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateZ(360deg);
+    }
+}
+
+/* z-index */
+.zi-1000 {
+  z-index: -1000;
+}
+
+.zi-1 {
+    z-index: -1;
+}
+
+.zi1 {
+  z-index: 1;
+}
+
+.zi2 {
+    z-index: 2;
+}
+
+.zi3 {
+    z-index: 3;
+}
+
+.zi11000 {
+    z-index: 11000;
+}
+
+.zi11001 {
+    z-index: 11001;
+}
