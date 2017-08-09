@@ -1,27 +1,28 @@
-import { Component, ElementRef, ViewChild, AfterViewChecked, OnInit, HostListener } from "@angular/core";
+import { Component, ElementRef, ViewChild, AfterViewChecked, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { DaoUtil, API, RestCode } from "../../http";
 import { Observable } from "rxjs/Rx";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/switchMap';
+import { BlogBasicUtil } from '../util';
 
 @Component({
   selector: 'article',
-  templateUrl: 'article.component.html',
-  styleUrls: ['article.component.css'],
+  templateUrl: './article.component.html',
+  styleUrls: ['../util/blog.basic.css', './article.component.css'],
   providers: []
 })
 export class ArticleComponent implements OnInit {
 
   nonePrevious = '没有上一篇了';
   noneNext = '没有下一篇了';
-  prefix: string = API.getAPI("server/origin") + '/serve';
-  post: any = {};
+  
+  post: any = {
+    BlogPostUrl: '/'
+  };
   previous: any;
   next: any;
   breadcrumb: Array<any> = [];
-  height: number = 0;
-  loading: boolean = true;
   replyFocused: boolean;
   replyUserName: string;
   replyContent: string;
@@ -32,58 +33,10 @@ export class ArticleComponent implements OnInit {
     private rest: RestCode) {
   }
 
-  @HostListener("window:message", ['$event'])
-  receiveMessage(e) {
-    if (e.origin !== API.getAPI("server/origin")) {
-      return;
-    }
-
-    let data = JSON.parse(e.data);
-    this.height = data.height;
-    this.loading = false;
-  }
-
-  private genBreadcrumb(now: Array<any>, cs: Array<any>, idx: number, id): Array<any> {
-    if (idx >= cs.length) {
-      throw 'index out of range';
-    }
-
-    let c = cs[idx];
-    now = [...now, c];
-
-    if (c.BlogCategoryId + '' === id + '') {
-      return now;
-    }
-
-    let cc = cs[idx].ChildCategories || [];
-    if (!cc.length) {
-      now.pop();
-      return now;
-    }
-
-    let cIdx = 0, newNow = [];
-    while (cIdx < cc.length) {
-      newNow = this.genBreadcrumb(now, cc, cIdx++, id);
-      if (newNow.length > now.length) {
-        break;
-      }
-    }
-
-    if (newNow.length > now.length) {
-      return newNow;
-    } else {
-      now.pop();
-      return now;
-    }
-  }
-
   ngOnInit() {
     const self = this;
     this.route.paramMap
       .switchMap((params: ParamMap) => {
-        self.loading = true;
-        self.height = 0;
-
         let post = self.dao.getJSON(API.getAPI("post")(params.get('id')));
         let categories = self.dao.getJSON(API.getAPI("categories"));
 
@@ -93,7 +46,7 @@ export class ArticleComponent implements OnInit {
               categories.subscribe(
                 ret2 => self.rest.checkCode(ret2, (cs) => {
                   let c = p.BlogCategoryId;
-                  let breadcrumb = self.genBreadcrumb([], cs, 0, c);
+                  let breadcrumb = BlogBasicUtil.genBreadcrumb([], cs, 0, c);
 
                   subject.next({
                     post: p,
@@ -125,15 +78,6 @@ export class ArticleComponent implements OnInit {
           }),
           err => DaoUtil.logError(err)
         );
-
-        setTimeout(() => {
-          if (!self.loading) {
-            return;
-          }
-
-          self.loading = false;
-          self.height = 500;
-        }, 3000);
       });
   }
 

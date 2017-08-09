@@ -4,6 +4,8 @@ import { FormsModule } from "@angular/forms";
 
 import { BlogIndexComponent } from './index.c';
 import { ArticleComponent } from './article';
+import { CategoryComponent } from './category';
+import { ContentComponent } from './content';
 import { SafeHtmlPipe } from './util';
 import { DaoUtil, RestCode } from '../http';
 
@@ -11,7 +13,9 @@ import { DaoUtil, RestCode } from '../http';
   declarations: [
     SafeHtmlPipe,
     BlogIndexComponent,
-    ArticleComponent
+    ArticleComponent,
+    CategoryComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,

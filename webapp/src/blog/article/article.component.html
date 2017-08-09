@@ -11,12 +11,11 @@
   </p>
 
   <!--  内容  -->
-  <div class="iframe zi11000" [class.loading]="loading"></div>
-  <iframe [src]="(prefix + post.BlogPostUrl) | safeHtml" scrolling="no" [style.height]="height + 'px'"></iframe>
+  <content [url]="post.BlogPostUrl"></content>
 
   <!--  点赞  -->
-  <div class="like" (click)="like()">
-    <img src="assets/like.png" alt="点赞">
+  <div class="like">
+    <img src="assets/like.png" alt="点赞" (click)="like()">
     <hr>
   </div>
 

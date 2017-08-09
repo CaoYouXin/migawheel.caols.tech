@@ -1,161 +1,82 @@
-import {Component, ViewChild, ElementRef} from "@angular/core"
-import {DomSanitizer} from "@angular/platform-browser";
-import {CategoryDao, ListItem} from "./category.dao";
-import {DaoUtil} from "../dao/dao.util";
-import {PostOpener} from "../common/post.opener";
-import {PostOpenerDao} from "../common/post.opener.dao";
-import {PostUnload} from "../common/post.unload";
-import {Router} from "@angular/router";
-import {URIUtil} from "../route/uri.util";
+import { Component, OnInit } from "@angular/core"
+import { Router, ActivatedRoute, ParamMap } from "@angular/router";
+import { DaoUtil, API, RestCode } from "../../http";
+import { Observable } from "rxjs/Rx";
+import "rxjs/add/operator/map";
+import 'rxjs/add/operator/switchMap';
+import { BlogBasicUtil } from "../util";
 
 @Component({
-    selector: 'category',
-    templateUrl: 'category.component.html',
-    styleUrls: ['category.component.css'],
-    providers: [CategoryDao, DaoUtil, PostOpener, PostOpenerDao, PostUnload]
+  selector: 'category',
+  templateUrl: './category.component.html',
+  styleUrls: ['../util/blog.basic.css', './category.component.css'],
+  providers: []
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
 
-    constructor(private dao: CategoryDao,
-                private router: Router,
-                private postOpener: PostOpener,
-                private unload: PostUnload,
-                private sanitizer: DomSanitizer) {}
+  prefix: string = API.getAPI("server/origin") + '/serve';
+  category: any = {
+    BlogCategoryUrl: '/'
+  };
+  breadcrumb: Array<any> = [];
+  posts: Array<any> = [];
 
-    @ViewChild('body')
-    private bodyContainer: ElementRef;
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private dao: DaoUtil,
+    private rest: RestCode) {
+  }
 
-    private footerFixed: boolean;
-    private showMenu: boolean;
-    private loading: boolean;
+  ngOnInit() {
+    const self = this;
+    this.route.paramMap
+      .switchMap((params: ParamMap) => {
+        let c = params.get('id');
+        let cs = self.dao.getJSON(API.getAPI("categories"));
+        let posts = self.dao.getJSON(API.getAPI("posts")(c));
 
-    private categoryName: string;
-    private categoryLikeCount: number;
-    private categoryCreateTime: string;
-    private categoryUpdateTime: string;
+        return new Observable<{ category: any, breadcrumb: Array<any>, posts: Array<any> }>(subject => {
+          cs.subscribe(
+            ret => self.rest.checkCode(ret, retBody => {
+              let breadcrumb = BlogBasicUtil.genBreadcrumb([], retBody, 0, c);
 
-    private categoryContent: string;
-    private categoryScriptSrc: string;
+              posts.subscribe(
+                ret2 => self.rest.checkCode(ret2, retBody2 => {
+                  subject.next({
+                    breadcrumb,
+                    category: breadcrumb[breadcrumb.length - 1],
+                    posts: retBody2
+                  });
+                  subject.complete();
+                }),
+                err2 => DaoUtil.logError(err2)
+              );
+            }),
+            err => DaoUtil.logError(err)
+          );
+        });
+      })
+      .subscribe((ret: { category: any, breadcrumb: Array<any>, posts: Array<any> }) => {
+        self.breadcrumb = ret.breadcrumb;
+        self.category = ret.category;
+        self.posts = ret.posts;
+      });
+  }
 
-    private imageListItemBackgroundSize: string;
-    private _imageList: ListItem[];
-    private imageList: ListItem[];
-    private _noneImageList: ListItem[];
-    private noneImageList: ListItem[];
-
-    private list1PagerTotalCount: number;
-    private list1PagerPageSize: string;
-    private list1PagerCurrentPage: number;
-
-    private list2PagerTotalCount: number;
-    private list2PagerPageSize: string;
-    private list2PagerCurrentPage: number;
-
-    private top5: string[];
-
-    private list1Render() {
-        if ('无限' === this.list1PagerPageSize) {
-            this.imageList = this._imageList;
-            return;
-        }
-
-        let pageSize = parseInt(this.list1PagerPageSize);
-        this.imageList = this._imageList.slice(
-            (this.list1PagerCurrentPage - 1) * pageSize,
-            this.list1PagerCurrentPage * pageSize
-        );
+  toPost(p) {
+    switch (p.BlogPostType) {
+      case 2:
+        this.router.navigate(['/post', '' + p.BlogPostId]);
+        return;
+      case 1:
+      default:
+        window.open(p.BlogPostUrl, '_blank');
+        return;
     }
+  }
 
-    private list2Render() {
-        if ('无限' === this.list2PagerPageSize) {
-            this.noneImageList = this._noneImageList;
-            return;
-        }
-
-        let pageSize = parseInt(this.list2PagerPageSize);
-        this.noneImageList = this._noneImageList.slice(
-            (this.list2PagerCurrentPage - 1) * pageSize,
-            this.list2PagerCurrentPage * pageSize
-        );
-    }
-
-    // ng handlers
-    ngOnInit() {
-        this.list1PagerCurrentPage = 1;
-        this.list2PagerCurrentPage = 1;
-        this.list1PagerPageSize = '5';
-        this.list2PagerPageSize = '5';
-        this.list1PagerTotalCount = 0;
-        this.list2PagerTotalCount = 0;
-
-        this.loading = true;
-        this.showMenu = true;
-        this.categoryName = URIUtil.getParam(this.router.routerState.snapshot.url, ['n'])['n'];
-        this.categoryLikeCount = 99;
-        this.imageList = [];
-        this.noneImageList = [];
-
-        this.top5 = [];
-
-        let self = this;
-        this.dao.category(this.categoryName)
-            .subscribe(category => {
-
-                self.categoryCreateTime = category.create;
-                self.categoryUpdateTime = category.update;
-                self.categoryContent = category.content;
-                self.categoryScriptSrc = category.script;
-
-                self._imageList = category.imageList.map(ilItem => {
-                    ilItem.imageSrc = self.sanitizer.bypassSecurityTrustStyle('url("' + ilItem._imageSrc + '")');
-                    return ilItem;
-                });
-                self._noneImageList = category.noneImageList;
-
-                self.list1PagerCurrentPage = 1;
-                self.list2PagerCurrentPage = 1;
-                self.list1PagerTotalCount = category.imageList.length;
-                self.list2PagerTotalCount = category.noneImageList.length;
-
-                self.list1Render();
-                self.list2Render();
-            });
-
-        this.imageListItemBackgroundSize = 'contain';
-    }
-
-    // dom handlers
-    categoryOnload() {
-        this.loading = false;
-        this.showMenu = false;
-        this.footerFixed = this.bodyContainer.nativeElement.offsetHeight < window.innerHeight - 150;
-    }
-
-    list1PagerInfoChange(e) {
-        if (!e.split) {
-            return;
-        }
-
-        let split = e.split('@');
-        this.list1PagerCurrentPage = parseInt(split[0]);
-        this.list1PagerPageSize = split[1];
-        this.list1Render();
-    }
-
-    list2PagerInfoChange(e) {
-        if (!e.split) {
-            return;
-        }
-
-        let split = e.split('@');
-        this.list2PagerCurrentPage = parseInt(split[0]);
-        this.list2PagerPageSize = split[1];
-        this.list2Render();
-    }
-
-    noneImageListItemClicked(title: string) {
-        this.unload.unload(null);
-        this.postOpener.postOpen(title);
-    }
+  toCategory(bc) {
+    this.router.navigate(['/category', '' + bc.BlogCategoryId]);
+  }
 
 }
