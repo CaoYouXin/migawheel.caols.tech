@@ -14,6 +14,10 @@ code {
   font-family: "CQ Mono", Monaco, "Lucida Console", "Courier New", monospace;
 }
 
+body {
+  background-color: #EAEAEA;
+}
+
 .screen-wrapper {
     position: fixed;
 
@@ -25,15 +29,19 @@ code {
     text-align: center;
 }
 
-.wrapper > *, .wrapper:after {
-    display: inline-block;
-    vertical-align: middle;
+.v-mid-box {
+  text-align: center;
 }
 
-.wrapper:after {
-    content: '';
-    width: 0;
-    height: 100%;
+.v-mid-box > *, .v-mid-box:after {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.v-mid-box:after {
+  content: '';
+  width: 0;
+  height: 100%;
 }
 
 /* keyframes */

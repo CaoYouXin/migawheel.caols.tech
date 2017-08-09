@@ -1,0 +1,125 @@
+<div class="wrapper blog">
+  <!--  标题  -->
+  <h1>{{post.BlogPostName}}</h1>
+
+  <!--  时间  -->
+  <p class="time"> <span class="time">{{post.BlogPostCreateTime}}</span> - <span class="time">{{post.BlogPostUpdateTime}}</span> </p>
+
+  <!--  路径  -->
+  <p class="breadcrumb">
+    <span *ngFor="let bc of breadcrumb">/ <a (click)="toCategory(bc)">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a> </span>
+  </p>
+
+  <!--  内容  -->
+  <div class="iframe zi11000" [class.loading]="loading"></div>
+  <iframe [src]="(prefix + post.BlogPostUrl) | safeHtml" scrolling="no" [style.height]="height + 'px'"></iframe>
+
+  <!--  点赞  -->
+  <div class="like" (click)="like()">
+    <img src="assets/like.png" alt="点赞">
+    <hr>
+  </div>
+
+  <!-- 上一篇，下一篇  -->
+  <p *ngIf="!previous" class="previous" (click)="toPost(previous)">{{nonePrevious}}</p>
+  <p *ngIf="previous" class="previous active" (click)="toPost(previous)">{{previous.BlogPostName}}</p>
+  <p *ngIf="!next" class="next" (click)="toPost(next)">{{noneNext}}</p>
+  <p *ngIf="next" class="next active" (click)="toPost(next)">{{next.BlogPostName}}</p>
+</div>
+
+<div class="wrapper reply" [class.focused]="replyFocused">
+  <div class="title"><span (click)="resetReplyUserName(null)">{{replyUserName}}</span>发布评论...</div>
+  <textarea #reply placeholder="输入评论..." [(ngModel)]="replyContent" [class.focused]="replyFocused" (focus)="replyFocused=true"
+    (blur)="replyFocused=false"></textarea>
+  <div class="publish-btn" (click)="replyPublishBtnClicked()">发布</div>
+</div>
+
+<div class="wrapper comments">
+  <h2>评论</h2>
+  <ul>
+    <li class="comment">
+      <div class="user">
+        ABCABCABCABCA
+      </div>
+      <div class="content">
+        <div class="text">
+          chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+        </div>
+        <ul>
+          <li class="comment">
+            <div class="user">
+              CABCABCABCABC
+            </div>
+            <div class="content">
+              <div class="text">
+                chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+              </div>
+              <div class="reply-btn">
+                <span (click)="replyCommentBtnClicked()">回复</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="reply-btn">
+          <span (click)="replyCommentBtnClicked()">回复</span>
+        </div>
+      </div>
+    </li>
+    <li class="comment">
+      <div class="user">
+        ABCABCABCABCA
+      </div>
+      <div class="content">
+        <div class="text">
+          chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+        </div>
+        <ul>
+          <li class="comment">
+            <div class="user">
+              CABCABCABCABC
+            </div>
+            <div class="content">
+              <div class="text">
+                chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+              </div>
+              <div class="reply-btn">
+                <span (click)="replyCommentBtnClicked()">回复</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="reply-btn">
+          <span (click)="replyCommentBtnClicked()">回复</span>
+        </div>
+      </div>
+    </li>
+    <li class="comment">
+      <div class="user">
+        ABCABCABCABCA
+      </div>
+      <div class="content">
+        <div class="text">
+          chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+        </div>
+        <ul>
+          <li class="comment">
+            <div class="user">
+              CABCABCABCABC
+            </div>
+            <div class="content">
+              <div class="text">
+                chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+              </div>
+              <div class="reply-btn">
+                <span (click)="replyCommentBtnClicked()">回复</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="reply-btn">
+          <span (click)="replyCommentBtnClicked()">回复</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

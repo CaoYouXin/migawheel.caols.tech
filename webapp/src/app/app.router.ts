@@ -2,12 +2,12 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { FallbackComponent } from "./fallback.component";
-import { BlogIndexComponent } from "../blog";
+import { BlogIndexComponent, ArticleComponent } from "../blog";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
   { path: 'index', component: BlogIndexComponent },
-  // {path: 'article', component: ArticleComponent, data: {name: 'article'}},
+  { path: 'post/:id', component: ArticleComponent },
   // {path: 'category', component: CategoryComponent, data: {name: 'category'}},
 
   { path: '**', component: FallbackComponent, data: { name: '看上去，你是迷路了吧？', color: '#EADFCB' } }

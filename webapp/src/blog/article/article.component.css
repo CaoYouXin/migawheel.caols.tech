@@ -1,0 +1,271 @@
+.wrapper {
+  margin: 1em auto;
+  width: calc(100% - 2.4em);
+  max-width: 800px;
+  box-sizing: content-box;
+}
+
+.wrapper>* {
+  box-sizing: border-box;
+}
+
+.blog {
+  border: solid 1px #EFEFEF;
+  box-shadow: .5em .5em 1em #AEAEAE;
+  color: black;
+  background-color: #FFFFFF;
+}
+
+h1 {
+  font-size: xx-large;
+  border-left: solid 5px darkblue;
+  padding-left: 1em;
+}
+
+p.time {
+  color: #CCCCCC;
+  margin: 0.5em 0 0.5em -10em;
+  overflow: hidden;
+  text-align: center;
+}
+
+span.time {
+  padding: 0.5em;
+}
+
+p.breadcrumb {
+  user-select: none;
+  margin: 0.5em auto;
+  padding-left: 1em;
+  overflow: hidden;
+}
+
+p.breadcrumb a {
+  cursor: pointer;
+  color: royalblue;
+  text-decoration: underline;
+}
+
+p.breadcrumb a:hover {
+  color: whitesmoke;
+  background-color: cornflowerblue;
+}
+
+p.breadcrumb a:active {
+  color: whitesmoke;
+  background-color: royalblue;
+}
+
+iframe {
+  width: 800px;
+  overflow: hidden;
+}
+
+.iframe {
+  display: none;
+  padding: 0;
+  border: none;
+}
+
+.iframe.loading {
+  display: block;
+  width: 800px;
+  height: 500px;
+  background-color: rgba(0, 0, 0, 0.618);
+}
+
+div.like {
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+div.like>hr {
+  margin-left: 50%;
+  width: 0;
+  height: 3px;
+  background-image: linear-gradient(indianred, red 40%, indianred);
+}
+
+div.like:hover>hr {
+  margin-left: 0;
+  width: 100%;
+  transition: width 1s, margin 1s;
+}
+
+p.previous, p.next {
+  margin-left: 1em;
+}
+
+p.previous.active, p.next.active {
+  text-decoration: underline;
+  color: royalblue;
+  cursor: pointer;
+}
+
+p.previous:before {
+  content: '上一篇：';
+}
+
+p.next::before {
+  content: '下一篇：';
+}
+
+.reply {
+    height: 75px;
+
+    border-radius: 5px;
+    box-shadow: 0 0 10px cyan;
+
+    overflow: hidden;
+
+    transition: height 1s ease-in-out;
+
+    font-size: 0;
+}
+
+.reply > * {
+    font-family: Monaco, "Lucida Console", monospace;
+    font-size: 20px;
+
+    width: calc(100% - 10px);
+    height: 30px;
+
+    margin-top: 5px;
+    margin-left: 5px;
+
+    line-height: 30px;
+}
+
+.reply > .title {
+    text-align: center;
+
+    color: white;
+    background-color: cyan;
+}
+
+.reply > .title > span:hover {
+    background-color: indianred;
+    cursor: default;
+}
+
+.reply > .title > span:before {
+    content: '『';
+}
+
+.reply > .title > span:after {
+    content: '』';
+}
+
+.reply > textarea {
+    outline: none;
+    resize: none;
+
+    line-height: 28px;
+
+    border: dashed 1px cyan;
+
+    background-color: transparent;
+
+    transition: height 1s ease-in-out;
+}
+
+.reply > .publish-btn {
+    text-align: center;
+
+    cursor: pointer;
+
+    color: white;
+    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);
+}
+
+.reply > .publish-btn:hover {
+    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);
+}
+
+.reply.focused {
+    height: 230px;
+}
+
+.reply > textarea.focused {
+    height: 150px;
+}
+
+.comments>h2 {
+  user-select: none;
+  color: yellowgreen;
+  font-size: xx-large;
+}
+
+.comment ul {
+  list-style: none;
+}
+
+.comment {
+  display: block;
+  overflow: hidden;
+}
+
+.comment:first-child {
+  border-top: solid 1px yellowgreen;
+}
+
+.comment:last-child {
+  border-bottom: solid 1px yellowgreen;
+}
+
+.comment+.comment {
+  border-top: dashed 1px yellowgreen;
+}
+
+.comment .comment:first-child {
+  border-top: dashed 1px yellowgreen;
+}
+
+.comment .comment:last-child {
+  border-bottom: dashed 1px yellowgreen;
+}
+
+.comment .user,
+.comment .content {
+  display: block;
+  overflow: hidden;
+  padding: 0.5em;
+}
+
+.comment .user {
+  float: left;
+  width: 20%;
+  padding: 1em 1.2em 0;
+  color: darkgrey;
+}
+
+.comment .content {
+  float: right;
+  width: 80%;
+  padding-left: 1.2em;
+}
+
+.content .text {
+  color: hsl(80,61%,60%);
+}
+
+.content .reply-btn {
+  margin-top: .5em;
+  color: gray;
+  font-size: small;
+  cursor: default;
+  text-align: right;
+  transition: padding .36s;
+  transition-timing-function: cubic-bezier(0, 1, .57, 1.35);
+}
+
+.content .reply-btn:hover,
+.content .reply-btn:focus {
+  padding-right: 1em;
+}
+
+.content ul {
+  margin-top: 1em;
+}

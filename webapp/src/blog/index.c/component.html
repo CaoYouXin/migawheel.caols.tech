@@ -1,12 +1,12 @@
 <div class="screen-wrapper zi-1000 bg"></div>
 
-<div class="screen-wrapper wrapper zi-1 effect-wrapper">
+<div class="screen-wrapper v-mid-box zi-1 effect-wrapper">
   <div class="signal" [class.ani]="clickEffect"></div>
 </div>
 
 <div class="screen-wrapper zi1 blur"></div>
 
-<div class="screen-wrapper wrapper zi2">
+<div class="screen-wrapper v-mid-box zi2">
   <div class="tao">
     <div id="miga-search" [class.focused]="searchFocused">
       <input type="text" placeholder="搜索分类或者文章" autofocus (keyup)="searchKeyUp($event)" (focus)="searchFocus($event)" (blur)="searchFocused=false;">
@@ -53,6 +53,6 @@
   </div>
 </div>
 
-<div class="screen-wrapper wrapper zi3" *ngIf="loading">
+<div class="screen-wrapper v-mid-box zi3" *ngIf="loading">
   <div class="photo"></div>
 </div>
