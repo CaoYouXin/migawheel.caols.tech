@@ -24,7 +24,8 @@
 
 .detail > span {
   font-size: x-large;
-  color: #303131;
+  color: royalblue;
+  text-decoration: underline;
 }
 
 hr {
@@ -36,4 +37,5 @@ hr {
 .brief {
   max-height: 30em;
   overflow: hidden;
+  margin-bottom: 1em;
 }

@@ -92,7 +92,7 @@ export class ArticleComponent implements OnInit {
   like() {
     this.dao.getJSON(API.getAPI("like")(this.post.BlogPostId)).subscribe(
       ret => this.rest.checkCode(ret, retBody => {
-        console.log(retBody);
+        alert(retBody);
       }),
       err => DaoUtil.logError(err)
     );

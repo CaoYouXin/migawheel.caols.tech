@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 @Injectable()
 export class RestCode {
 
+  private static loginRetUrl: string;
+
   constructor(private router: Router) {
   }
 
@@ -14,6 +16,7 @@ export class RestCode {
     }
 
     if (ret.code === 50001) {
+      RestCode.loginRetUrl = location.href.toString();
       this.router.navigate(['/login']);
       return;
     }
@@ -24,6 +27,10 @@ export class RestCode {
     }
 
     cb(ret.body);
+  }
+
+  getLoginRetUrl(): string {
+    return RestCode.loginRetUrl;
   }
 
 }
