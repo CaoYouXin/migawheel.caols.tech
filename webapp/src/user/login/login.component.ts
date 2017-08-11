@@ -53,7 +53,7 @@ export class LoginComponent {
         self.loading = false;
         self.rest.checkCode(ret, retBody => {
           UserService.store(retBody);
-          self.router.navigate([this.rest.getLoginRetUrl() || '/']);
+          location.href = this.rest.getLoginRetUrl() || `${location.protocol}//${document.domain}:${location.port}`;
         });
       },
       err => {

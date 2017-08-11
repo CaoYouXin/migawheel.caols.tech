@@ -2098,7 +2098,7 @@ var LoginComponent = (function () {
             self.loading = false;
             self.rest.checkCode(ret, function (retBody) {
                 __WEBPACK_IMPORTED_MODULE_3__http__["d" /* UserService */].store(retBody);
-                self.router.navigate([_this.rest.getLoginRetUrl() || '/']);
+                location.href = _this.rest.getLoginRetUrl() || location.protocol + "//" + document.domain + ":" + location.port;
             });
         }, function (err) {
             self.loading = false;
