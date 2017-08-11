@@ -21,6 +21,10 @@ export class API {
         return `http://localhost:9999/api/blog/category/${id}`;
       }
     },
+    "all/posts": {
+      "prod": `http://server.caols.tech:9999/api/blog/post/list/client`,
+      "dev": `http://localhost:9999/api/blog/post/list/client`
+    },
     "posts": {
       "prod": function (categoryId) {
         return `http://server.caols.tech:9999/api/blog/post/list/client/${categoryId}`;

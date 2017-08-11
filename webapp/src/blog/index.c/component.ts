@@ -17,7 +17,11 @@ export class BlogIndexComponent implements OnInit {
   searchHintsShow: boolean;
   categorySelected: boolean;
   elemsTransform: string;
+  searchText: string;
+  allPosts: Array<any>;
+  selectedHint: number;
 
+  firstKeyUp: boolean = false;
   hints: Array<any> = [];
   elems: Array<Elem> = [];
   renderedCategory: Array<RenderedText> = [];
@@ -32,6 +36,143 @@ export class BlogIndexComponent implements OnInit {
     private dao: DaoUtil,
     private rest: RestCode,
     private router: Router) { }
+
+  private furtherRender(data, cate) {
+    const self = this;
+
+    if (!data.length) {
+      alert('没有条目了！');
+      return;
+    }
+
+    self.history = new History(self.history, self.core.toCoreHistory(), self.renderedCategory);
+
+    self.render(data);
+
+    self.categorySelected = true;
+    self.renderedCategory = self.core.renderCategory(cate);
+  }
+
+  private openCategory(category, cb) {
+    const self = this;
+
+    let data = self.renderCategory(category.BlogCategoryId);
+
+    self.dao.getJSON(API.getAPI("posts")(category.BlogCategoryId)).subscribe(
+      ret => this.rest.checkCode(ret, (retBody) => {
+        if (!!cb) cb();
+
+        retBody.forEach(p => p.isPost = true);
+
+        self.furtherRender([...data, ...retBody], category.BlogCategoryName);
+      }),
+      err => DaoUtil.logError(err)
+    );
+  }
+
+  private openPost(post) {
+    switch (post.BlogPostType) {
+      case 2:
+        this.router.navigate(['/post', '' + post.BlogPostId]);
+        return;
+      case 1:
+      default:
+        window.open(post.BlogPostUrl, '_blank');
+        return;
+    }
+  }
+
+  private findAll(regExp: RegExp, ret: Array<any>, array: Array<any>) {
+    array.forEach(c => {
+      if (regExp.test(c.BlogCategoryName)) {
+        ret.push(c);
+      }
+
+      if (!!c.ChildCategories && c.ChildCategories.length) {
+        this.findAll(regExp, ret, c.ChildCategories);
+      }
+    });
+
+    return ret;
+  }
+
+  private search(cmd: string): { c: Array<any>, p: Array<any> } {
+    if (!this.allPosts || !this.allPosts.length || !this.categories || !this.categories.length || !cmd) {
+      return {
+        c: [],
+        p: []
+      };
+    }
+
+    let regExp = new RegExp(cmd.replace(/\s+/g, '|'));
+
+    return {
+      c: this.findAll(regExp, [], this.categories).map(c => { c.isPost = false; return c; }),
+      p: this.allPosts.filter(post => {
+        return regExp.test(post.BlogPostName)
+          || regExp.test(post.BlogPostCreateTime)
+          || regExp.test(post.BlogPostUpdateTime);
+      }).map(p => { p.isPost = true; return p; })
+    };
+  }
+
+  private searchHintsReset(show: boolean) {
+    this.selectedHint = -1;
+    this.hints = [];
+    this.searchHintsShow = show;
+  }
+
+  private searchHintsUpdate(searchStr: string) {
+    this.searchHintsReset(true);
+
+    let ret = this.search(searchStr);
+    if (ret.c.length + ret.p.length > 5) {
+      this.hints = [...ret.c.slice(0, 2), ...ret.p.slice(0, 5 - Math.min(2, ret.c.length))];
+      return;
+    }
+
+    this.hints = [...ret.c, ...ret.p];
+  }
+
+  private searchHintsSelect(cmd: string) {
+    let newIndex = this.selectedHint + (cmd === 'ArrowUp' ? -1 : 1);
+
+    if (newIndex > -1 && newIndex < this.hints.length) {
+      this.selectedHint = newIndex;
+    }
+  }
+
+  private searchHintClicked(hint: any) {
+    if (!hint.isPost) {
+      this.openCategory(hint, () => this.searchHintsReset(false));
+    } else {
+      this.searchHintsReset(false);
+      this.openPost(hint);
+    }
+  }
+
+  private searchInputKeyEnterUp(value: string) {
+    if (-1 !== this.selectedHint) {
+      let hint = this.hints[this.selectedHint];
+      this.searchHintClicked(hint);
+      return;
+    }
+
+    this.searchHintsReset(false);
+
+    let ret = this.search(value);
+
+    this.furtherRender([...ret.c, ...ret.p], '搜索结果');
+  }
+
+  private searchInputKeyBackspaceUp(value: string) {
+    if (value === '') {
+      this.firstKeyUp = true;
+      this.searchHintsReset(false);
+    } else {
+      this.searchHintsUpdate(value);
+    }
+  }
 
   private calcAngle(e) {
     let dx = e.pageX - window.innerWidth / 2;
@@ -82,27 +223,59 @@ export class BlogIndexComponent implements OnInit {
   }
 
   ngOnInit() {
+    const self = this;
+
     this.loading = true;
     this.dao.getJSON(API.getAPI("categories")).subscribe(
-      ret => this.rest.checkCode(ret, (retBody) => {
-        this.loading = false;
-        this.categories = retBody;
-        this.render([...this.renderCategory(null)]);
+      ret => self.rest.checkCode(ret, (retBody) => {
+        self.loading = false;
+        self.categories = retBody;
+        self.render([...self.renderCategory(null)]);
+      }),
+      err => DaoUtil.logError(err)
+    );
+
+    this.dao.getJSON(API.getAPI("all/posts")).subscribe(
+      ret => self.rest.checkCode(ret, (retBody) => {
+        self.allPosts = retBody;
       }),
       err => DaoUtil.logError(err)
     );
   }
 
   searchKeyUp(e) {
+    if (this.firstKeyUp) {
+      this.searchHintsReset(true);
+      this.firstKeyUp = false;
+    }
 
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowUp':
+        this.searchHintsSelect(e.key);
+        break;
+      case 'Enter':
+        this.searchInputKeyEnterUp(this.searchText);
+        break;
+      case 'Backspace':
+        this.searchInputKeyBackspaceUp(this.searchText);
+        break;
+      default:
+        this.searchHintsUpdate(this.searchText);
+        return;
+    }
   }
 
   searchFocus(e) {
     this.searchFocused = true;
+
+    if (!this.searchText) {
+      this.searchHintsUpdate(this.searchText);
+    }
   }
 
   searchClicked(e, hint) {
-
+    this.searchHintClicked(hint);
   }
 
   svgMouseDown(e) {
@@ -196,39 +369,10 @@ export class BlogIndexComponent implements OnInit {
       self.clickEffect = false;
 
       if (!elem.source.isPost) {
-        let data = self.renderCategory(elem.source.BlogCategoryId);
-
-        self.dao.getJSON(API.getAPI("posts")(elem.source.BlogCategoryId)).subscribe(
-          ret => this.rest.checkCode(ret, (retBody) => {
-            self.loading = false;
-
-            retBody.forEach(p => p.isPost = true);
-            data = [...data, ...retBody];
-
-            if (!data.length) {
-              alert('没有条目了！');
-              return;
-            }
-            self.history = new History(self.history, self.core.toCoreHistory(), self.renderedCategory);
-
-            self.render(data);
-
-            self.categorySelected = true;
-            self.renderedCategory = self.core.renderCategory(elem.source.BlogCategoryName);
-          }),
-          err => DaoUtil.logError(err)
-        );
+        self.openCategory(elem.source, () => self.loading = false);
       } else {
         self.loading = false;
-        switch (elem.source.BlogPostType) {
-          case 2:
-            self.router.navigate(['/post', '' + elem.source.BlogPostId]);
-            return;
-          case 1:
-          default:
-            window.open(elem.source.BlogPostUrl, '_blank');
-            return;
-        }
+        self.openPost(elem.source);
       }
 
     }, 1000, this);
