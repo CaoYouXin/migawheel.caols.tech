@@ -119,7 +119,7 @@ export class BlogIndexComponent implements OnInit {
   private searchHintsReset(show: boolean) {
     this.selectedHint = -1;
     this.hints = [];
-    this.searchHintsShow = show;
+    this.searchHintsShow = show || false;
   }
 
   private searchHintsUpdate(searchStr: string) {
@@ -166,7 +166,7 @@ export class BlogIndexComponent implements OnInit {
   }
 
   private searchInputKeyBackspaceUp(value: string) {
-    if (value === '') {
+    if (!value || value === '') {
       this.firstKeyUp = true;
       this.searchHintsReset(false);
     } else {
@@ -269,7 +269,7 @@ export class BlogIndexComponent implements OnInit {
   searchFocus(e) {
     this.searchFocused = true;
 
-    if (!this.searchText) {
+    if (this.searchText) {
       this.searchHintsUpdate(this.searchText);
     }
   }
