@@ -288,7 +288,7 @@ exports = module.exports = __webpack_require__("../../../../.0.28.4@css-loader/l
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\n*,\n*:before,\n*:after {\n  margin: 0;\n  padding: 0;\n  border: none;\n  box-sizing: border-box;\n  font-family: \"Hiragino Sans GB\", \"Microsoft Yahei\", \"WenQuanYi Micro Hei\", monospace;\n}\n\ncode {\n  font-family: \"CQ Mono\", Monaco, \"Lucida Console\", \"Courier New\", monospace;\n}\n\nbody {\n  background-color: #EAEAEA;\n}\n\n.screen-wrapper {\n    position: fixed;\n\n    left: 0;\n    right: 0;\n    top: 0;\n    bottom: 0;\n\n    text-align: center;\n}\n\n.v-mid-box {\n  text-align: center;\n}\n\n.v-mid-box > *, .v-mid-box:after {\n  display: inline-block;\n  vertical-align: middle;\n}\n\n.v-mid-box:after {\n  content: '';\n  width: 0;\n  height: 100%;\n}\n\n/* keyframes */\n@-webkit-keyframes rotation {\n    from {\n        -webkit-transform: rotateZ(0deg);\n                transform: rotateZ(0deg);\n    }\n\n    to {\n        -webkit-transform: rotateZ(360deg);\n                transform: rotateZ(360deg);\n    }\n}\n@keyframes rotation {\n    from {\n        -webkit-transform: rotateZ(0deg);\n                transform: rotateZ(0deg);\n    }\n\n    to {\n        -webkit-transform: rotateZ(360deg);\n                transform: rotateZ(360deg);\n    }\n}\n\n/* z-index */\n.zi-1000 {\n  z-index: -1000;\n}\n\n.zi-1 {\n    z-index: -1;\n}\n\n.zi1 {\n  z-index: 1;\n}\n\n.zi2 {\n    z-index: 2;\n}\n\n.zi3 {\n    z-index: 3;\n}\n\n.zi11000 {\n    z-index: 11000;\n}\n\n.zi11001 {\n    z-index: 11001;\n}\n", ""]);
 
 // exports
 
