@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { DaoUtil, RestCode, API } from "../../http";
+import { DaoUtil, RestCode, API, UserService } from "../../http";
 import { Md5 } from "ts-md5/dist/md5"; 
 
 @Component({
@@ -51,9 +51,8 @@ export class LoginComponent {
     this.dao.postJSON(API.getAPI("login"), data).subscribe(
       ret => {
         self.loading = false;
-        self.rest.checkCode(ret, ret => {
-          localStorage.setItem('currentUser', ret.UserToken);
-          localStorage.setItem('currentUserDetail', ret);
+        self.rest.checkCode(ret, retBody => {
+          UserService.store(retBody);
           self.router.navigate([this.rest.getLoginRetUrl() || '/']);
         });
       },

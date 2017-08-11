@@ -27,96 +27,43 @@
 </div>
 
 <div class="wrapper reply" [class.focused]="replyFocused">
-  <div class="title"><span (click)="resetReplyUserName(null)">{{replyUserName}}</span>发布评论...</div>
+  <div class="title">
+    <span *ngIf="replyComment" (click)="resetReplyComment()">{{'回复 ' + replyComment.WriterName}}</span>
+    发布评论...
+  </div>
   <textarea #reply placeholder="输入评论..." [(ngModel)]="replyContent" [class.focused]="replyFocused" (focus)="replyFocused=true"
     (blur)="replyFocused=false"></textarea>
   <div class="publish-btn" (click)="replyPublishBtnClicked()">发布</div>
 </div>
 
 <div class="wrapper comments">
-  <h2>评论</h2>
+  <h2 *ngIf="comments.length">评论</h2>
   <ul>
-    <li class="comment">
+    <li class="comment" *ngFor="let c of comments; let idx=index">
       <div class="user">
-        ABCABCABCABCA
+        {{c.WriterName}}
       </div>
       <div class="content">
         <div class="text">
-          chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+          {{c.CommentContent}}
         </div>
         <ul>
-          <li class="comment">
+          <li class="comment" *ngFor="let cc of (c.Leafs || [])">
             <div class="user">
-              CABCABCABCABC
+              {{cc.WriterName}}
             </div>
             <div class="content">
               <div class="text">
-                chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
+                {{cc.CommentContent}}
               </div>
               <div class="reply-btn">
-                <span (click)="replyCommentBtnClicked()">回复</span>
+                <span (click)="replyCommentBtnClicked(c, cc, idx)">回复</span>
               </div>
             </div>
           </li>
         </ul>
         <div class="reply-btn">
-          <span (click)="replyCommentBtnClicked()">回复</span>
-        </div>
-      </div>
-    </li>
-    <li class="comment">
-      <div class="user">
-        ABCABCABCABCA
-      </div>
-      <div class="content">
-        <div class="text">
-          chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
-        </div>
-        <ul>
-          <li class="comment">
-            <div class="user">
-              CABCABCABCABC
-            </div>
-            <div class="content">
-              <div class="text">
-                chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
-              </div>
-              <div class="reply-btn">
-                <span (click)="replyCommentBtnClicked()">回复</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="reply-btn">
-          <span (click)="replyCommentBtnClicked()">回复</span>
-        </div>
-      </div>
-    </li>
-    <li class="comment">
-      <div class="user">
-        ABCABCABCABCA
-      </div>
-      <div class="content">
-        <div class="text">
-          chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
-        </div>
-        <ul>
-          <li class="comment">
-            <div class="user">
-              CABCABCABCABC
-            </div>
-            <div class="content">
-              <div class="text">
-                chunk polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 178 kB [initial]
-              </div>
-              <div class="reply-btn">
-                <span (click)="replyCommentBtnClicked()">回复</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="reply-btn">
-          <span (click)="replyCommentBtnClicked()">回复</span>
+          <span (click)="replyCommentBtnClicked(c, null, idx)">回复</span>
         </div>
       </div>
     </li>

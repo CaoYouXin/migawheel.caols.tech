@@ -2,6 +2,7 @@ import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import "rxjs/add/operator/map";
 import { Injectable } from "@angular/core";
+import { UserService } from './user.service';
 
 @Injectable()
 export class DaoUtil {
@@ -36,7 +37,7 @@ export class DaoUtil {
     }
 
     if (!userset['infinitely-serve-token']) {
-      let token = localStorage.getItem('currentUser');
+      let token = UserService.token();
       if (token) {
         headers.append('infinitely-serve-token', token);
       }

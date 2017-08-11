@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewChecked, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
-import { DaoUtil, API, RestCode } from "../../http";
+import { DaoUtil, API, RestCode, UserService } from "../../http";
 import { Observable } from "rxjs/Rx";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/switchMap';
@@ -16,7 +16,7 @@ export class ArticleComponent implements OnInit {
 
   nonePrevious = '没有上一篇了';
   noneNext = '没有下一篇了';
-  
+
   post: any = {
     BlogPostUrl: '/'
   };
@@ -24,8 +24,13 @@ export class ArticleComponent implements OnInit {
   next: any;
   breadcrumb: Array<any> = [];
   replyFocused: boolean;
-  replyUserName: string;
+  replyComment: any;
+  replyCommentIdx: number = -1;
   replyContent: string;
+  comments: Array<any> = [];
+
+  @ViewChild("reply")
+  reply: ElementRef;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -37,10 +42,12 @@ export class ArticleComponent implements OnInit {
     const self = this;
     this.route.paramMap
       .switchMap((params: ParamMap) => {
-        let post = self.dao.getJSON(API.getAPI("post")(params.get('id')));
+        const id = params.get('id');
+        let post = self.dao.getJSON(API.getAPI("post")(id));
         let categories = self.dao.getJSON(API.getAPI("categories"));
+        let comments = self.dao.getJSON(API.getAPI("FetchComments")(id));
 
-        return new Observable<{ post: any, breadcrumb: any }>(subject => {
+        return new Observable<{ post: any, breadcrumb: any, comments: Array<any> }>(subject => {
           post.subscribe(
             ret => self.rest.checkCode(ret, (p) => {
               categories.subscribe(
@@ -48,11 +55,17 @@ export class ArticleComponent implements OnInit {
                   let c = p.BlogCategoryId;
                   let breadcrumb = BlogBasicUtil.genBreadcrumb([], cs, 0, c);
 
-                  subject.next({
-                    post: p,
-                    breadcrumb
-                  });
-                  subject.complete();
+                  comments.subscribe(
+                    ret3 => self.rest.checkCode(ret3, (cms) => {
+                      subject.next({
+                        post: p,
+                        breadcrumb,
+                        comments: cms
+                      });
+                      subject.complete();
+                    }),
+                    err3 => DaoUtil.logError(err3)
+                  );
                 }),
                 err2 => DaoUtil.logError(err2)
               );
@@ -61,9 +74,10 @@ export class ArticleComponent implements OnInit {
           );
         });
       })
-      .subscribe((ret: { post: any, breadcrumb: any }) => {
+      .subscribe((ret: { post: any, breadcrumb: any, comments: Array<any> }) => {
         self.post = ret.post;
         self.breadcrumb = ret.breadcrumb;
+        self.comments = ret.comments;
 
         self.dao.getJSON(API.getAPI("PreviousPost")(self.post.BlogPostUpdateTime)).subscribe(
           ret => this.rest.checkCode(ret, retBody => {
@@ -98,16 +112,52 @@ export class ArticleComponent implements OnInit {
     );
   }
 
-  replyCommentBtnClicked() {
-    console.log('回复');
+  replyCommentBtnClicked(c, cc, idx) {
+    this.replyComment = cc || c;
+    this.replyCommentIdx = idx;
+    this.reply.nativeElement.focus();
   }
 
-  resetReplyUserName() {
-
+  resetReplyComment() {
+    this.replyComment = null;
+    this.replyCommentIdx = -1;
   }
 
   replyPublishBtnClicked() {
-    console.log(this.replyContent);
+    const content = this.replyContent;
+    if (!content) {
+      return;
+    }
+
+    const user = UserService.getUser();
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const self = this;
+    this.dao.postJSON(API.getAPI("Comment"), {
+      BlogPostId: self.post.BlogPostId,
+      WriterUserId: user.UserId,
+      CommentContent: content,
+      ParentCommentId: !this.replyComment ? 0 : this.replyComment.ParentCommentId || this.replyComment.CommentId,
+      CommenteeUserId: !this.replyComment ? 0 : this.replyComment.WriterUserId
+    }).subscribe(
+      ret => self.rest.checkCode(ret, retBody => {
+        retBody.WriterName = user.UserName;
+
+        if (-1 === this.replyCommentIdx) {
+          self.comments = [retBody, ...self.comments];
+        } else {
+          const cc = self.comments[this.replyCommentIdx];
+          cc.Leafs = cc.Leafs || [];
+          cc.Leafs = [retBody, ...cc.Leafs];
+        }
+
+        this.replyContent = '';
+      }),
+      err => DaoUtil.logError(err)
+      );
   }
 
 }
