@@ -22,6 +22,11 @@ export class ContentComponent {
     }
 
     let data = JSON.parse(e.data);
+
+    if (this.url !== data.path) {
+      return;
+    }
+
     this.height = data.height;
     this.loading = false;
   }
