@@ -270,7 +270,7 @@ export class MigaWheelCore {
   }
 
   private rangeTitle(datum): string[] {
-    let ret = [datum.BlogPostUpdateTime.substr(0, '2017-08-08'.length), datum.BlogPostCreateTime.substr(0, '2017-08-08'.length) + ' -'];
+    let ret = [datum.BlogPostCreateTime.substr(0, '2017-08-08'.length) + ' -', datum.BlogPostUpdateTime.substr(0, '2017-08-08'.length)];
     let str = datum.BlogPostName;
 
     let alpha0 = this.calcTotalAngle(ret[1], this.lineNum - 2);

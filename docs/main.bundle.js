@@ -1384,7 +1384,7 @@ var MigaWheelCore = (function () {
         return str;
     };
     MigaWheelCore.prototype.rangeTitle = function (datum) {
-        var ret = [datum.BlogPostUpdateTime.substr(0, '2017-08-08'.length), datum.BlogPostCreateTime.substr(0, '2017-08-08'.length) + ' -'];
+        var ret = [datum.BlogPostCreateTime.substr(0, '2017-08-08'.length) + ' -', datum.BlogPostUpdateTime.substr(0, '2017-08-08'.length)];
         var str = datum.BlogPostName;
         var alpha0 = this.calcTotalAngle(ret[1], this.lineNum - 2);
         var alpha = this.calcTotalAngle(str, this.lineNum - 3);
