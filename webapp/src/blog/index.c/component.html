@@ -9,15 +9,15 @@
 <div class="screen-wrapper v-mid-box zi2">
   <div class="tao">
     <div id="miga-search" [class.focused]="searchFocused">
-      <input type="text" placeholder="搜索分类或者文章" autofocus [(ngModel)]="searchText" (keyup)="searchKeyUp($event)" (focus)="searchFocus($event)" (blur)="searchFocused=false;">
+      <input type="text" placeholder="搜索分类或者文章" autofocus [(ngModel)]="searchText" (keyup)="searchKeyUp($event)" (focus)="searchFocus($event)"
+        (blur)="searchFocused=false;">
     </div>
     <div id="miga-search-hints" [class.show]="searchHintsShow" data-rel="-1">
       <p *ngFor="let hint of hints; let i=index" [class.selected]="i === selectedHint" (click)="searchClicked($event, hint)">{{hint.isPost ? hint.BlogPostName : hint.BlogCategoryName}}</p>
       <span *ngIf="hints.length === 0">没有符合条件的内容</span>
     </div>
 
-    <svg #taiqi id="taiqi" width="500" height="500" (mousemove)="svgMouseMove($event)"
-     (mouseup)="svgMouseUp($event)" (mousedown)="svgMouseDown($event)">
+    <svg #taiqi id="taiqi" width="500" height="500" (mousemove)="svgMouseMove($event)" (mouseup)="svgMouseUp($event)" (mousedown)="svgMouseDown($event)">
       <defs>
         <radialGradient id="gradient" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="250" spreadMethod="pad">
           <stop offset="0%" stop-color="#3366CC"></stop>

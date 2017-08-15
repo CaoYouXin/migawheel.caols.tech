@@ -29,6 +29,7 @@ export class BlogIndexComponent implements OnInit {
   private categories: any;
   private history: History;
   private svgMoving: boolean;
+  private svgCanMove: boolean;
   private daCount: number = 0;
   private lastAngle: number;
 
@@ -281,14 +282,20 @@ export class BlogIndexComponent implements OnInit {
   svgMouseDown(e) {
     if (1 === e.buttons) {
       this.lastAngle = this.calcAngle(e);
-      this.svgMoving = true;
+      this.svgMoving = false;
+      this.svgCanMove = true;
     }
   }
 
+  svgMouseUp(e) {
+    this.svgCanMove = false;
+  }
+
   svgMouseMove(e) {
-    if (!this.svgMoving) {
+    if (!this.svgCanMove) {
       return;
     }
+    this.svgMoving = true;
 
     let angle = this.calcAngle(e);
     let da = angle - this.lastAngle;
@@ -319,13 +326,8 @@ export class BlogIndexComponent implements OnInit {
     this.lastAngle = angle;
   }
 
-  svgMouseUp(e) {
-    this.svgMoving = false;
-  }
-
   leftClicked(e) {
     if (this.svgMoving) {
-      this.svgMoving = false;
       return;
     }
 
@@ -340,7 +342,6 @@ export class BlogIndexComponent implements OnInit {
 
   rightClicked(e) {
     if (this.svgMoving) {
-      this.svgMoving = false;
       return;
     }
 
@@ -355,7 +356,6 @@ export class BlogIndexComponent implements OnInit {
 
   elemClicked(e, elem) {
     if (this.svgMoving) {
-      this.svgMoving = false;
       return;
     }
 
@@ -380,7 +380,6 @@ export class BlogIndexComponent implements OnInit {
 
   backClicked(e) {
     if (this.svgMoving) {
-      this.svgMoving = false;
       return;
     }
 
