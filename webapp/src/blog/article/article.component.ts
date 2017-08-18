@@ -53,7 +53,7 @@ export class ArticleComponent implements OnInit {
               categories.subscribe(
                 ret2 => self.rest.checkCode(ret2, (cs) => {
                   let c = p.BlogCategoryId;
-                  let breadcrumb = BlogBasicUtil.genBreadcrumb([], cs, 0, c);
+                  let breadcrumb = BlogBasicUtil.genBreadcrumb([], cs, c);
 
                   comments.subscribe(
                     ret3 => self.rest.checkCode(ret3, (cms) => {

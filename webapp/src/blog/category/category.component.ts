@@ -38,7 +38,7 @@ export class CategoryComponent implements OnInit {
         return new Observable<{ category: any, breadcrumb: Array<any>, posts: Array<any> }>(subject => {
           cs.subscribe(
             ret => self.rest.checkCode(ret, retBody => {
-              let breadcrumb = BlogBasicUtil.genBreadcrumb([], retBody, 0, c);
+              let breadcrumb = BlogBasicUtil.genBreadcrumb([], retBody, c);
 
               posts.subscribe(
                 ret2 => self.rest.checkCode(ret2, retBody2 => {

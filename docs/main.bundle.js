@@ -349,7 +349,7 @@ var ArticleComponent = (function () {
                 post.subscribe(function (ret) { return self.rest.checkCode(ret, function (p) {
                     categories.subscribe(function (ret2) { return self.rest.checkCode(ret2, function (cs) {
                         var c = p.BlogCategoryId;
-                        var breadcrumb = __WEBPACK_IMPORTED_MODULE_6__util__["a" /* BlogBasicUtil */].genBreadcrumb([], cs, 0, c);
+                        var breadcrumb = __WEBPACK_IMPORTED_MODULE_6__util__["a" /* BlogBasicUtil */].genBreadcrumb([], cs, c);
                         comments.subscribe(function (ret3) { return self.rest.checkCode(ret3, function (cms) {
                             subject.next({
                                 post: p,
@@ -591,7 +591,7 @@ var CategoryComponent = (function () {
             var posts = self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_2__http__["a" /* API */].getAPI("posts")(c));
             return new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"](function (subject) {
                 cs.subscribe(function (ret) { return self.rest.checkCode(ret, function (retBody) {
-                    var breadcrumb = __WEBPACK_IMPORTED_MODULE_6__util__["a" /* BlogBasicUtil */].genBreadcrumb([], retBody, 0, c);
+                    var breadcrumb = __WEBPACK_IMPORTED_MODULE_6__util__["a" /* BlogBasicUtil */].genBreadcrumb([], retBody, c);
                     posts.subscribe(function (ret2) { return self.rest.checkCode(ret2, function (retBody2) {
                         subject.next({
                             breadcrumb: breadcrumb,
@@ -1536,33 +1536,25 @@ module.exports = module.exports.toString();
 var BlogBasicUtil = (function () {
     function BlogBasicUtil() {
     }
-    BlogBasicUtil.genBreadcrumb = function (now, cs, idx, id) {
-        if (idx >= cs.length) {
-            throw 'index out of range';
-        }
-        var c = cs[idx];
-        now = now.concat([c]);
-        if (c.BlogCategoryId + '' === id + '') {
-            return now;
-        }
-        var cc = cs[idx].ChildCategories || [];
-        if (!cc.length) {
-            now.pop();
-            return now;
-        }
-        var cIdx = 0, newNow = [];
-        while (cIdx < cc.length) {
-            newNow = this.genBreadcrumb(now, cc, cIdx++, id);
-            if (newNow.length > now.length) {
-                break;
+    BlogBasicUtil.genBreadcrumb = function (now, cs, id) {
+        for (var i = 0; i < cs.length; i++) {
+            var c = cs[i];
+            now = now.concat([c]);
+            if (c.BlogCategoryId + '' === id + '') {
+                return now;
             }
-        }
-        if (newNow.length > now.length) {
-            return newNow;
-        }
-        else {
-            now.pop();
-            return now;
+            var cc = c.ChildCategories || [];
+            if (!cc.length) {
+                now.pop();
+                continue;
+            }
+            var newNow = this.genBreadcrumb(now, cc, id);
+            if (newNow.length > now.length) {
+                return newNow;
+            }
+            else {
+                now.pop();
+            }
         }
     };
     return BlogBasicUtil;
