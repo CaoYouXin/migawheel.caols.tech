@@ -1556,6 +1556,7 @@ var BlogBasicUtil = (function () {
                 now.pop();
             }
         }
+        return now;
     };
     return BlogBasicUtil;
 }());

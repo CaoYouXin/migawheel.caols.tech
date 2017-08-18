@@ -23,6 +23,7 @@ export class BlogBasicUtil {
         now.pop();
       }
     }
+    return now;
 
   }
 
