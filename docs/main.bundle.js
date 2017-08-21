@@ -659,7 +659,7 @@ exports = module.exports = __webpack_require__("../../../../.0.28.4@css-loader/l
 
 
 // module
-exports.push([module.i, "iframe {\n  width: 100%;\n  overflow: hidden;\n}\n\n.iframe {\n  display: none;\n  padding: 0;\n  border: none;\n}\n\n.iframe.loading {\n  display: block;\n  width: 100%;\n  height: 500px;\n  line-height: 500px;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.618);\n}", ""]);
+exports.push([module.i, "iframe {\n  width: 100%;\n  overflow: hidden;\n}\n\n.iframe {\n  display: none;\n  padding: 0;\n  border: none;\n}\n\n.iframe.loading {\n  display: block;\n  width: 100%;\n  height: 500px;\n  line-height: 500px;\n  text-align: center;\n  color: wheat;\n  background-color: rgba(0, 0, 0, 0.618);\n}", ""]);
 
 // exports
 

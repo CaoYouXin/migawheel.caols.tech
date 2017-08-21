@@ -15,5 +15,6 @@ iframe {
   height: 500px;
   line-height: 500px;
   text-align: center;
+  color: wheat;
   background-color: rgba(0, 0, 0, 0.618);
 }
