@@ -659,7 +659,7 @@ exports = module.exports = __webpack_require__("../../../../.0.28.4@css-loader/l
 
 
 // module
-exports.push([module.i, "iframe {\n  width: 100%;\n  overflow: hidden;\n}\n\n.iframe {\n  display: none;\n  padding: 0;\n  border: none;\n}\n\n.iframe.loading {\n  display: block;\n  width: 100%;\n  height: 500px;\n  background-color: rgba(0, 0, 0, 0.618);\n}", ""]);
+exports.push([module.i, "iframe {\n  width: 100%;\n  overflow: hidden;\n}\n\n.iframe {\n  display: none;\n  padding: 0;\n  border: none;\n}\n\n.iframe.loading {\n  display: block;\n  width: 100%;\n  height: 500px;\n  line-height: 500px;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.618);\n}", ""]);
 
 // exports
 
@@ -672,7 +672,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/blog/content/content.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"iframe zi11000\" [class.loading]=\"loading\"></div>\n<iframe [src]=\"(prefix + url) | safeHtml\" scrolling=\"no\" [style.height]=\"height + 'px'\"></iframe>\n"
+module.exports = "<div class=\"iframe zi11000\" [class.loading]=\"loading\">loading...</div>\n<iframe [src]=\"(prefix + url) | safeHtml\" scrolling=\"no\" [style.height]=\"height + 'px'\"></iframe>\n"
 
 /***/ }),
 
