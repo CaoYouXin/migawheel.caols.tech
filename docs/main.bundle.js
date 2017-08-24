@@ -705,6 +705,17 @@ var ContentComponent = (function () {
             return;
         }
         var data = JSON.parse(e.data);
+        if (data.path && data.height) {
+            this.loadMsg(data);
+        }
+        else if (data.url && data.target) {
+            this.openMsg(data);
+        }
+    };
+    ContentComponent.prototype.openMsg = function (data) {
+        window.open(data.url, data.target);
+    };
+    ContentComponent.prototype.loadMsg = function (data) {
         if (this.url !== data.path) {
             return;
         }

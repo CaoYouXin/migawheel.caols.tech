@@ -23,6 +23,18 @@ export class ContentComponent {
 
     let data = JSON.parse(e.data);
 
+    if (data.path && data.height) {
+      this.loadMsg(data);
+    } else if (data.url && data.target) {
+      this.openMsg(data);
+    }
+  }
+
+  private openMsg(data) {
+    window.open(data.url, data.target);
+  }
+
+  private loadMsg(data) {
     if (this.url !== data.path) {
       return;
     }
