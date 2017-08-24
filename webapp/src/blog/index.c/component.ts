@@ -58,7 +58,6 @@ export class BlogIndexComponent implements OnInit {
     const self = this;
 
     let data = self.renderCategory(category.BlogCategoryId);
-    console.log(data);
 
     self.dao.getJSON(API.getAPI("posts")(category.BlogCategoryId)).subscribe(
       ret => this.rest.checkCode(ret, (retBody) => {
@@ -216,12 +215,22 @@ export class BlogIndexComponent implements OnInit {
 
     for (var i = 0; i < array.length; i++) {
       var element = array[i];
+
+      if (!element.ChildCategories || !element.ChildCategories.length) {
+        continue;
+      }
+
       if (element.BlogCategoryId + '' === id + '') {
-        return element.ChildCategories || [];
+        return element.ChildCategories;
+      } else {
+        let ret = this.recursiveMatch(element.ChildCategories, id);
+        if (ret && ret.length) {
+          return ret;
+        }
       }
     }
 
-    return this.recursiveMatch(element.ChildCategories || null, id);
+    return [];
   }
 
   ngOnInit() {

@@ -844,7 +844,6 @@ var BlogIndexComponent = (function () {
         var _this = this;
         var self = this;
         var data = self.renderCategory(category.BlogCategoryId);
-        console.log(data);
         self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_3__http__["a" /* API */].getAPI("posts")(category.BlogCategoryId)).subscribe(function (ret) { return _this.rest.checkCode(ret, function (retBody) {
             if (!!cb)
                 cb();
@@ -973,11 +972,20 @@ var BlogIndexComponent = (function () {
         }
         for (var i = 0; i < array.length; i++) {
             var element = array[i];
+            if (!element.ChildCategories || !element.ChildCategories.length) {
+                continue;
+            }
             if (element.BlogCategoryId + '' === id + '') {
-                return element.ChildCategories || [];
+                return element.ChildCategories;
+            }
+            else {
+                var ret = this.recursiveMatch(element.ChildCategories, id);
+                if (ret && ret.length) {
+                    return ret;
+                }
             }
         }
-        return this.recursiveMatch(element.ChildCategories || null, id);
+        return [];
     };
     BlogIndexComponent.prototype.ngOnInit = function () {
         var self = this;
