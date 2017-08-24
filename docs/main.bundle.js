@@ -844,6 +844,7 @@ var BlogIndexComponent = (function () {
         var _this = this;
         var self = this;
         var data = self.renderCategory(category.BlogCategoryId);
+        console.log(data);
         self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_3__http__["a" /* API */].getAPI("posts")(category.BlogCategoryId)).subscribe(function (ret) { return _this.rest.checkCode(ret, function (retBody) {
             if (!!cb)
                 cb();

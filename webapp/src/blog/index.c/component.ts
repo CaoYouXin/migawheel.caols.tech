@@ -58,6 +58,7 @@ export class BlogIndexComponent implements OnInit {
     const self = this;
 
     let data = self.renderCategory(category.BlogCategoryId);
+    console.log(data);
 
     self.dao.getJSON(API.getAPI("posts")(category.BlogCategoryId)).subscribe(
       ret => this.rest.checkCode(ret, (retBody) => {
