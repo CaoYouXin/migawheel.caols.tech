@@ -274,7 +274,7 @@ export class MigaWheelCore {
     let str = datum.BlogPostName;
 
     let alpha0 = this.calcTotalAngle(ret[1], this.lineNum - 2);
-    let alpha = this.calcTotalAngle(str, this.lineNum - 3);
+    let alpha = this.calcTotalAngle(str, this.lineNum - 4);
 
     let ratio = alpha / alpha0, line3, line4, line5;
 
