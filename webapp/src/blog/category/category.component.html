@@ -4,6 +4,7 @@
 
   <!--  路径  -->
   <p class="breadcrumb">
+    <span>/ <a (click)="toHome()">&nbsp;首页&nbsp;</a> </span>
     <span *ngFor="let bc of breadcrumb; let idx=index">/ 
       <a *ngIf="idx < breadcrumb.length - 1" (click)="toCategory(bc)">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a>
       <span *ngIf="idx === breadcrumb.length - 1">&nbsp;{{bc.BlogCategoryName}}&nbsp;</span>

@@ -79,4 +79,8 @@ export class CategoryComponent implements OnInit {
     this.router.navigate(['/category', '' + bc.BlogCategoryId]);
   }
 
+  toHome() {
+    this.router.navigate(['/']);
+  }
+
 }

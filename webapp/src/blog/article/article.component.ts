@@ -103,6 +103,10 @@ export class ArticleComponent implements OnInit {
     this.router.navigate(['/category', '' + bc.BlogCategoryId]);
   }
 
+  toHome() {
+    this.router.navigate(['/']);
+  }
+
   like() {
     this.dao.getJSON(API.getAPI("like")(this.post.BlogPostId)).subscribe(
       ret => this.rest.checkCode(ret, retBody => {

@@ -7,6 +7,7 @@
 
   <!--  路径  -->
   <p class="breadcrumb">
+    <span>/ <a (click)="toHome()">&nbsp;首页&nbsp;</a> </span>
     <span *ngFor="let bc of breadcrumb">/ <a (click)="toCategory(bc)">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a> </span>
   </p>
 
@@ -28,8 +29,7 @@
 
 <div class="wrapper reply" [class.focused]="replyFocused">
   <div class="title">
-    <span *ngIf="replyComment" (click)="resetReplyComment()">{{'回复 ' + replyComment.WriterName}}</span>
-    发布评论...
+    <span *ngIf="replyComment" (click)="resetReplyComment()">{{'回复 ' + replyComment.WriterName}}</span> 发布评论...
   </div>
   <textarea #reply placeholder="输入评论..." [(ngModel)]="replyContent" [class.focused]="replyFocused" (focus)="replyFocused=true"
     (blur)="replyFocused=false"></textarea>
