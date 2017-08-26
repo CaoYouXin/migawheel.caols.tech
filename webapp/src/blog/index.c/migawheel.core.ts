@@ -14,7 +14,7 @@ export class Configs {
 const configChineseAngle = (fontSize, radius) => {
   let ret: number[] = [];
   for (let i = 0; i < radius.length; i++) {
-    ret.push(2 * Math.asin(fontSize / 2 / (radius[i] - fontSize)));
+    ret.push(2 * Math.atan(fontSize / 2 / (radius[i] - fontSize)));
   }
   return ret;
 };
@@ -269,33 +269,49 @@ export class MigaWheelCore {
     return str;
   }
 
+  private calcSpaceAngle(index) {
+    return ' '.charCodeAt(0) < 128 ? this.englishAngle[index] : this.chineseAngle[index];
+  }
+
   private rangeTitle(datum): string[] {
     let ret = [datum.BlogPostCreateTime.substr(0, '2017-08-08'.length) + ' -', datum.BlogPostUpdateTime.substr(0, '2017-08-08'.length)];
-    let str = datum.BlogPostName;
+    ret = ret.map(function (s) {
+      return ' ' + s.trim() + ' ';
+    });
+    let str = datum.BlogPostName.trim();
 
-    let alpha0 = this.calcTotalAngle(ret[1], this.lineNum - 2);
-    let alpha = this.calcTotalAngle(str, this.lineNum - 4);
+    let alpha0 = Math.max(this.calcTotalAngle(ret[0], this.lineNum - 2), this.calcTotalAngle(ret[1], this.lineNum - 1));
+    let alpha = this.calcTotalAngle(' ' + str + ' ', this.lineNum - 4);
 
     let ratio = alpha / alpha0, line3, line4, line5;
 
     if (ratio <= 1) {
-      ret = ['', str, ''].concat(ret);
-    } else if (ratio <= 2) {
-      line4 = this.splitToAngle(str, alpha0, this.lineNum - 4, false);
-      ret = ['', line4, str.substr(line4.length)].concat(ret);
-    } else if (ratio <= 3) {
-      line3 = this.splitToAngle(str, alpha0, this.lineNum - 3, true);
-      line4 = this.splitToAngle(str.substr(0, str.length - line3.length), alpha0, this.lineNum - 4, true);
-      ret = [str.substr(0, str.length - line3.length - line4.length), line4, line3].concat(ret);
-    } else {
-      line5 = this.splitToAngle(str, alpha / 3, this.lineNum - 5, false);
-      line4 = this.splitToAngle(str.substr(line5.length), alpha / 3, this.lineNum - 4, false);
-      ret = [line5, line4, str.substr(line5.length + line4.length)].concat(ret);
+      ret = ['  ', ' ' + str + ' ', '  '].concat(ret);
+      return ret;
     }
 
-    return ret.map(function (s) {
-      return ' ' + s.trim() + ' ';
-    });
+    if (ratio <= 2) {
+      line4 = this.splitToAngle(' ' + str + ' ', alpha0 - this.calcSpaceAngle(this.lineNum - 4), this.lineNum - 4, false);
+      ret = ['  ', line4 + ' ', ' ' + str.substr(line4.length - 1) + ' '].concat(ret);
+      return ret;
+    }
+
+    if (ratio <= 3) {
+      line3 = this.splitToAngle(' ' + str + ' ', alpha0 - this.calcSpaceAngle(this.lineNum - 3), this.lineNum - 3, true);
+      line4 = this.splitToAngle(' ' + str.substr(0, str.length - line3.length + 1) + ' ',
+        alpha0 - this.calcSpaceAngle(this.lineNum - 4), this.lineNum - 4, true);
+      ret = [' ' + str.substr(0, str.length - line3.length - line4.length + 2) + ' ', line4 + ' ', line3 + ' '].concat(ret);
+      return ret;
+    }
+
+
+    line5 = this.splitToAngle(' ' + str + ' ', alpha0 - this.calcSpaceAngle(this.lineNum - 5), this.lineNum - 5, false);
+    line4 = this.splitToAngle(' ' + str.substr(line5.length - 1) + ' ', alpha0 - this.calcSpaceAngle(this.lineNum - 4),
+      this.lineNum - 4, false);
+    line3 = this.splitToAngle(' ' + str.substr(line5.length + line4.length - 2) + ' ',
+      alpha0 - this.calcSpaceAngle(this.lineNum - 3), this.lineNum - 3, false);
+    ret = [line5 + ' ', line4 + ' ', line3 + ' '].concat(ret);
+    return ret;
   }
 }
 
