@@ -15,7 +15,7 @@
   <content [url]="post.BlogPostUrl"></content>
 
   <!--  点赞  -->
-  <div class="like">
+  <div class="like" [class.liked]="liked">
     <img src="assets/like.png" alt="点赞" (click)="like()">
     <hr>
   </div>

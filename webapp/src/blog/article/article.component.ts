@@ -28,6 +28,7 @@ export class ArticleComponent implements OnInit {
   replyCommentIdx: number = -1;
   replyContent: string;
   comments: Array<any> = [];
+  liked: boolean;
 
   @ViewChild("reply")
   reply: ElementRef;
@@ -46,38 +47,43 @@ export class ArticleComponent implements OnInit {
         let post = self.dao.getJSON(API.getAPI("post")(id));
         let categories = self.dao.getJSON(API.getAPI("categories"));
         let comments = self.dao.getJSON(API.getAPI("FetchComments")(id));
+        let liked = self.dao.getJSON(API.getAPI("liked")(id));
 
-        return new Observable<{ post: any, breadcrumb: any, comments: Array<any> }>(subject => {
-          post.subscribe(
-            ret => self.rest.checkCode(ret, (p) => {
-              categories.subscribe(
-                ret2 => self.rest.checkCode(ret2, (cs) => {
-                  let c = p.BlogCategoryId;
-                  let breadcrumb = BlogBasicUtil.genBreadcrumb([], cs, c);
-
-                  comments.subscribe(
-                    ret3 => self.rest.checkCode(ret3, (cms) => {
-                      subject.next({
-                        post: p,
-                        breadcrumb,
-                        comments: cms
-                      });
-                      subject.complete();
-                    }),
-                    err3 => DaoUtil.logError(err3)
-                  );
-                }),
-                err2 => DaoUtil.logError(err2)
-              );
-            }),
+        return new Observable<{ post: any, breadcrumb: any, comments: Array<any>, liked: boolean }>(subject => {
+          Observable.zip(post, categories, comments, liked).subscribe(
+            rets => {
+              let next: any = {};
+              rets.forEach((ret, idx) => self.rest.checkCode(ret, retBody => {
+                switch (idx) {
+                  case 0:
+                    next.post = retBody;
+                    next.BlogCategoryId = retBody.BlogCategoryId;
+                    break;
+                  case 1:
+                    next.breadcrumb = BlogBasicUtil.genBreadcrumb([], retBody, next.BlogCategoryId);
+                    break;
+                  case 2:
+                    next.comments = retBody;
+                    break;
+                  case 3:
+                    next.liked = retBody;
+                    break;
+                  default:
+                    throw new Error(idx + ' not handled.');
+                }
+              }));
+              subject.next(next);
+              subject.complete();
+            },
             err => DaoUtil.logError(err)
           );
         });
       })
-      .subscribe((ret: { post: any, breadcrumb: any, comments: Array<any> }) => {
+      .subscribe((ret: { post: any, breadcrumb: any, comments: Array<any>, liked: boolean }) => {
         self.post = ret.post;
         self.breadcrumb = ret.breadcrumb;
         self.comments = ret.comments;
+        self.liked = ret.liked;
 
         self.dao.getJSON(API.getAPI("PreviousPost")(self.post.BlogPostUpdateTime)).subscribe(
           ret => this.rest.checkCode(ret, retBody => {
@@ -108,9 +114,13 @@ export class ArticleComponent implements OnInit {
   }
 
   like() {
+    const self = this;
     this.dao.getJSON(API.getAPI("like")(this.post.BlogPostId)).subscribe(
       ret => this.rest.checkCode(ret, retBody => {
-        alert(retBody);
+        if (retBody) {
+          self.liked = true;
+          alert('操作成功！');
+        }
       }),
       err => DaoUtil.logError(err)
     );

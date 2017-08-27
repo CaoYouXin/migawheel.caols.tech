@@ -23,6 +23,13 @@ div.like {
   margin-bottom: 1em;
 }
 
+div.like.liked>img {
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border: solid 3px transparent;
+  border-bottom: solid 18px #208AE8;
+}
+
 div.like>hr {
   margin-left: 50%;
   width: 0;
@@ -30,7 +37,7 @@ div.like>hr {
   background-image: linear-gradient(indianred, red 40%, indianred);
 }
 
-div.like:hover>hr {
+div.like:not(.liked):hover>hr {
   margin-left: 0;
   width: 100%;
   transition: width 1s, margin 1s;

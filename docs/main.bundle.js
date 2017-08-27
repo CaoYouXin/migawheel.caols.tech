@@ -273,7 +273,7 @@ exports = module.exports = __webpack_require__("../../../../.0.28.4@css-loader/l
 
 
 // module
-exports.push([module.i, ".blog {\n  border: solid 1px #EFEFEF;\n  box-shadow: .5em .5em 1em #AEAEAE;\n  color: black;\n  background-color: #FFFFFF;\n}\n\np.time {\n  color: #CCCCCC;\n  margin: 0.5em 0 0.5em -10em;\n  overflow: hidden;\n  text-align: center;\n}\n\nspan.time {\n  padding: 0.5em;\n}\n\ndiv.like {\n  text-align: center;\n  display: block;\n  width: 100%;\n  margin-bottom: 1em;\n}\n\ndiv.like>hr {\n  margin-left: 50%;\n  width: 0;\n  height: 3px;\n  background-image: linear-gradient(indianred, red 40%, indianred);\n}\n\ndiv.like:hover>hr {\n  margin-left: 0;\n  width: 100%;\n  transition: width 1s, margin 1s;\n}\n\np.previous, p.next {\n  margin-left: 1em;\n}\n\np.previous.active, p.next.active {\n  text-decoration: underline;\n  color: royalblue;\n  cursor: pointer;\n}\n\np.previous:before {\n  content: '\\4E0A\\4E00\\7BC7\\FF1A';\n}\n\np.next::before {\n  content: '\\4E0B\\4E00\\7BC7\\FF1A';\n}\n\n.reply {\n    height: 75px;\n\n    border-radius: 5px;\n    box-shadow: 0 0 10px cyan;\n\n    overflow: hidden;\n\n    transition: height 1s ease-in-out;\n\n    font-size: 0;\n}\n\n.reply > * {\n    font-family: Monaco, \"Lucida Console\", monospace;\n    font-size: 20px;\n\n    width: calc(100% - 10px);\n    height: 30px;\n\n    margin-top: 5px;\n    margin-left: 5px;\n\n    line-height: 30px;\n}\n\n.reply > .title {\n    text-align: center;\n\n    color: white;\n    background-color: cyan;\n}\n\n.reply > .title > span:hover {\n    background-color: indianred;\n    cursor: default;\n}\n\n.reply > .title > span:before {\n    content: '\\300E';\n}\n\n.reply > .title > span:after {\n    content: '\\300F';\n}\n\n.reply > textarea {\n    outline: none;\n    resize: none;\n\n    line-height: 28px;\n\n    border: dashed 1px cyan;\n\n    background-color: transparent;\n\n    transition: height 1s ease-in-out;\n}\n\n.reply > .publish-btn {\n    text-align: center;\n\n    cursor: pointer;\n\n    color: white;\n    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);\n}\n\n.reply > .publish-btn:hover {\n    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n}\n\n.reply.focused {\n    height: 230px;\n}\n\n.reply > textarea.focused {\n    height: 150px;\n}\n\n.comments>h2 {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  color: yellowgreen;\n  font-size: xx-large;\n}\n\n.comment ul {\n  list-style: none;\n}\n\n.comment {\n  display: block;\n  overflow: hidden;\n}\n\n.comment:first-child {\n  border-top: solid 1px yellowgreen;\n}\n\n.comment:last-child {\n  border-bottom: solid 1px yellowgreen;\n}\n\n.comment+.comment {\n  border-top: dashed 1px yellowgreen;\n}\n\n.comment .comment:first-child {\n  border-top: dashed 1px yellowgreen;\n}\n\n.comment .comment:last-child {\n  border-bottom: dashed 1px yellowgreen;\n}\n\n.comment .user,\n.comment .content {\n  display: block;\n  overflow: hidden;\n  padding: 0.5em;\n}\n\n.comment .user {\n  float: left;\n  width: 20%;\n  padding: 1em 1.2em 0;\n  color: darkgrey;\n}\n\n.comment .content {\n  float: right;\n  width: 80%;\n  padding-left: 1.2em;\n}\n\n.content .text {\n  color: hsl(80,61%,60%);\n}\n\n.content .reply-btn {\n  margin-top: .5em;\n  color: gray;\n  font-size: small;\n  cursor: default;\n  text-align: right;\n  transition: padding .36s;\n  transition-timing-function: cubic-bezier(0, 1, .57, 1.35);\n}\n\n.content .reply-btn:hover,\n.content .reply-btn:focus {\n  padding-right: 1em;\n}\n\n.content ul {\n  margin-top: 1em;\n}\n", ""]);
+exports.push([module.i, ".blog {\n  border: solid 1px #EFEFEF;\n  box-shadow: .5em .5em 1em #AEAEAE;\n  color: black;\n  background-color: #FFFFFF;\n}\n\np.time {\n  color: #CCCCCC;\n  margin: 0.5em 0 0.5em -10em;\n  overflow: hidden;\n  text-align: center;\n}\n\nspan.time {\n  padding: 0.5em;\n}\n\ndiv.like {\n  text-align: center;\n  display: block;\n  width: 100%;\n  margin-bottom: 1em;\n}\n\ndiv.like.liked>img {\n  border-bottom-left-radius: 50%;\n  border-bottom-right-radius: 50%;\n  border: solid 3px transparent;\n  border-bottom: solid 18px #208AE8;\n}\n\ndiv.like>hr {\n  margin-left: 50%;\n  width: 0;\n  height: 3px;\n  background-image: linear-gradient(indianred, red 40%, indianred);\n}\n\ndiv.like:not(.liked):hover>hr {\n  margin-left: 0;\n  width: 100%;\n  transition: width 1s, margin 1s;\n}\n\np.previous, p.next {\n  margin-left: 1em;\n}\n\np.previous.active, p.next.active {\n  text-decoration: underline;\n  color: royalblue;\n  cursor: pointer;\n}\n\np.previous:before {\n  content: '\\4E0A\\4E00\\7BC7\\FF1A';\n}\n\np.next::before {\n  content: '\\4E0B\\4E00\\7BC7\\FF1A';\n}\n\n.reply {\n    height: 75px;\n\n    border-radius: 5px;\n    box-shadow: 0 0 10px cyan;\n\n    overflow: hidden;\n\n    transition: height 1s ease-in-out;\n\n    font-size: 0;\n}\n\n.reply > * {\n    font-family: Monaco, \"Lucida Console\", monospace;\n    font-size: 20px;\n\n    width: calc(100% - 10px);\n    height: 30px;\n\n    margin-top: 5px;\n    margin-left: 5px;\n\n    line-height: 30px;\n}\n\n.reply > .title {\n    text-align: center;\n\n    color: white;\n    background-color: cyan;\n}\n\n.reply > .title > span:hover {\n    background-color: indianred;\n    cursor: default;\n}\n\n.reply > .title > span:before {\n    content: '\\300E';\n}\n\n.reply > .title > span:after {\n    content: '\\300F';\n}\n\n.reply > textarea {\n    outline: none;\n    resize: none;\n\n    line-height: 28px;\n\n    border: dashed 1px cyan;\n\n    background-color: transparent;\n\n    transition: height 1s ease-in-out;\n}\n\n.reply > .publish-btn {\n    text-align: center;\n\n    cursor: pointer;\n\n    color: white;\n    background-image: linear-gradient(0deg, #07fff2 0%, #43fdff 50%, cyan 100%);\n}\n\n.reply > .publish-btn:hover {\n    background-image: linear-gradient(0deg, #05faf0 0%, #41fafa 50%, #00fafa 100%);\n}\n\n.reply.focused {\n    height: 230px;\n}\n\n.reply > textarea.focused {\n    height: 150px;\n}\n\n.comments>h2 {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  color: yellowgreen;\n  font-size: xx-large;\n}\n\n.comment ul {\n  list-style: none;\n}\n\n.comment {\n  display: block;\n  overflow: hidden;\n}\n\n.comment:first-child {\n  border-top: solid 1px yellowgreen;\n}\n\n.comment:last-child {\n  border-bottom: solid 1px yellowgreen;\n}\n\n.comment+.comment {\n  border-top: dashed 1px yellowgreen;\n}\n\n.comment .comment:first-child {\n  border-top: dashed 1px yellowgreen;\n}\n\n.comment .comment:last-child {\n  border-bottom: dashed 1px yellowgreen;\n}\n\n.comment .user,\n.comment .content {\n  display: block;\n  overflow: hidden;\n  padding: 0.5em;\n}\n\n.comment .user {\n  float: left;\n  width: 20%;\n  padding: 1em 1.2em 0;\n  color: darkgrey;\n}\n\n.comment .content {\n  float: right;\n  width: 80%;\n  padding-left: 1.2em;\n}\n\n.content .text {\n  color: hsl(80,61%,60%);\n}\n\n.content .reply-btn {\n  margin-top: .5em;\n  color: gray;\n  font-size: small;\n  cursor: default;\n  text-align: right;\n  transition: padding .36s;\n  transition-timing-function: cubic-bezier(0, 1, .57, 1.35);\n}\n\n.content .reply-btn:hover,\n.content .reply-btn:focus {\n  padding-right: 1em;\n}\n\n.content ul {\n  margin-top: 1em;\n}\n", ""]);
 
 // exports
 
@@ -286,7 +286,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/blog/article/article.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper blog\">\n  <!--  标题  -->\n  <h1>{{post.BlogPostName}}</h1>\n\n  <!--  时间  -->\n  <p class=\"time\"> <span class=\"time\">{{post.BlogPostCreateTime}}</span> - <span class=\"time\">{{post.BlogPostUpdateTime}}</span> </p>\n\n  <!--  路径  -->\n  <p class=\"breadcrumb\">\n    <span>/ <a (click)=\"toHome()\">&nbsp;首页&nbsp;</a> </span>\n    <span *ngFor=\"let bc of breadcrumb\">/ <a (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a> </span>\n  </p>\n\n  <!--  内容  -->\n  <content [url]=\"post.BlogPostUrl\"></content>\n\n  <!--  点赞  -->\n  <div class=\"like\">\n    <img src=\"assets/like.png\" alt=\"点赞\" (click)=\"like()\">\n    <hr>\n  </div>\n\n  <!-- 上一篇，下一篇  -->\n  <p *ngIf=\"!previous\" class=\"previous\" (click)=\"toPost(previous)\">{{nonePrevious}}</p>\n  <p *ngIf=\"previous\" class=\"previous active\" (click)=\"toPost(previous)\">{{previous.BlogPostName}}</p>\n  <p *ngIf=\"!next\" class=\"next\" (click)=\"toPost(next)\">{{noneNext}}</p>\n  <p *ngIf=\"next\" class=\"next active\" (click)=\"toPost(next)\">{{next.BlogPostName}}</p>\n</div>\n\n<div class=\"wrapper reply\" [class.focused]=\"replyFocused\">\n  <div class=\"title\">\n    <span *ngIf=\"replyComment\" (click)=\"resetReplyComment()\">{{'回复 ' + replyComment.WriterName}}</span> 发布评论...\n  </div>\n  <textarea #reply placeholder=\"输入评论...\" [(ngModel)]=\"replyContent\" [class.focused]=\"replyFocused\" (focus)=\"replyFocused=true\"\n    (blur)=\"replyFocused=false\"></textarea>\n  <div class=\"publish-btn\" (click)=\"replyPublishBtnClicked()\">发布</div>\n</div>\n\n<div class=\"wrapper comments\">\n  <h2 *ngIf=\"comments.length\">评论</h2>\n  <ul>\n    <li class=\"comment\" *ngFor=\"let c of comments; let idx=index\">\n      <div class=\"user\">\n        {{c.WriterName}}\n      </div>\n      <div class=\"content\">\n        <div class=\"text\">\n          {{c.CommentContent}}\n        </div>\n        <ul>\n          <li class=\"comment\" *ngFor=\"let cc of (c.Leafs || [])\">\n            <div class=\"user\">\n              {{cc.WriterName}}\n            </div>\n            <div class=\"content\">\n              <div class=\"text\">\n                {{cc.CommentContent}}\n              </div>\n              <div class=\"reply-btn\">\n                <span (click)=\"replyCommentBtnClicked(c, cc, idx)\">回复</span>\n              </div>\n            </div>\n          </li>\n        </ul>\n        <div class=\"reply-btn\">\n          <span (click)=\"replyCommentBtnClicked(c, null, idx)\">回复</span>\n        </div>\n      </div>\n    </li>\n  </ul>\n</div>"
+module.exports = "<div class=\"wrapper blog\">\n  <!--  标题  -->\n  <h1>{{post.BlogPostName}}</h1>\n\n  <!--  时间  -->\n  <p class=\"time\"> <span class=\"time\">{{post.BlogPostCreateTime}}</span> - <span class=\"time\">{{post.BlogPostUpdateTime}}</span> </p>\n\n  <!--  路径  -->\n  <p class=\"breadcrumb\">\n    <span>/ <a (click)=\"toHome()\">&nbsp;首页&nbsp;</a> </span>\n    <span *ngFor=\"let bc of breadcrumb\">/ <a (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a> </span>\n  </p>\n\n  <!--  内容  -->\n  <content [url]=\"post.BlogPostUrl\"></content>\n\n  <!--  点赞  -->\n  <div class=\"like\" [class.liked]=\"liked\">\n    <img src=\"assets/like.png\" alt=\"点赞\" (click)=\"like()\">\n    <hr>\n  </div>\n\n  <!-- 上一篇，下一篇  -->\n  <p *ngIf=\"!previous\" class=\"previous\" (click)=\"toPost(previous)\">{{nonePrevious}}</p>\n  <p *ngIf=\"previous\" class=\"previous active\" (click)=\"toPost(previous)\">{{previous.BlogPostName}}</p>\n  <p *ngIf=\"!next\" class=\"next\" (click)=\"toPost(next)\">{{noneNext}}</p>\n  <p *ngIf=\"next\" class=\"next active\" (click)=\"toPost(next)\">{{next.BlogPostName}}</p>\n</div>\n\n<div class=\"wrapper reply\" [class.focused]=\"replyFocused\">\n  <div class=\"title\">\n    <span *ngIf=\"replyComment\" (click)=\"resetReplyComment()\">{{'回复 ' + replyComment.WriterName}}</span> 发布评论...\n  </div>\n  <textarea #reply placeholder=\"输入评论...\" [(ngModel)]=\"replyContent\" [class.focused]=\"replyFocused\" (focus)=\"replyFocused=true\"\n    (blur)=\"replyFocused=false\"></textarea>\n  <div class=\"publish-btn\" (click)=\"replyPublishBtnClicked()\">发布</div>\n</div>\n\n<div class=\"wrapper comments\">\n  <h2 *ngIf=\"comments.length\">评论</h2>\n  <ul>\n    <li class=\"comment\" *ngFor=\"let c of comments; let idx=index\">\n      <div class=\"user\">\n        {{c.WriterName}}\n      </div>\n      <div class=\"content\">\n        <div class=\"text\">\n          {{c.CommentContent}}\n        </div>\n        <ul>\n          <li class=\"comment\" *ngFor=\"let cc of (c.Leafs || [])\">\n            <div class=\"user\">\n              {{cc.WriterName}}\n            </div>\n            <div class=\"content\">\n              <div class=\"text\">\n                {{cc.CommentContent}}\n              </div>\n              <div class=\"reply-btn\">\n                <span (click)=\"replyCommentBtnClicked(c, cc, idx)\">回复</span>\n              </div>\n            </div>\n          </li>\n        </ul>\n        <div class=\"reply-btn\">\n          <span (click)=\"replyCommentBtnClicked(c, null, idx)\">回复</span>\n        </div>\n      </div>\n    </li>\n  </ul>\n</div>"
 
 /***/ }),
 
@@ -345,27 +345,39 @@ var ArticleComponent = (function () {
             var post = self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_2__http__["a" /* API */].getAPI("post")(id));
             var categories = self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_2__http__["a" /* API */].getAPI("categories"));
             var comments = self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_2__http__["a" /* API */].getAPI("FetchComments")(id));
+            var liked = self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_2__http__["a" /* API */].getAPI("liked")(id));
             return new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"](function (subject) {
-                post.subscribe(function (ret) { return self.rest.checkCode(ret, function (p) {
-                    categories.subscribe(function (ret2) { return self.rest.checkCode(ret2, function (cs) {
-                        var c = p.BlogCategoryId;
-                        var breadcrumb = __WEBPACK_IMPORTED_MODULE_6__util__["a" /* BlogBasicUtil */].genBreadcrumb([], cs, c);
-                        comments.subscribe(function (ret3) { return self.rest.checkCode(ret3, function (cms) {
-                            subject.next({
-                                post: p,
-                                breadcrumb: breadcrumb,
-                                comments: cms
-                            });
-                            subject.complete();
-                        }); }, function (err3) { return __WEBPACK_IMPORTED_MODULE_2__http__["b" /* DaoUtil */].logError(err3); });
-                    }); }, function (err2) { return __WEBPACK_IMPORTED_MODULE_2__http__["b" /* DaoUtil */].logError(err2); });
-                }); }, function (err) { return __WEBPACK_IMPORTED_MODULE_2__http__["b" /* DaoUtil */].logError(err); });
+                __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"].zip(post, categories, comments, liked).subscribe(function (rets) {
+                    var next = {};
+                    rets.forEach(function (ret, idx) { return self.rest.checkCode(ret, function (retBody) {
+                        switch (idx) {
+                            case 0:
+                                next.post = retBody;
+                                next.BlogCategoryId = retBody.BlogCategoryId;
+                                break;
+                            case 1:
+                                next.breadcrumb = __WEBPACK_IMPORTED_MODULE_6__util__["a" /* BlogBasicUtil */].genBreadcrumb([], retBody, next.BlogCategoryId);
+                                break;
+                            case 2:
+                                next.comments = retBody;
+                                break;
+                            case 3:
+                                next.liked = retBody;
+                                break;
+                            default:
+                                throw new Error(idx + ' not handled.');
+                        }
+                    }); });
+                    subject.next(next);
+                    subject.complete();
+                }, function (err) { return __WEBPACK_IMPORTED_MODULE_2__http__["b" /* DaoUtil */].logError(err); });
             });
         })
             .subscribe(function (ret) {
             self.post = ret.post;
             self.breadcrumb = ret.breadcrumb;
             self.comments = ret.comments;
+            self.liked = ret.liked;
             self.dao.getJSON(__WEBPACK_IMPORTED_MODULE_2__http__["a" /* API */].getAPI("PreviousPost")(self.post.BlogPostUpdateTime)).subscribe(function (ret) { return _this.rest.checkCode(ret, function (retBody) {
                 self.previous = retBody;
             }); }, function (err) { return __WEBPACK_IMPORTED_MODULE_2__http__["b" /* DaoUtil */].logError(err); });
@@ -385,8 +397,12 @@ var ArticleComponent = (function () {
     };
     ArticleComponent.prototype.like = function () {
         var _this = this;
+        var self = this;
         this.dao.getJSON(__WEBPACK_IMPORTED_MODULE_2__http__["a" /* API */].getAPI("like")(this.post.BlogPostId)).subscribe(function (ret) { return _this.rest.checkCode(ret, function (retBody) {
-            alert(retBody);
+            if (retBody) {
+                self.liked = true;
+                alert('操作成功！');
+            }
         }); }, function (err) { return __WEBPACK_IMPORTED_MODULE_2__http__["b" /* DaoUtil */].logError(err); });
     };
     ArticleComponent.prototype.replyCommentBtnClicked = function (c, cc, idx) {
@@ -1721,6 +1737,14 @@ API.api = {
         },
         "dev": function (postId) {
             return "http://localhost:9999/api/blog/like/" + postId;
+        }
+    },
+    "liked": {
+        "prod": function (postId) {
+            return "http://server.caols.tech:9999/api/blog/liked/" + postId;
+        },
+        "dev": function (postId) {
+            return "http://localhost:9999/api/blog/liked/" + postId;
         }
     },
     "FetchComments": {
