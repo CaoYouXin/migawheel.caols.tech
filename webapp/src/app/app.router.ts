@@ -6,8 +6,8 @@ import { BlogIndexComponent, ArticleComponent, CategoryComponent } from "../blog
 import { LoginComponent, RegisterComponent } from "../user";
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/index', pathMatch: 'full' },
-  { path: 'index', component: BlogIndexComponent },
+  // { path: '', redirectTo: '/index', pathMatch: 'full' },
+  { path: '', component: BlogIndexComponent, pathMatch: 'full' },
   { path: 'post/:id', component: ArticleComponent },
   { path: 'category/:id', component: CategoryComponent },
 

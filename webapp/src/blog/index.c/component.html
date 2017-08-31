@@ -17,7 +17,8 @@
       <span *ngIf="hints.length === 0">没有符合条件的内容</span>
     </div>
 
-    <svg #taiqi id="taiqi" width="500" height="500" (mousemove)="svgMouseMove($event)" (mouseup)="svgMouseUp($event)" (mousedown)="svgMouseDown($event)">
+    <svg #taiqi id="taiqi" width="500" height="500" (mousemove)="svgMouseMove($event)" (mouseup)="svgMouseUp($event)" (mousedown)="svgMouseDown($event)"
+      xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="gradient" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="250" spreadMethod="pad">
           <stop offset="0%" stop-color="#3366CC"></stop>
