@@ -302,7 +302,7 @@ export class BlogIndexComponent implements OnInit {
   }
 
   svgMouseMove(e) {
-    if (!this.svgCanMove) {
+    if (!this.svgCanMove || e.movementX + e.movementY <= 5) {
       return;
     }
     this.svgMoving = true;
@@ -370,7 +370,7 @@ export class BlogIndexComponent implements OnInit {
     }
 
     if (!elem.source) {
-      return null;
+      return;
     }
 
     this.loading = true;
