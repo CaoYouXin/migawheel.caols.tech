@@ -1065,7 +1065,7 @@ var BlogIndexComponent = (function () {
         this.svgCanMove = false;
     };
     BlogIndexComponent.prototype.svgMouseMove = function (e) {
-        if (!this.svgCanMove || e.movementX + e.movementY <= 5) {
+        if (!this.svgCanMove || e.movementX + e.movementY === 0) {
             return;
         }
         this.svgMoving = true;
@@ -1669,16 +1669,16 @@ var StarsComponent = (function () {
         this.height = this.stars_graphics.nativeElement.offsetHeight;
         this.stars_graphics.nativeElement.width = this.width;
         this.stars_graphics.nativeElement.height = this.height;
+        var widthHalf = this.width / 2;
+        var heightHalf = this.height / 2;
+        for (var i = 0; i < (365 / 1.618); i++) {
+            this.stars[i] = new __WEBPACK_IMPORTED_MODULE_1__star_shape__["a" /* StarShape */](widthHalf, heightHalf);
+        }
     };
     StarsComponent.prototype.ngOnInit = function () {
         console.log('start drawing');
         this.bgCtx = this.stars_graphics.nativeElement.getContext('2d');
         this.resetViewport();
-        var widthHalf = this.width / 2;
-        var heightHalf = this.height / 2;
-        for (var i = 0; i < 365; i++) {
-            this.stars[i] = new __WEBPACK_IMPORTED_MODULE_1__star_shape__["a" /* StarShape */](widthHalf, heightHalf);
-        }
         this.animateStars();
     };
     StarsComponent.prototype.animateStars = function () {

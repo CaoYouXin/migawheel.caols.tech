@@ -26,19 +26,19 @@ export class StarsComponent implements OnInit {
     this.height = this.stars_graphics.nativeElement.offsetHeight;
     this.stars_graphics.nativeElement.width = this.width;
     this.stars_graphics.nativeElement.height = this.height;
+
+    let widthHalf = this.width / 2;
+    let heightHalf = this.height / 2;
+
+    for (let i = 0; i < (365 / 1.618); i++) {
+      this.stars[i] = new StarShape(widthHalf, heightHalf);
+    }
   }
 
   ngOnInit() {
     console.log('start drawing');
     this.bgCtx = this.stars_graphics.nativeElement.getContext('2d');
     this.resetViewport();
-
-    let widthHalf = this.width / 2;
-    let heightHalf = this.height / 2;
-
-    for (let i = 0; i < 365; i++) {
-      this.stars[i] = new StarShape(widthHalf, heightHalf);
-    }
     this.animateStars();
   }
 
