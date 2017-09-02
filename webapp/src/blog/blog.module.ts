@@ -6,6 +6,7 @@ import { BlogIndexComponent } from './index.c';
 import { ArticleComponent } from './article';
 import { CategoryComponent } from './category';
 import { ContentComponent } from './content';
+import { StarsComponent } from './stars';
 import { SafeHtmlPipe } from './util';
 import { DaoUtil, RestCode } from '../http';
 
@@ -15,7 +16,8 @@ import { DaoUtil, RestCode } from '../http';
     BlogIndexComponent,
     ArticleComponent,
     CategoryComponent,
-    ContentComponent
+    ContentComponent,
+    StarsComponent
   ],
   imports: [
     BrowserModule,
