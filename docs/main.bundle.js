@@ -286,7 +286,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/blog/article/article.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper blog\">\n  <!--  标题  -->\n  <h1>{{post.BlogPostName}}</h1>\n\n  <!--  时间  -->\n  <p class=\"time\"> <span class=\"time\">{{post.BlogPostCreateTime}}</span> - <span class=\"time\">{{post.BlogPostUpdateTime}}</span> </p>\n\n  <!--  路径  -->\n  <p class=\"breadcrumb\">\n    <span>/ <a (click)=\"toHome()\">&nbsp;首页&nbsp;</a> </span>\n    <span *ngFor=\"let bc of breadcrumb\">/ <a (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a> </span>\n  </p>\n\n  <!--  内容  -->\n  <content [url]=\"post.BlogPostUrl\"></content>\n\n  <!--  点赞  -->\n  <div class=\"like\" [class.liked]=\"liked\">\n    <img src=\"assets/like.png\" alt=\"点赞\" (click)=\"like()\">\n    <hr>\n  </div>\n\n  <!-- 上一篇，下一篇  -->\n  <p *ngIf=\"!previous\" class=\"previous\" (click)=\"toPost(previous)\">{{nonePrevious}}</p>\n  <p *ngIf=\"previous\" class=\"previous active\" (click)=\"toPost(previous)\">{{previous.BlogPostName}}</p>\n  <p *ngIf=\"!next\" class=\"next\" (click)=\"toPost(next)\">{{noneNext}}</p>\n  <p *ngIf=\"next\" class=\"next active\" (click)=\"toPost(next)\">{{next.BlogPostName}}</p>\n</div>\n\n<div class=\"wrapper reply\" [class.focused]=\"replyFocused\">\n  <div class=\"title\">\n    <span *ngIf=\"replyComment\" (click)=\"resetReplyComment()\">{{'回复 ' + replyComment.WriterName}}</span> 发布评论...\n  </div>\n  <textarea #reply placeholder=\"输入评论...\" [(ngModel)]=\"replyContent\" [class.focused]=\"replyFocused\" (focus)=\"replyFocused=true\"\n    (blur)=\"replyFocused=false\"></textarea>\n  <div class=\"publish-btn\" (click)=\"replyPublishBtnClicked()\">发布</div>\n</div>\n\n<div class=\"wrapper comments\">\n  <h2 *ngIf=\"comments.length\">评论</h2>\n  <ul>\n    <li class=\"comment\" *ngFor=\"let c of comments; let idx=index\">\n      <div class=\"user\">\n        {{c.WriterName}}\n      </div>\n      <div class=\"content\">\n        <div class=\"text\">\n          {{c.CommentContent}}\n        </div>\n        <ul>\n          <li class=\"comment\" *ngFor=\"let cc of (c.Leafs || [])\">\n            <div class=\"user\">\n              {{cc.WriterName}}\n            </div>\n            <div class=\"content\">\n              <div class=\"text\">\n                {{cc.CommentContent}}\n              </div>\n              <div class=\"reply-btn\">\n                <span (click)=\"replyCommentBtnClicked(c, cc, idx)\">回复</span>\n              </div>\n            </div>\n          </li>\n        </ul>\n        <div class=\"reply-btn\">\n          <span (click)=\"replyCommentBtnClicked(c, null, idx)\">回复</span>\n        </div>\n      </div>\n    </li>\n  </ul>\n</div>"
+module.exports = "<stars></stars>\n\n<div class=\"wrapper blog\">\n  <!--  标题  -->\n  <h1>{{post.BlogPostName}}</h1>\n\n  <!--  时间  -->\n  <p class=\"time\"> <span class=\"time\">{{post.BlogPostCreateTime}}</span> - <span class=\"time\">{{post.BlogPostUpdateTime}}</span> </p>\n\n  <!--  路径  -->\n  <p class=\"breadcrumb\">\n    <span>/ <a (click)=\"toHome()\">&nbsp;首页&nbsp;</a> </span>\n    <span *ngFor=\"let bc of breadcrumb\">/ <a (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a> </span>\n  </p>\n\n  <!--  内容  -->\n  <content [url]=\"post.BlogPostUrl\"></content>\n\n  <!--  点赞  -->\n  <div class=\"like\" [class.liked]=\"liked\">\n    <img src=\"assets/like.png\" alt=\"点赞\" (click)=\"like()\">\n    <hr>\n  </div>\n\n  <!-- 上一篇，下一篇  -->\n  <p *ngIf=\"!previous\" class=\"previous\" (click)=\"toPost(previous)\">{{nonePrevious}}</p>\n  <p *ngIf=\"previous\" class=\"previous active\" (click)=\"toPost(previous)\">{{previous.BlogPostName}}</p>\n  <p *ngIf=\"!next\" class=\"next\" (click)=\"toPost(next)\">{{noneNext}}</p>\n  <p *ngIf=\"next\" class=\"next active\" (click)=\"toPost(next)\">{{next.BlogPostName}}</p>\n</div>\n\n<div class=\"wrapper reply\" [class.focused]=\"replyFocused\">\n  <div class=\"title\">\n    <span *ngIf=\"replyComment\" (click)=\"resetReplyComment()\">{{'回复 ' + replyComment.WriterName}}</span> 发布评论...\n  </div>\n  <textarea #reply placeholder=\"输入评论...\" [(ngModel)]=\"replyContent\" [class.focused]=\"replyFocused\" (focus)=\"replyFocused=true\"\n    (blur)=\"replyFocused=false\"></textarea>\n  <div class=\"publish-btn\" (click)=\"replyPublishBtnClicked()\">发布</div>\n</div>\n\n<div class=\"wrapper comments\">\n  <h2 *ngIf=\"comments.length\">评论</h2>\n  <ul>\n    <li class=\"comment\" *ngFor=\"let c of comments; let idx=index\">\n      <div class=\"user\">\n        {{c.WriterName}}\n      </div>\n      <div class=\"content\">\n        <div class=\"text\">\n          {{c.CommentContent}}\n        </div>\n        <ul>\n          <li class=\"comment\" *ngFor=\"let cc of (c.Leafs || [])\">\n            <div class=\"user\">\n              {{cc.WriterName}}\n            </div>\n            <div class=\"content\">\n              <div class=\"text\">\n                {{cc.CommentContent}}\n              </div>\n              <div class=\"reply-btn\">\n                <span (click)=\"replyCommentBtnClicked(c, cc, idx)\">回复</span>\n              </div>\n            </div>\n          </li>\n        </ul>\n        <div class=\"reply-btn\">\n          <span (click)=\"replyCommentBtnClicked(c, null, idx)\">回复</span>\n        </div>\n      </div>\n    </li>\n  </ul>\n</div>"
 
 /***/ }),
 
@@ -488,8 +488,9 @@ var _a, _b, _c, _d, _e;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__article__ = __webpack_require__("../../../../../src/blog/article/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__category__ = __webpack_require__("../../../../../src/blog/category/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__content__ = __webpack_require__("../../../../../src/blog/content/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__util__ = __webpack_require__("../../../../../src/blog/util/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__http__ = __webpack_require__("../../../../../src/http/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stars__ = __webpack_require__("../../../../../src/blog/stars/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__util__ = __webpack_require__("../../../../../src/blog/util/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__http__ = __webpack_require__("../../../../../src/http/index.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BlogModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -497,6 +498,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -514,17 +516,18 @@ var BlogModule = (function () {
 BlogModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["b" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_7__util__["b" /* SafeHtmlPipe */],
+            __WEBPACK_IMPORTED_MODULE_8__util__["b" /* SafeHtmlPipe */],
             __WEBPACK_IMPORTED_MODULE_3__index_c__["a" /* BlogIndexComponent */],
             __WEBPACK_IMPORTED_MODULE_4__article__["a" /* ArticleComponent */],
             __WEBPACK_IMPORTED_MODULE_5__category__["a" /* CategoryComponent */],
-            __WEBPACK_IMPORTED_MODULE_6__content__["a" /* ContentComponent */]
+            __WEBPACK_IMPORTED_MODULE_6__content__["a" /* ContentComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__stars__["a" /* StarsComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* FormsModule */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__http__["b" /* DaoUtil */], __WEBPACK_IMPORTED_MODULE_8__http__["c" /* RestCode */]]
+        providers: [__WEBPACK_IMPORTED_MODULE_9__http__["b" /* DaoUtil */], __WEBPACK_IMPORTED_MODULE_9__http__["c" /* RestCode */]]
     })
 ], BlogModule);
 
@@ -553,7 +556,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/blog/category/category.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper category\">\n  <!--  名称  -->\n  <h1>{{category.BlogCategoryName}}</h1>\n\n  <!--  路径  -->\n  <p class=\"breadcrumb\">\n    <span>/ <a (click)=\"toHome()\">&nbsp;首页&nbsp;</a> </span>\n    <span *ngFor=\"let bc of breadcrumb; let idx=index\">/ \n      <a *ngIf=\"idx < breadcrumb.length - 1\" (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a>\n      <span *ngIf=\"idx === breadcrumb.length - 1\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</span>\n    </span>\n  </p>\n  <p class=\"breadcrumb\" *ngIf=\"breadcrumb.length && (breadcrumb[breadcrumb.length - 1].ChildCategories || []).length\">:\n    <span *ngFor=\"let bc of breadcrumb[breadcrumb.length - 1].ChildCategories\">\n      <a (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a>\n    </span>\n  </p>\n\n  <!--  内容  -->\n  <content [url]=\"category.BlogCategoryUrl\"></content>\n</div>\n\n<div class=\"wrapper post\" *ngFor=\"let p of posts\">\n  <h1>{{p.BlogPostName}}</h1>\n\n  <div class=\"detail\">\n    <span (click)=\"toPost(p)\">查看详情</span>\n  </div>\n\n  <hr>\n\n  <div class=\"brief\">\n    <content [url]=\"p.BlogPostScript\"></content>\n  </div>\n</div>"
+module.exports = "<stars></stars>\n\n<div class=\"wrapper category\">\n  <!--  名称  -->\n  <h1>{{category.BlogCategoryName}}</h1>\n\n  <!--  路径  -->\n  <p class=\"breadcrumb\">\n    <span>/ <a (click)=\"toHome()\">&nbsp;首页&nbsp;</a> </span>\n    <span *ngFor=\"let bc of breadcrumb; let idx=index\">/ \n      <a *ngIf=\"idx < breadcrumb.length - 1\" (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a>\n      <span *ngIf=\"idx === breadcrumb.length - 1\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</span>\n    </span>\n  </p>\n  <p class=\"breadcrumb\" *ngIf=\"breadcrumb.length && (breadcrumb[breadcrumb.length - 1].ChildCategories || []).length\">:\n    <span *ngFor=\"let bc of breadcrumb[breadcrumb.length - 1].ChildCategories\">\n      <a (click)=\"toCategory(bc)\">&nbsp;{{bc.BlogCategoryName}}&nbsp;</a>\n    </span>\n  </p>\n\n  <!--  内容  -->\n  <content [url]=\"category.BlogCategoryUrl\"></content>\n</div>\n\n<div class=\"wrapper post\" *ngFor=\"let p of posts\">\n  <h1>{{p.BlogPostName}}</h1>\n\n  <div class=\"detail\">\n    <span (click)=\"toPost(p)\">查看详情</span>\n  </div>\n\n  <hr>\n\n  <div class=\"brief\">\n    <content [url]=\"p.BlogPostScript\"></content>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -1062,7 +1065,7 @@ var BlogIndexComponent = (function () {
         this.svgCanMove = false;
     };
     BlogIndexComponent.prototype.svgMouseMove = function (e) {
-        if (!this.svgCanMove) {
+        if (!this.svgCanMove || e.movementX + e.movementY <= 5) {
             return;
         }
         this.svgMoving = true;
@@ -1118,7 +1121,7 @@ var BlogIndexComponent = (function () {
             return;
         }
         if (!elem.source) {
-            return null;
+            return;
         }
         this.loading = true;
         this.clickEffect = true;
@@ -1555,6 +1558,163 @@ var CoreHistory = (function () {
 
 
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/blog/stars/index.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stars_component__ = __webpack_require__("../../../../../src/blog/stars/stars.component.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__stars_component__["a"]; });
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/blog/stars/star.shape.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StarShape; });
+var StarShape = (function () {
+    function StarShape(halfW, halfH) {
+        this.r = this.random(10, 20);
+        this.x = this.random(0, this.distance(halfW, halfH));
+        this.y = 0;
+        this.rotation = this.random(0, 360) * Math.PI / 180;
+        this.speed = this.random(0, .5) * Math.PI / 180;
+    }
+    StarShape.prototype.random = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+    StarShape.prototype.distance = function (x, y) {
+        var hypotenuse = Math.round(Math.sqrt(x * x + y * y));
+        return hypotenuse;
+    };
+    StarShape.prototype.draw = function (ctx, halfW, halfH) {
+        var grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+        grd.addColorStop(0, '#fff');
+        grd.addColorStop(0.3, '#bbf');
+        grd.addColorStop(0.36, 'rgba(234, 234, 234, 1)');
+        grd.addColorStop(1, 'rgba(234, 234, 234, 0)');
+        ctx.save();
+        ctx.translate(halfW, halfH);
+        ctx.rotate(this.rotation);
+        ctx.beginPath();
+        ctx.fillStyle = grd;
+        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.restore();
+        this.rotation += this.speed / 50;
+    };
+    ;
+    return StarShape;
+}());
+
+//# sourceMappingURL=star.shape.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/blog/stars/stars.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../.0.28.4@css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "canvas {\n  width: 100%;\n  height: 100%;\n  background: transparent;\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/blog/stars/stars.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"screen-wrapper zi-1000\">\n  <canvas #stars_graphics></canvas>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/blog/stars/stars.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../../.4.3.3@@angular/core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__star_shape__ = __webpack_require__("../../../../../src/blog/stars/star.shape.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StarsComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var StarsComponent = (function () {
+    function StarsComponent() {
+        this.stars = [];
+        this.animateStars = this.animateStars.bind(this);
+    }
+    StarsComponent.prototype.resetViewport = function () {
+        this.width = this.stars_graphics.nativeElement.offsetWidth;
+        this.height = this.stars_graphics.nativeElement.offsetHeight;
+        this.stars_graphics.nativeElement.width = this.width;
+        this.stars_graphics.nativeElement.height = this.height;
+    };
+    StarsComponent.prototype.ngOnInit = function () {
+        console.log('start drawing');
+        this.bgCtx = this.stars_graphics.nativeElement.getContext('2d');
+        this.resetViewport();
+        var widthHalf = this.width / 2;
+        var heightHalf = this.height / 2;
+        for (var i = 0; i < 365; i++) {
+            this.stars[i] = new __WEBPACK_IMPORTED_MODULE_1__star_shape__["a" /* StarShape */](widthHalf, heightHalf);
+        }
+        this.animateStars();
+    };
+    StarsComponent.prototype.animateStars = function () {
+        this.bgCtx.fillStyle = 'RGBA(0, 0, 0, 0)';
+        this.bgCtx.clearRect(0, 0, this.width, this.height);
+        var widthHalf = this.width / 2;
+        var heightHalf = this.height / 2;
+        for (var i = 0; i < this.stars.length; i++) {
+            this.stars[i].draw(this.bgCtx, widthHalf, heightHalf);
+        }
+        requestAnimationFrame(this.animateStars);
+    };
+    ;
+    return StarsComponent;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('stars_graphics'),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["N" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["N" /* ElementRef */]) === "function" && _a || Object)
+], StarsComponent.prototype, "stars_graphics", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_3" /* HostListener */])("window:resize", ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], StarsComponent.prototype, "resetViewport", null);
+StarsComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Component */])({
+        selector: 'stars',
+        template: __webpack_require__("../../../../../src/blog/stars/stars.component.html"),
+        styles: [__webpack_require__("../../../../../src/blog/stars/stars.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], StarsComponent);
+
+var _a;
+//# sourceMappingURL=stars.component.js.map
 
 /***/ }),
 
