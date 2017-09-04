@@ -34,8 +34,8 @@
     <span *ngIf="replyComment" (click)="resetReplyComment()">{{'回复 ' + replyComment.WriterName}}</span> 发布评论...
   </div>
   <textarea #reply placeholder="输入评论..." [(ngModel)]="replyContent" [class.focused]="replyFocused" (focus)="replyFocused=true"
-    (blur)="replyFocused=false"></textarea>
-  <div class="publish-btn" (click)="replyPublishBtnClicked()">发布</div>
+    (blur)="replyFocused=true"></textarea>
+  <div class="publish-btn" (click)="replyPublishBtnClicked()"><span>发布</span></div>
 </div>
 
 <div class="wrapper comments">

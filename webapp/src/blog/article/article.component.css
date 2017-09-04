@@ -110,6 +110,7 @@ p.next::before {
 .reply > textarea {
     outline: none;
     resize: none;
+    vertical-align: top;
 
     line-height: 28px;
 
