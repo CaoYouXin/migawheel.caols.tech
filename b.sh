@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd webapp \
-    && ng build --env=prod \
+    && npm run build \
     && cd .. \
     && rm -rf ./docs/ \
     && git checkout -- docs/CNAME \
