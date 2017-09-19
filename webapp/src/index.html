@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>曹力升的博客</title>
@@ -7,8 +8,21 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <script>
+    var UA = navigator.userAgent,
+      isAndroid = /android|adr/gi.test(UA),
+      isIos = /iphone|ipod|ipad/gi.test(UA) && !isAndroid, // 据说某些国产机的UA会同时包含 android iphone 字符
+      isMobile = isAndroid || isIos;  // 粗略的判断
+
+    if (isMobile) {
+      location.href = "http://caols.tech/";
+    }
+  </script>
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>
