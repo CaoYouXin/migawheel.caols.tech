@@ -360,7 +360,7 @@ export class BlogIndexComponent implements OnInit {
     setTimeout((self) => {
       self.loading = false;
       self.clickEffect = false;
-      window.open('http://demo.caols.tech/profile/index.html', '_blank');
+      window.open('http://diary.caols.tech', '_blank');
     }, 1000, this);
   }
 
