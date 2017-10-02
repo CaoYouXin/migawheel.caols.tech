@@ -2455,7 +2455,9 @@ var RegisterComponent = (function () {
         this.rootError = '';
         this.formErrors = {
             'UserName': '',
-            'UserPassword': ''
+            'UserPassword': '',
+            'UserPasswordConfirmed': '',
+            'ImageCaptcha': ''
         };
         this.validationMessages = {
             'rootError': {

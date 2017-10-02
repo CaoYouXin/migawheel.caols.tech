@@ -33,7 +33,9 @@ export class RegisterComponent {
   rootError = '';
   formErrors = {
     'UserName': '',
-    'UserPassword': ''
+    'UserPassword': '',
+    'UserPasswordConfirmed': '',
+    'ImageCaptcha': ''
   };
   validationMessages = {
     'rootError': {
@@ -89,7 +91,7 @@ export class RegisterComponent {
           if (retBody) {
             self.toLogin();
           } else {
-            alert('注册未成功！'); 
+            alert('注册未成功！');
           }
         });
       },
